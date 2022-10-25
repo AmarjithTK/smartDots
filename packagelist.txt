@@ -1,0 +1,13 @@
+dmenu
+ranger
+rofi
+feh
+parole
+picom
+alacritty
+mpd
+mpv 
+flameshot
+volctl
+nm-applet
+freetube-bin
