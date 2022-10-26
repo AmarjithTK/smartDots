@@ -1,12 +1,11 @@
-shift+j; {k,t,r,v,c,n,y,e}
-  {kdeconnect-app,thunar,rofi -show drun,kdenlive,chromium,codium ~/notepad,pipe-viewer,dmenu-config-editor}
+shift+j;{k,t,r,v,c,n,y,e}
+  {kdeconnect-app,thunar,rofi -show drun,kdenlive,chromium,codium ~/notepad,pipe-viewer,/bin/bash -c ~/.local/bin/dmenu-config-editor}
 
-super+shift+Return
+super + shift + Return
   tabbed alacritty --embed
 
-super+shift+e
-  dmenu-powermenu
-
+super+shift+r
+  /bin/bash -c ~/.local/bin/dmenu-powermenu
 
  
 

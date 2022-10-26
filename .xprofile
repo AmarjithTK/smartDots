@@ -1,9 +1,0 @@
-#!/bin/sh
-redshifter 2500 .8 &
-nitrogen --restore &
-flameshot & 
-nm-applet &
-volctl &
-slstatus &
-kdeconnect-cli -l&
-sxhkd &
