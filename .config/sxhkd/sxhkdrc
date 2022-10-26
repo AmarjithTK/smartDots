@@ -1,0 +1,13 @@
+shift+j; {k,t,r,v,c,n,y,e}
+  {kdeconnect-app,thunar,rofi -show drun,kdenlive,chromium,codium ~/notepad,pipe-viewer,dmenu-config-editor}
+
+super+shift+Return
+  tabbed alacritty --embed
+
+super+shift+e
+  dmenu-powermenu
+
+
+ 
+
+

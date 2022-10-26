@@ -5,4 +5,5 @@ flameshot &
 nm-applet &
 volctl &
 slstatus &
-kdeconnect-indicator &
+kdeconnect-cli -l&
+sxhkd &
