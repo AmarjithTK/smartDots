@@ -1,12 +1,23 @@
 shift+j;{k,t,r,v,c,n,y,e}
   {kdeconnect-app,thunar,rofi -show drun,kdenlive,chromium,codium ~/notepad,pipe-viewer,/bin/bash -c ~/.local/bin/dmenu-config-editor}
 
+shift+j;{x,g}
+  {xed,galculator}
+
+
 super + shift + Return
   tabbed alacritty --embed
 
-super+shift+r
+super+shift+e
   /bin/bash -c ~/.local/bin/dmenu-powermenu
 
- 
 
+alt+j 
+  alacritty --class spranger -e ranger
+
+alt+k
+  alacritty --class spmusic -e cmus
+	
+alt+l
+  alacritty --class spterm 
 
