@@ -55,5 +55,4 @@ fi
 
 
 
-
 numlockx &

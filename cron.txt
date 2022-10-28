@@ -1,5 +1,5 @@
 0 22 * * * crontab -l > ~/cron.txt
 2 22 * * * (pacman -Qqe && pacman -Qqm) | sort | uniq > pacman.txt
-4 22 * * * cd ~ && gauc "changes done on $(date +%F) " && git push   
-4 22 * * * cd ~/notepad && gauc "changes done on $(date +%F) " && git push   
+10 22 * * * /bin/zsh -c cd ~ && gauc "changes done on $(date +%F) " && git push   
+35 22 * * * /bin/zsh -c cd ~/notepad && gauc "changes done on $(date +%F) " && git push   
 
