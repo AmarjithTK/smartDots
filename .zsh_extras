@@ -19,3 +19,7 @@ alias takenote='_takenote() { vim "$HOME/storagebin/takenote/$1.txt" ;}; _takeno
 alias hddl="cd /mnt/4012B47212B46E92/"
 alias clo="curl -O"
 alias gauc="git add -u && git commit -m"
+
+
+
+alias ksend='ksend() { kdeconnect-cli -n miatoll --share=$1 ;}; ksend'

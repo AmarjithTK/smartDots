@@ -11,6 +11,8 @@ super + shift + Return
 super+shift+e
   /bin/bash -c ~/.local/bin/dmenu-powermenu
 
+alt+m
+  rhythmbox
 
 alt+j 
   alacritty --class spranger -e ranger
