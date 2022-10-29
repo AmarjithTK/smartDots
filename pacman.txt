@@ -79,7 +79,9 @@ gedit
 gettext
 git
 glances
+gnome-clocks
 gnome-disk-utility
+gnome-terminal
 gnu-netcat
 gpm
 gptfdisk
@@ -98,6 +100,7 @@ gvfs-nfs
 gvfs-smb
 gzip
 haveged
+htop
 hwdetect
 hwinfo
 indent
@@ -111,6 +114,7 @@ iwd
 jfsutils
 kdeconnect-git
 kdenlive
+kitty
 kvantum
 less
 libdvdcss
@@ -197,6 +201,7 @@ ppp
 pptpclient
 python-capng
 python-packaging
+python-pip
 python-pulsectl
 python-pyqt5
 qt5ct
@@ -212,8 +217,10 @@ rofi
 rp-pppoe
 rsync
 rtkit
+samba
 sed
 sg3_utils
+simplescreenrecorder
 smartmontools
 s-nail
 sof-firmware
@@ -223,6 +230,7 @@ sxhkd
 sysfsutils
 systemd-sysvcompat
 tdrop
+testdisk
 texinfo
 thunar
 thunar-archive-plugin
@@ -230,6 +238,7 @@ thunar-media-tags-plugin
 thunar-volman
 tldr
 tmux
+tree
 ttf-bitstream-vera
 ttf-dejavu
 ttf-liberation

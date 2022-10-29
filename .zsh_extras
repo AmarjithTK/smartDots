@@ -23,3 +23,6 @@ alias gauc="git add -u && git commit -m"
 
 
 alias ksend='ksend() { kdeconnect-cli -n miatoll --share=$1 ;}; ksend'
+
+
+alias pyenv="source /home/$USER/code-source/pyenv/bin/activate"

@@ -1,18 +1,30 @@
-shift+j;{k,t,r,v,c,n,y,e}
-  {kdeconnect-app,thunar,rofi -show drun,kdenlive,chromium,codium ~/notepad,pipe-viewer,/bin/bash -c ~/.local/bin/dmenu-config-editor}
 
-shift+j;{x,g}
-  {xed,galculator}
+# ================ APP launchers ===================
 
+control+shift+j;{k,t,r,v,c,n}
+  {kdeconnect-app,thunar,rofi -show drun,kdenlive,chromium,codium ~/notepad}
+
+control+shift+j;{x,g,y,a,u}
+  {xed,galculator,chromium www.youtube.com,rhythmbox,codium}
+
+
+
+# ================ script launchers ===================
+
+control+shift+h; {c,e,y}
+  {bash ~/scripts/dmenu-config-editor,bash ~/scripts/dmenu-powermenu,bash -c ~/scripts/rofi-channel-launch}
+
+
+
+# ================ Terminal launcher ===================
 
 super + shift + Return
-  tabbed alacritty --embed
+  kitty 
 
-super+shift+e
-  /bin/bash -c ~/.local/bin/dmenu-powermenu
 
-alt+m
-  rhythmbox
+
+
+# ================ Scratchpad launchers  ===================
 
 alt+j 
   alacritty --class spranger -e ranger
@@ -20,6 +32,10 @@ alt+j
 alt+k
   alacritty --class spmusic -e cmus
 	
-alt+l
-  alacritty --class spterm 
+#alt+l
+#  alacritty --class spterm 
+
+
+
+
 
