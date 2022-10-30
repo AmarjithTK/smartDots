@@ -26,7 +26,6 @@ cantarell-fonts
 chromium
 cinnamon
 cmus
-cronie
 cryptsetup
 device-mapper
 dhclient
@@ -60,6 +59,7 @@ exfatprogs
 exo
 f2fs-tools
 fakeroot
+fcron
 feh
 ffmpegthumbnailer
 file
@@ -167,6 +167,7 @@ nitrogen
 nmap
 nordic-darker-theme
 noto-fonts
+noto-fonts-emoji
 nss-mdns
 ntfs-3g
 ntp
@@ -214,6 +215,7 @@ reiserfsprogs
 rhythmbox
 ristretto
 rofi
+rofi-emoji
 rp-pppoe
 rsync
 rtkit
@@ -300,6 +302,7 @@ xorg-xinput
 xorg-xkill
 xorg-xrandr
 xorg-xsetroot
+xsel
 xterm
 xz
 yad-eos

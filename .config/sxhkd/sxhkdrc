@@ -32,8 +32,8 @@ alt+j
 alt+k
   alacritty --class spmusic -e cmus
 	
-#alt+l
-#  alacritty --class spterm 
+alt+l
+  alacritty --class spterm 
 
 
 

@@ -1,1 +1,2 @@
-0 22 * * * /bin/zsh -c cron-ten-thirty 
+*/2 * * * * touch ~/linux/f-$(date +%N).txt
+0 22 * * * cron-ten-thirty
