@@ -1,2 +1,3 @@
-*/2 * * * * touch ~/linux/f-$(date +%N).txt
-0 22 * * * cron-ten-thirty
+CRON_TZ=Asia/Kolkata
+1 22 * * * /bin/bash -c cron-ten-thirty
+0 */3 * * * /bin/bash -c cron-every-two-hours
