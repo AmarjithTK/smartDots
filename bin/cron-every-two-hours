@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Script to power cron jobs for backing up crucial stuff to git
+
+cd ~/code-sources && git add . && git commit -m "changes done on $(date "+%F %I:%M %p") " && sleep 21 && git push

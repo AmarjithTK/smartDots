@@ -2,17 +2,17 @@
 # ================ APP launchers ===================
 
 control+shift+j;{k,t,r,v,c,n}
-  {kdeconnect-app,thunar,rofi -show drun,kdenlive,chromium,codium ~/notepad}
+  {kdeconnect-app,thunar,rofi -show drun,kdenlive,google-chrome-stable,codium ~/notepad}
 
 control+shift+j;{x,g,y,a,u}
-  {xed,galculator,chromium www.youtube.com,rhythmbox,codium}
+  {xed,galculator,google-chrome-stable www.youtube.com,rhythmbox,codium}
 
 
 
 # ================ script launchers ===================
 
-control+shift+h; {c,e,y}
-  {bash ~/scripts/dmenu-config-editor,bash ~/scripts/dmenu-powermenu,bash -c ~/scripts/rofi-channel-launch}
+control+shift+h; {c,e}
+  {bash -l -c dmenu-config-editor,bash -l -c dmenu-powermenu}
 
 
 
@@ -27,13 +27,13 @@ super + shift + Return
 # ================ Scratchpad launchers  ===================
 
 alt+j 
-  alacritty --class spranger -e ranger
+  kitty --class spranger -e ranger
 
 alt+k
-  alacritty --class spmusic -e cmus
+  kitty --class spmusic -e cmus
 	
 alt+l
-  alacritty --class spterm 
+  kitty --class spterm 
 
 
 

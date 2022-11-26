@@ -1,3 +1,5 @@
-CRON_TZ=Asia/Kolkata
-1 22 * * * /bin/bash -c cron-ten-thirty
-0 */3 * * * /bin/bash -c cron-every-two-hours
+* * * * * /bin/bash -l -c  
+
+
+1 22 * * * /bin/bash -l -c cron-ten-thirty
+0 */3 * * * /bin/bash -l -c cron-every-two-hours

@@ -70,6 +70,6 @@ case "$choice" in
 esac
 
 # Ultimately, what do want to do with our choice?  Open in our editor!
-alacritty -e vim "$choice"
+kitty -e vim "$choice"
 # emacsclient -c -a emacs "$choice"
 

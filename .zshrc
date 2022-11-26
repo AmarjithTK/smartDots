@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/.local/bin:$HOME/scripts:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -106,16 +106,34 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source ~/powerlevel10k/powerlevel10k.zsh-theme
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+if [ -f ~/.config/zsh/zsh_alias ]; then
+	    . ~/.config/zsh/zsh_alias
+fi
+
+if [ -f ~/.config/zsh/zsh_func ]; then
+	    . ~/.config/zsh/zsh_func
+fi
+
+if [ -f ~/.config/zsh/zsh_themes ]; then
+	    . ~/.config/zsh/zsh_themes
+fi
+
+
+export EDITOR=vim
+if [ -f ~/.config/zsh/zsh_alias ]; then
+	    . ~/.config/zsh/zsh_alias
+fi
+
+if [ -f ~/.config/zsh/zsh_func ]; then
+	    . ~/.config/zsh/zsh_func
+fi
+
+if [ -f ~/.config/zsh/zsh_themes ]; then
+	    . ~/.config/zsh/zsh_themes
+fi
+
+
+export EDITOR=vim
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-
-# zsh extras
-if [ -f ~/.zsh_extras ]; then
-	    . ~/.zsh_extras
-fi
-
-export EDITOR=vim
