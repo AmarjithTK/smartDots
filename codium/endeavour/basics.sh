@@ -1,26 +1,31 @@
 #!/bin/bash
 
-function pacman() {
+baseinstall(){
 
-    sudo pacman -S --noconfirm zsh powerline-fonts
-    sudo pacman -S --needed git base-devel
-    sudo pacman -S docker docker-compose
-}
+sudo pacman -S base-devel
+sudo pacman -S rofi dmenu sxhkd redshift network-manager-applet vim kitty ttf-firacode-nerd --noconfirm
+sudo pacman -S fcron --noconfirm
+sudo systemctl start fcron # systemctl enable if required
+sudo pacman -S --noconfirm zsh powerline-fonts
 
-function dockerinstall() {
-
-    sudo systemctl enable docker.service
-    sudo systemctl start docker.service
-    sudo usermod -aG docker $USER
-https://statistics.berkeley.edu/computing/encrypt
-
+# cron shell runs non interactive thats why error , add bash -l -c and works fine
 
 }
 
-function chsh() {
+
+importdotfiles() {
+
+    cd
+    rm -rf dotfiles
+    git clone 
+
+
+}
+
+
+chsh() {
 
     #    yay -S zsh oh-my-zsh-git nerd-fonts-hack
-
     sudo chsh -s /bin/zsh
 
     mkdir -p .config/zsh
@@ -33,11 +38,11 @@ function chsh() {
     fi
 
     curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-    # git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
+    #    git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 
     echo 'source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme' >>~/.config/zsh/zsh_themes
-
+    p10k configure
 
 }
 
@@ -52,17 +57,12 @@ function yayinstall() {
 
 function aurinstall() {
 
-    yay -S google-chrome vscodium-bin 
-    
-    # case esac here meaningless
-
-
+    yay -S google-chrome vscodium-bin
 
 }
 
 function appimageinstaller() {
 
-    echo "AppImageLaucher"
     mkdir -p ~/.local/bin/appimages
 
 }
@@ -93,10 +93,8 @@ function firacodeorfont() {
 }
 
 function dwminstall() {
-
-    # base devel on arch or other os
-
     cd
+    pacman -S --needed git base-devel
 
     git clone https://github.com/AmarjithTK/dwm.git -b dwm-endeavour --single-branch --depth 1
 
@@ -119,7 +117,7 @@ gitconfig() {
 
 function choicerunner() {
 
-    echo -e "Enter your choice \n1)Base install \n2)yayinstall \n3)redshifter \n4)chshell \n5)dwminstall \n6) aurinstall \n7)gitconfig"
+    echo -e "Enter your choice \n1)Base install \n2)yayinstall \n3)redshifter \n4)chshell \n5)dwminstall \n6) aurinstall \ngitconfig"
     echo -e "\n Press q to quit"
     read CHOICE
     if [[ $CHOICE == 'q' ]]; then
@@ -131,7 +129,7 @@ function choicerunner() {
 
     1)
         echo "base install ... \n"
-        sudo pacman -S rofi dmenu sxhkd redshift network-manager-applet vim kitty ttf-firacode-nerd --noconfirm
+        baseinstall
         echo -e "\ndone ...................\n"
         ;;
 
@@ -161,8 +159,8 @@ function choicerunner() {
         echo -e "\ndone ...................\n"
         ;;
     7)
-        echo "gitconfig ... \n"
-        gitconfig
+        echo "dwminstall ... \n"
+        dwminstall
         echo -e "\ndone ...................\n"
         ;;
     *)

@@ -1,0 +1,66 @@
+version: "3"
+
+networks:
+  intranet:
+    external:
+      name: intra_network  
+
+
+services:
+  transmission:
+    image: ghcr.io/linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Kolkata
+      - TRANSMISSION_WEB_HOME=/combustion-release/ #optional
+      - USER=admin #optional
+      - PASS=sinkthatbitch1 #optional
+      - WHITELIST=*.*.*.* #optional
+      - HOST_WHITELIST=dnsnane list #optional
+    volumes:
+      - ../dockerdata/transmission:/config
+      - /home/himadri/ultraflare/torrent_docker:/downloads
+      - ../sync_data/torrent:/watch
+    ports:
+      - 1000:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped
+    networks:
+      intranet:
+        ipv4_address: 10.2.5.5    
+
+  filebrowser:
+    container_name: filebrowser
+    image: hurlenko/filebrowser
+    user: "1001:1001"
+    ports:
+      - 2000:8080
+    volumes:
+      - /home/himadri:/data
+      - ../dockerdata/filebrowser:/config
+    environment:
+      - FB_BASEURL=/filebrowser
+    restart: always
+    networks:
+      intranet:
+        ipv4_address: 10.2.5.10        
+
+  muximux:
+    image: ghcr.io/linuxserver/muximux
+    container_name: muximux
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Kolkata
+    volumes:
+      - ../dockerdata/muximux:/config
+    ports:
+      - 3000:80
+    restart: unless-stopped    
+    networks:
+      intranet:
+        ipv4_address: 10.2.5.15        
+

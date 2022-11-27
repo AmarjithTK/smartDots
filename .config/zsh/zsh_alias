@@ -26,3 +26,11 @@ alias ksend='ksend() { kdeconnect-cli -n miatoll --share=$1 ;}; ksend'
 
 
 alias pyenv="source /home/$USER/code-source/pyenv/bin/activate"
+
+alias rpisync=" rsync -azP ~/codium/rpi/setup euler@192.168.1.169:/home/euler/rpi"
+alias docsync=" rsync -azP ~/codium/rpi/docker euler@192.168.1.169:/home/euler/docker"
+alias editalias="vim ~/.config/zsh/zsh_alias"
+alias ssha="ssh euler"
+alias sshb="ftp() { ssh admin@$1 -p 2222 ;}; ftp"
+
+
