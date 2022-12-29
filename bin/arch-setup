@@ -1,6 +1,20 @@
 #!/bin/bash
 
-function pacman() {
+function baseinstall() {
+
+
+
+
+# here
+
+# if ( set base or set one or set two you want to install)
+
+# list set items by loop 
+
+
+
+
+    sudo pacman -S rofi dmenu sxhkd redshift network-manager-applet vim kitty ttf-firacode-nerd ttf-fira-code --noconfirm
 
     sudo pacman -S --noconfirm zsh powerline-fonts
     sudo pacman -S --needed git base-devel
@@ -12,7 +26,7 @@ function dockerinstall() {
     sudo systemctl enable docker.service
     sudo systemctl start docker.service
     sudo usermod -aG docker $USER
-https://statistics.berkeley.edu/computing/encrypt
+# https://statistics.berkeley.edu/computing/encrypt
 
 
 }
@@ -21,7 +35,8 @@ function chsh() {
 
     #    yay -S zsh oh-my-zsh-git nerd-fonts-hack
 
-    sudo chsh -s /bin/zsh
+    chsh -s /usr/bin/zsh
+
 
     mkdir -p .config/zsh
     touch .config/zsh/zsh_{func,alias,themes}
@@ -54,43 +69,63 @@ function aurinstall() {
 
     yay -S google-chrome vscodium-bin 
     
-    # case esac here meaningless
-
+# make sets of apps and ask user to choose installations
 
 
 }
 
-function appimageinstaller() {
 
-    echo "AppImageLaucher"
-    mkdir -p ~/.local/bin/appimages
+function setcron(){
 
-}
 
-function redshifter() {
-    mkdir -p .local/bin
-    cd ~/.local/bin
-    curl -o redshifter https://raw.githubusercontent.com/wizetek/bash/master/redshifter
-    chmod +x redshifter
-    cd
-}
+    sudo pacman -S fcron
 
-function firacodeorfont() {
+    sudo systemctl start fcron
+    sudo systemctl enable fcron
 
-    echo "Enter a font link or choose default by pressing d \n"
-    read FONT
-    if [[ $FONT == 'd' ]]; then
-        wget -o https://fonts.google.com/download?family=Fira%20Code
-    fi
+    # setup cronjob for syncing notepad git,dotfiles git etc
 
-    mkdir -p ~/.local/share/fonts
-    cd ~/.local/share/fonts
-
-    fc-cache -f
-    clear
-    cd
 
 }
+
+
+
+# function appimageinstaller() {
+
+#     echo "AppImageLaucher"
+#     mkdir -p ~/.local/bin/appimages
+
+# }
+
+# make seperate script for ubuntu based distros
+
+# function redshifter() {
+#     mkdir -p .local/bin
+#     cd ~/.local/bin
+#     curl -o redshifter https://raw.githubusercontent.com/wizetek/bash/master/redshifter
+#     chmod +x redshifter
+#     cd
+# }
+
+
+# use ttf fira code instead
+
+# function firacodeorfont() {
+
+#     echo "Enter a font link or choose default by pressing d \n"
+#     read FONT
+#     if [[ $FONT == 'd' ]]; then
+#         wget -o https://fonts.google.com/download?family=Fira%20Code
+#     fi
+
+#     mkdir -p ~/.local/share/fonts
+#     cd ~/.local/share/fonts
+
+#     fc-cache -f
+#     clear
+#     cd
+
+# }
 
 function dwminstall() {
 
@@ -131,7 +166,7 @@ function choicerunner() {
 
     1)
         echo "base install ... \n"
-        sudo pacman -S rofi dmenu sxhkd redshift network-manager-applet vim kitty ttf-firacode-nerd --noconfirm
+        baseinstall
         echo -e "\ndone ...................\n"
         ;;
 
