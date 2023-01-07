@@ -21,7 +21,7 @@ alias clo="curl -O"
 alias gauc="git add -u && git commit -m"
 
 
-alias reflect=sudo reflector --latest 20 --protocol https --save /etc/pacman.d/mirrorlist
+alias reflect="sudo reflector --latest 20 --protocol https --save /etc/pacman.d/mirrorlist"
 
 
 
