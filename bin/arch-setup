@@ -1,5 +1,11 @@
 #!/bin/bash
 
+
+
+# git remote add origin git ...dotfiles
+# git fetch origin branchname
+# git pull origin branchname
+
 function baseinstall() {
 
 
@@ -19,6 +25,14 @@ function baseinstall() {
     sudo pacman -S --noconfirm zsh powerline-fonts
     sudo pacman -S --needed git base-devel
     sudo pacman -S docker docker-compose ranger cmus 
+	# locale gen sed editor en_us utf-8
+
+	# CRATE NEW USER FOR AMIR AUTOMATICALLY
+
+	# sudo useradd -m -aG autologin amir
+
+
+
 }
 
 function dockerinstall() {
@@ -31,7 +45,7 @@ function dockerinstall() {
 
 }
 
-function chsh() {
+function zshinstall() {
 
     #    yay -S zsh oh-my-zsh-git nerd-fonts-hack
 
@@ -40,23 +54,29 @@ function chsh() {
 
     mkdir -p .config/zsh
     touch .config/zsh/zsh_{func,alias,themes}
-    curl -fsSL https://raw.githubusercontent.com/AmarjithTK/dotfiles/dwm-endeavour/zsh-extras-config >>~/.zshrc
     echo -e " press y to reinstall old alias, any other key to skip\n"
     read y
     if [[ $y == "y" ]]; then
-        curl -fsSL https://raw.githubusercontent.com/AmarjithTK/dotfiles/dwm-endeavour/.zsh_extras >>~/.config/zsh/zsh_alias
+    curl -fsSL https://raw.githubusercontent.com/AmarjithTK/dotfiles/dwm-endeavour/.zsh_extras >>~/.config/zsh/zsh_alias
     fi
 
     curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
     # git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k
 
+    echo 'POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true' >>! ~/.zshrc
+
+
+
     echo 'source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme' >>~/.config/zsh/zsh_themes
+
+    curl -fsSL https://raw.githubusercontent.com/AmarjithTK/dotfiles/dwm-endeavour/zsh-extras-config >>~/.zshrc
+
 
 
 }
 
-function yayinstall() {
+function aurhelperinstall() {
     cd
     pacman -S --needed git base-devel
     git clone https://aur.archlinux.org/yay.git
@@ -65,9 +85,9 @@ function yayinstall() {
     cd
 }
 
-function aurinstall() {
+function extrapackagesinstall() {
 
-    yay -S google-chrome vscodium-bin 
+    yay -S --noconfirm google-chrome vscodium-bin volctl neofetch htop scrot
     
 # make sets of apps and ask user to choose installations
 
@@ -101,13 +121,20 @@ function setcron(){
 
 # make seperate script for ubuntu based distros
 
-# function redshifter() {
-#     mkdir -p .local/bin
-#     cd ~/.local/bin
-#     curl -o redshifter https://raw.githubusercontent.com/wizetek/bash/master/redshifter
-#     chmod +x redshifter
-#     cd
-# }
+function redshifterinstall() {
+    mkdir -p ~/bin
+    cd ~/bin
+    curl -o redshifter https://raw.githubusercontent.com/wizetek/bash/master/redshifter
+    chmod +x redshifter
+    cd
+}
+
+function codessd(){
+
+    echo "Enter branch name of codessd : "
+    read BRANCH 
+    git clone git@github.com:AmarjithTK/code-sources.git -b "$BRANCH" ~/code-ssd
+}
 
 
 # use ttf fira code instead
@@ -133,9 +160,9 @@ function dwminstall() {
 
     # base devel on arch or other os
 
-    cd
+    # cd ~
 
-    git clone https://github.com/AmarjithTK/dwm.git -b dwm-endeavour --single-branch --depth 1
+    git clone git@github.com:AmarjithTK/dwm.git -b dwm-endeavour3 dwm
 
     cd dwm
 
@@ -148,7 +175,7 @@ function dwminstall() {
 
 }
 
-gitconfig() {
+function gitconfig() {
 
     git config --global user.name "AmarjithTK"
     git config --global user.email "amarjithraveendran@gmail.com"
@@ -156,7 +183,7 @@ gitconfig() {
 
 function choicerunner() {
 
-    echo -e "Enter your choice \n1)Base install \n2)yayinstall \n3)redshifter \n4)chshell \n5)dwminstall \n6) aurinstall \n7)gitconfig"
+    echo -e "Enter your choice \n1)basepackagesinstall \n2)aurhelperinstall \n3)redshifterinstall \n4)zshinstall \n5)dwminstall \n6)extrapackagesinstall \n7)gitconfig 8)codessdclone"
     echo -e "\n Press q to quit"
     read CHOICE
     if [[ $CHOICE == 'q' ]]; then
@@ -167,24 +194,24 @@ function choicerunner() {
     case "$CHOICE" in
 
     1)
-        echo "base install ... \n"
+        echo "basepackagesinstall ... \n"
         baseinstall
         echo -e "\ndone ...................\n"
         ;;
 
     2)
         echo "yay ... \n"
-        yayinstall
+        aurhelperinstall
         echo -e "\ndone ...................\n"
         ;;
     3)
-        echo "redshifter ... \n"
-        redshifter
+        echo "redshifterinstall ... \n"
+        redshifterinstall
         echo -e "\ndone ...................\n"
         ;;
     4)
-        echo "chshell ... \n"
-        chsh
+        echo "zshinstall ... \n"
+        zshinstall
         echo -e "\ndone ...................\n"
         ;;
     5)
@@ -194,7 +221,7 @@ function choicerunner() {
         ;;
     6)
         echo "aur install ... \n"
-        aurinstall
+    extrapackagesinstall
         echo -e "\ndone ...................\n"
         ;;
     7)
@@ -202,6 +229,11 @@ function choicerunner() {
         gitconfig
         echo -e "\ndone ...................\n"
         ;;
+    8)
+        echo "codessdclone ... \n"
+        codessd
+        echo -e "\ndone ...................\n"
+        ;;    
     *)
         echo "Wrong choice, exiting ..."
         echo -e "\ndone ...................\n"
