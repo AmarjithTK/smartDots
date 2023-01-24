@@ -35,6 +35,22 @@ function baseinstall() {
 
 }
 
+function wifihotspoterror(){
+ # implement iwd with network manager to resolve all the errors completely
+
+ sudo pacman -S --noconfirm iwd
+ sudo vim /etc/NetworkManager/conf.d/wifi_backend.conf
+# COPY THE BELOW TO THE NEWLY CREATED FILE
+# [device]
+#wifi.backend=iwd
+
+ sudo systemctl restart NetworkManager
+
+
+}
+
+
+
 function dockerinstall() {
 
     sudo systemctl enable docker.service
