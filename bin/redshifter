@@ -1,0 +1,160 @@
+#!/bin/bash
+#
+# redshifter
+#
+# 2020-03-20, 2018-03-13 Tom Wizetek
+# GPL
+#
+# Wrapper for 'redshift' http://jonls.dk/redshift/
+# Requires 'bc' for floating point math.
+#
+# Configuration saved in ~/.config/redshifter
+#
+# Example key bindings in DE/WM:
+#
+# Super+\	redshifter
+# Super+]	redshifter +
+# Super+[	redshifter -
+# Super+/	redshifter / /
+# Super+.	redshifter = +
+# Super+,	redshifter = -
+#
+
+showHelp() {
+  cat <<ENDHELP
+
+  $(basename ${0}) [colortemp] [brightness]
+
+no argument = cycle through presets:
+		6500K = Daylight
+		5500K = Sunlight
+		4200K = Fluorescent
+		3400K = Halogen
+		2700K = Incandescent
+		2300K = Dim Incandescent
+		1900K = Candle
+		1200K = Ember
+
+[colortemp]
+  -		decrease color temperature by 100K
+  +		increase color temperature by 100K
+  1000-25000	set specific color temperature
+  =		no change / restore saved values (e.g. for startup scripts)
+  /		reset to default
+
+[brightness]
+  -		decrease brightness by 0.02
+  +		increase brightness by 0.02
+  0.1-1.0	set specific brightness value
+  /		reset to default
+
+ENDHELP
+}
+
+#
+# Variables
+#
+conf_file="${HOME}/.config/$(basename ${0})"
+cmd_path="/usr/bin/redshift"
+cmd_arg_colortemp="-P -O"
+cmd_arg_brightness="-b"
+colortemp_array=(6500 5500 4200 3400 2700 2300 1900 1200)
+min_colortemp=1000
+max_colortemp=25000
+min_brightness=0.1
+max_brightness=1.0
+
+#
+# Conf file
+#
+if [[ -f ${conf_file} ]]
+then
+  source ${conf_file}
+  set_colortemp=${colortemp}
+  set_brightness=${brightness}
+else
+  set_colortemp=${max_colortemp}
+  set_brightness=${max_brightness}
+fi
+
+#
+# Brightness
+#
+case ${2} in
+"-")
+  if [[ $(bc <<< "${set_brightness} > ${min_brightness}") -eq 1 ]]
+  then
+    set_brightness=$(bc <<< ${set_brightness}-.02)
+  fi
+  ;;
+"+")
+  if [[ $(bc <<< "${set_brightness} < ${max_brightness}") -eq 1 ]]
+  then
+    set_brightness=$(bc <<< ${set_brightness}+.02)
+  fi
+  ;;
+[0-9]*)
+  set_brightness=${2}
+  ;;
+"/")
+  set_brightness=${max_brightness}
+  ;;
+esac
+
+#
+# Color temperature
+#
+case ${1} in
+"=")
+  : # no-op
+  ;;
+"-")
+  if [[ ${set_colortemp} -gt ${min_colortemp} ]]
+  then
+    ((set_colortemp-=100))
+  fi
+  ;;
+"+")
+  if [[ ${set_colortemp} -lt ${max_colortemp} ]]
+  then
+    ((set_colortemp+=100))
+  fi
+  ;;
+[0-9]*)
+  set_colortemp=${1}
+  ;;
+"/")
+  set_colortemp=${colortemp_array[0]}
+  ;;
+"")
+  for array_item in ${colortemp_array[@]}
+  do
+    if [[ ${array_item} -lt ${set_colortemp} ]]
+    then
+      break
+    # set_colortemp=1200, array_item=6500
+    elif [[ ${set_colortemp} -eq ${colortemp_array[-1]} ]]
+    then
+      break
+    fi
+  done
+  set_colortemp=${array_item}
+  ;;
+*)
+  showHelp
+  exit 1
+  ;;
+esac
+
+#
+# Execute
+#
+${cmd_path} ${cmd_arg_colortemp} ${set_colortemp} ${cmd_arg_brightness} ${set_brightness}
+
+#
+# Save values to conf file
+#
+echo "colortemp=${set_colortemp}" > ${conf_file}
+echo "brightness=${set_brightness}" >> ${conf_file}
+
+# eof
