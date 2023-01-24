@@ -38,3 +38,59 @@ alias ssha="ssh euler"
 alias sshb="ftp() { ssh admin@$1 -p 2222 ;}; ftp"
 
 
+alias spy="sudo pacman -Sy"
+alias sp="sudo pacman -S --noconfirm"
+alias vi="vim"
+alias ypy="yay -S"
+alias smci="rm -f ~/dwm/config.h && sudo make clean install"
+alias kitty="tabbed alacritty --embed"
+alias xtra="vim ~/.zsh_extras"
+alias mdwm="rm ~/dwm/config.h && vim ~/dwm/config.def.h"
+alias spr="sudo pacman -R"
+alias yt="pipe-viewer"
+alias search="w3m google.co.in"
+
+
+alias vimp="vim -p"
+alias vimc="rm -rf ~/.cache/vim/swap"
+alias takenote='_takenote() { vim "$HOME/storagebin/takenote/$1.txt" ;}; _takenote'
+
+
+alias hddl="cd /mnt/4012B47212B46E92/"
+alias clo="curl -O"
+alias gauc="git add -u && git commit -m"
+
+
+
+alias ksend='ksend() { kdeconnect-cli -n miatoll --share=$1 ;}; ksend'
+
+
+alias pyenv="source /home/$USER/code-source/pyenv/bin/activate"
+alias spy="sudo pacman -Sy"
+alias sp="sudo pacman -S --noconfirm"
+alias vi="vim"
+alias ypy="yay -S"
+alias smci="rm -f ~/dwm/config.h && sudo make clean install"
+alias kitty="tabbed alacritty --embed"
+alias xtra="vim ~/.zsh_extras"
+alias mdwm="rm ~/dwm/config.h && vim ~/dwm/config.def.h"
+alias spr="sudo pacman -R"
+alias yt="pipe-viewer"
+alias search="w3m google.co.in"
+
+
+alias vimp="vim -p"
+alias vimc="rm -rf ~/.cache/vim/swap"
+alias takenote='_takenote() { vim "$HOME/storagebin/takenote/$1.txt" ;}; _takenote'
+
+
+alias hddl="cd /mnt/4012B47212B46E92/"
+alias clo="curl -O"
+alias gauc="git add -u && git commit -m"
+
+
+
+alias ksend='ksend() { kdeconnect-cli -n miatoll --share=$1 ;}; ksend'
+
+
+alias pyenv="source /home/$USER/code-source/pyenv/bin/activate"

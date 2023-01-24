@@ -89,6 +89,10 @@ function extrapackagesinstall() {
 
     yay -S --noconfirm google-chrome vscodium-bin volctl neofetch htop scrot
     
+    yay -S --noconfirm bluez bluez-utils
+    sudo systemctl enable bluetooth.service
+
+
 # make sets of apps and ask user to choose installations
 
 
@@ -183,7 +187,7 @@ function gitconfig() {
 
 function choicerunner() {
 
-    echo -e "Enter your choice \n1)basepackagesinstall \n2)aurhelperinstall \n3)redshifterinstall \n4)zshinstall \n5)dwminstall \n6)extrapackagesinstall \n7)gitconfig 8)codessdclone"
+    echo -e "Enter your choice \n1)basepackagesinstall \n2)aurhelperinstall \n3)redshifterinstall \n4)zshinstall \n5)dwminstall \n6)extrapackagesinstall \n7)gitconfig 8)codessdclone 9)dockerinstall"
     echo -e "\n Press q to quit"
     read CHOICE
     if [[ $CHOICE == 'q' ]]; then
@@ -233,7 +237,12 @@ function choicerunner() {
         echo "codessdclone ... \n"
         codessd
         echo -e "\ndone ...................\n"
-        ;;    
+        ;;
+    9)
+        echo "docker ... \n"
+        dockerinstall
+        echo -e "\ndone ...................\n"
+        ;;           
     *)
         echo "Wrong choice, exiting ..."
         echo -e "\ndone ...................\n"
