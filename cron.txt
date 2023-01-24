@@ -1,4 +1,4 @@
-@reboot /bin/bash -l -c /home/ampere/scripts/firewall/firewall.py
+#@reboot /usr/bin/python /home/ampere/scripts/firewall/firewall.py
 */1 * * * * /bin/bash -l -c /home/ampere/scripts/cronrunner.sh 
 * */1 * * * /bin/bash -l -c /home/ampere/scripts/gitcron.py 
 0 */2 * * * /bin/bash -l -c /home/ampere/scripts/gitcron.sh 
