@@ -6,6 +6,29 @@
 # git fetch origin branchname
 # git pull origin branchname
 
+function bluetoothmanager(){
+
+
+    sudo pacman -S --noconfirm bluez bluez-utils blueman
+
+    sudo systemctl enable bluetooth
+    sudo systemctl start bluetooth
+
+}
+
+
+function notclassified(){
+
+
+    sudo pacman -S --noconfirm feh
+   # echo "feh --recursive --bg-fill --randomize ~/wallpapers" 
+
+
+
+
+}
+
+
 function baseinstall() {
 
 
