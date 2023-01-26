@@ -1,3 +1,13 @@
+# yt-dlp audio mp3 playlist download
+alias ytdp=" _ytdp() { yt-dlp --ignore-errors --format bestaudio --extract-audio --audio-format mp3 --audio-quality 70K --output '%(title)s.%(ext)s' --yes-playlist --embed-thumbnail '$1' ;}; _ytdp"
+
+
+alias takenote='ytdp() { vim "$HOME/storagebin/takenote/$1.txt" ;}; _takenote'
+
+
+
+
+
 alias spy="sudo pacman -Sy"
 alias sp="sudo pacman -S --noconfirm"
 alias vi="vim"
