@@ -1,3 +1,6 @@
+alias rshift="redshift -P -O 3000 -b 0.8"
+
+
 # yt-dlp audio mp3 playlist download
 alias ytdp=" _ytdp() { yt-dlp --ignore-errors --format bestaudio --extract-audio --audio-format mp3 --audio-quality 70K --output '%(title)s.%(ext)s' --yes-playlist --embed-thumbnail '$1' ;}; _ytdp"
 
