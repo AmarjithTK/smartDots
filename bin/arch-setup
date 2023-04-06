@@ -131,6 +131,9 @@ function extrapackagesinstall() {
     yay -S --noconfirm bluez bluez-utils
     sudo systemctl enable bluetooth.service
 
+    cat extensions.txt | xargs -n 1 codium --install-extension
+
+
 
 # make sets of apps and ask user to choose installations
 

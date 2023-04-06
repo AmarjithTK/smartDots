@@ -3,6 +3,8 @@
 # Script to power cron jobs for backing up crucial stuff to git
 
 fcrontab -l > ~/cron.txt
+codium --list-extensions >> extensions.txt
+
 (pacman -Qqe && pacman -Qqm) | sort | uniq > ~/pacman.txt
 cd ~ && git commit -am "changes done on $(date "+%F %I:%M %p") " && sleep 5 && git push
 sleep $((2+RANDOM % (20-2)))
