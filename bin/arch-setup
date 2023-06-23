@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo pacman -S --noconfirm archlinux-keyring endeavouros-keyring
+
 function bluetooth_manager() {
     sudo pacman -S --noconfirm bluez bluez-utils blueman
     sudo systemctl enable bluetooth
@@ -8,7 +10,7 @@ function bluetooth_manager() {
 
 function base_install() {
     sudo pacman -S rofi dmenu sxhkd \
-        redshift network-manager-applet vim kitty \
+        redshift vim kitty \
         ttf-firacode-nerd ttf-fira-code zsh powerline-fonts git base-devel
 }
 
@@ -144,7 +146,7 @@ function git_config() {
 
 function choice_runner() {
     echo -e "Enter your choice:\n1) base_install\n2) aur_helper_install\n3) redshifter_install\n4) zsh_install\n5) dwm_install\n6) extra_packages_install\n7) git_config\n8) docker_install\n9) bluetooth_manager\n10) generate_ssh_key\n11) clone_dotfiles_repo\n12) set_cron"
-    echo -e "\nPress q to quit."
+    echo -e "\nPress q to quit"
     read CHOICE
     if [[ $CHOICE == 'q' ]]; then
         echo "Exiting..."
@@ -212,9 +214,12 @@ function choice_runner() {
             set_cron
             echo "Done!"
             ;;
-        *)
-            echo "Invalid choice, please try again."
-            ;;
+       *)
+        echo "Wrong choice, exiting ..."
+        echo -e "\ndone ...................\n"
+        exit 1
+        ;;
+
     esac
 }
 

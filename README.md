@@ -2,4 +2,4 @@
 
 Run the commands with 
 
-    curl -sSL https://raw.githubusercontent.com/starlighter4097/dotfiles/dwm-endeavour5/bin/arch-setup | sh
+    curl -sSL https://raw.githubusercontent.com/starlighter4097/dotfiles/master/bin/arch-setup | sh
