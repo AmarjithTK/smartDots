@@ -1,173 +1,125 @@
 #!/bin/bash
 
-
-
-# git remote add origin git ...dotfiles
-# git fetch origin branchname
-# git pull origin branchname
-
-function bluetoothmanager(){
-
-
+function bluetooth_manager() {
     sudo pacman -S --noconfirm bluez bluez-utils blueman
-
     sudo systemctl enable bluetooth
     sudo systemctl start bluetooth
-
 }
 
-
-function notclassified(){
-
-
-    sudo pacman -S --noconfirm feh
-   # echo "feh --recursive --bg-fill --randomize ~/wallpapers" 
-
-
-
-
+function base_install() {
+    sudo pacman -S rofi dmenu sxhkd \
+        redshift network-manager-applet vim kitty \
+        ttf-firacode-nerd ttf-fira-code zsh powerline-fonts git base-devel
 }
 
+function generate_ssh_key() {
+    # Generate an RSA key pair with no passphrase
+    ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -q -N ""
 
-function baseinstall() {
+    # Display the public key to the user
+    echo "Public Key:"
+    cat ~/.ssh/id_rsa.pub
 
-
-
-
-# here
-
-# if ( set base or set one or set two you want to install)
-
-# list set items by loop 
-
-
-
-
-    sudo pacman -S rofi dmenu sxhkd redshift network-manager-applet vim kitty ttf-firacode-nerd ttf-fira-code --noconfirm
-
-    sudo pacman -S --noconfirm zsh powerline-fonts
-    sudo pacman -S --needed git base-devel
-    sudo pacman -S docker docker-compose ranger cmus 
-	# locale gen sed editor en_us utf-8
-
-	# CRATE NEW USER FOR AMIR AUTOMATICALLY
-
-	# sudo useradd -m -aG autologin amir
-
-
-
+    # Remind the user to add the public key to GitHub
+    echo "Be sure to add this public key to your GitHub account before using it for authentication."
 }
 
-function wifihotspoterror(){
- # implement iwd with network manager to resolve all the errors completely
+function clone_dotfiles_repo() {
+    # Clone the dotfiles repository into the target folder, forcibly overwriting any existing files
+    git clone --force https://github.com/starlighter4097/dotfiles.git ~ 2>/dev/null
 
- sudo pacman -S --noconfirm iwd
- sudo vim /etc/NetworkManager/conf.d/wifi_backend.conf
-# COPY THE BELOW TO THE NEWLY CREATED FILE
-# [device]
-#wifi.backend=iwd
-
- sudo systemctl restart NetworkManager
-
-
+    # Check if the clone was successful
+    if [ $? -eq 0 ]; then
+        echo "The dotfiles repository has been cloned into ~."
+    else
+        echo "There was an error cloning the dotfiles repository."
+    fi
 }
 
+function extra_packages_install() {
+    # Array of AUR packages
+    aur_packages=(
+        google-chrome
+        vscodium-bin
+        volctl
+        simplescreenrecorder
+        media-downloader
+        zoom
+    )
 
+    # Array of Pacman packages
+    pacman_packages=(
+        kdenlive
+        vlc
+        alacritty
+        python3
+        python3-pip
+        kitty
+        thunar
+        kdeconnect
+    )
 
-function dockerinstall() {
+    # Prompt user whether to install each package
+    selected_packages=()
+    for package in "${aur_packages[@]}" "${pacman_packages[@]}"
+    do
+        read -p "Do you want to install $package? (y/n): " choice
+        case "$choice" in
+            y|Y ) selected_packages+=("$package");;
+            n|N ) echo "Skipping $package...";;
+            * ) echo "Invalid choice, skipping $package...";;
+        esac
+    done
 
-    sudo systemctl enable docker.service
-    sudo systemctl start docker.service
-    sudo usermod -aG docker $USER
-# https://statistics.berkeley.edu/computing/encrypt
-
-
+    # Install selected packages
+    if [ ${#selected_packages[@]} -gt 0 ]; then
+        echo "Installing the following packages:"
+        printf '%s\n' "${selected_packages[@]}"
+        yay -S --needed "${selected_packages[@]}"
+    fi
 }
 
-function zshinstall() {
+function docker_install() {
+    curl -sSL https://get.docker.com/ | sh
+}
 
-    #    yay -S zsh oh-my-zsh-git nerd-fonts-hack
-
+function zsh_install() {
     chsh -s /usr/bin/zsh
-
 
     mkdir -p .config/zsh
     touch .config/zsh/zsh_{func,alias,themes}
-    echo -e " press y to reinstall old alias, any other key to skip\n"
-    read y
+    read -p "Press y to reinstall old alias, any other key to skip: " y
     if [[ $y == "y" ]]; then
-    curl -fsSL https://raw.githubusercontent.com/AmarjithTK/dotfiles/dwm-endeavour/.zsh_extras >>~/.config/zsh/zsh_alias
+        curl -fsSL https://raw.githubusercontent.com/starlighter4097/dotfiles/master/.zsh_extras >>~/.config/zsh/zsh_alias
     fi
 
     curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-    # git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k
-
-    echo 'POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true' >>! ~/.zshrc
-
-
-
+    echo 'POWERLEVEL10K_DISABLE_CONFIGURATION_WIZARD=true' >>! ~/.zshrc
     echo 'source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme' >>~/.config/zsh/zsh_themes
-
-    curl -fsSL https://raw.githubusercontent.com/AmarjithTK/dotfiles/dwm-endeavour/zsh-extras-config >>~/.zshrc
-
-
-
+    curl -fsSL https://raw.githubusercontent.com/starlighter4097/dotfiles/master/zsh-extras-config >>~/.zshrc
 }
 
-function aurhelperinstall() {
-    cd
-    pacman -S --needed git base-devel
+function aur_helper_install() {
+    cd ~
+    sudo pacman -S --needed git base-devel
     git clone https://aur.archlinux.org/yay.git
     cd yay
     makepkg -si
-    cd
 }
 
-function extrapackagesinstall() {
-
-    yay -S --noconfirm google-chrome vscodium-bin volctl neofetch htop scrot
-    
-    yay -S --noconfirm bluez bluez-utils
-    sudo systemctl enable bluetooth.service
-
-    cat extensions.txt | xargs -n 1 codium --install-extension
-
-
-
-# make sets of apps and ask user to choose installations
-
-
-}
-
-
-function setcron(){
-
-
-    sudo pacman -S fcron
+function set_cron() {
+    sudo pacman -S --noconfirm fcron
 
     sudo systemctl start fcron
     sudo systemctl enable fcron
 
-    crontab cron.txt // this will load the cron.txt to crontab
+    crontab cron.txt # this will load the cron.txt to crontab
 
-    # setup cronjob for syncing notepad git,dotfiles git etc
-
-
+    # setup cronjob for syncing notepad git, dotfiles git etc
 }
 
-
-
-# function appimageinstaller() {
-
-#     echo "AppImageLaucher"
-#     mkdir -p ~/.local/bin/appimages
-
-# }
-
-# make seperate script for ubuntu based distros
-
-function redshifterinstall() {
+function redshifter_install() {
     mkdir -p ~/bin
     cd ~/bin
     curl -o redshifter https://raw.githubusercontent.com/wizetek/bash/master/redshifter
@@ -175,126 +127,97 @@ function redshifterinstall() {
     cd
 }
 
-function codessd(){
-
-    echo "Enter branch name of codessd : "
-    read BRANCH 
-    git clone git@github.com:AmarjithTK/code-sources.git -b "$BRANCH" ~/code-ssd
-}
-
-
-# use ttf fira code instead
-
-# function firacodeorfont() {
-
-#     echo "Enter a font link or choose default by pressing d \n"
-#     read FONT
-#     if [[ $FONT == 'd' ]]; then
-#         wget -o https://fonts.google.com/download?family=Fira%20Code
-#     fi
-
-#     mkdir -p ~/.local/share/fonts
-#     cd ~/.local/share/fonts
-
-#     fc-cache -f
-#     clear
-#     cd
-
-# }
-
-function dwminstall() {
-
-    # base devel on arch or other os
-
-    # cd ~
-
-    git clone git@github.com:AmarjithTK/dwm.git -b dwm-endeavour3 dwm
-
+function dwm_install() {
+    git clone https://github.com/starlighter4097/dwm.git -b dwm-endeavour3 dwm
     cd dwm
-
     sudo make clean install
     sudo cp dwm.desktop /usr/share/xsessions/
     cd slstatus
-
     sudo make clean install
     cd
-
 }
 
-function gitconfig() {
-
-    git config --global user.name "AmarjithTK"
-    git config --global user.email "amarjithraveendran@gmail.com"
+function git_config() {
+    git config --global user.name "starlighter4097"
+    git config --global user.email "starlighter4097@gmail.com"
 }
 
-function choicerunner() {
-
-    echo -e "Enter your choice \n1)basepackagesinstall \n2)aurhelperinstall \n3)redshifterinstall \n4)zshinstall \n5)dwminstall \n6)extrapackagesinstall \n7)gitconfig 8)codessdclone 9)dockerinstall"
-    echo -e "\n Press q to quit"
+function choice_runner() {
+    echo -e "Enter your choice:\n1) base_install\n2) aur_helper_install\n3) redshifter_install\n4) zsh_install\n5) dwm_install\n6) extra_packages_install\n7) git_config\n8) docker_install\n9) bluetooth_manager\n10) generate_ssh_key\n11) clone_dotfiles_repo\n12) set_cron"
+    echo -e "\nPress q to quit."
     read CHOICE
     if [[ $CHOICE == 'q' ]]; then
-        echo "Exiting ....."
+        echo "Exiting..."
         exit 1
     fi
 
     case "$CHOICE" in
-
-    1)
-        echo "basepackagesinstall ... \n"
-        baseinstall
-        echo -e "\ndone ...................\n"
-        ;;
-
-    2)
-        echo "yay ... \n"
-        aurhelperinstall
-        echo -e "\ndone ...................\n"
-        ;;
-    3)
-        echo "redshifterinstall ... \n"
-        redshifterinstall
-        echo -e "\ndone ...................\n"
-        ;;
-    4)
-        echo "zshinstall ... \n"
-        zshinstall
-        echo -e "\ndone ...................\n"
-        ;;
-    5)
-        echo "dwminstall ... \n"
-        dwminstall
-        echo -e "\ndone ...................\n"
-        ;;
-    6)
-        echo "aur install ... \n"
-    extrapackagesinstall
-        echo -e "\ndone ...................\n"
-        ;;
-    7)
-        echo "gitconfig ... \n"
-        gitconfig
-        echo -e "\ndone ...................\n"
-        ;;
-    8)
-        echo "codessdclone ... \n"
-        codessd
-        echo -e "\ndone ...................\n"
-        ;;
-    9)
-        echo "docker ... \n"
-        dockerinstall
-        echo -e "\ndone ...................\n"
-        ;;           
-    *)
-        echo "Wrong choice, exiting ..."
-        echo -e "\ndone ...................\n"
-        exit 1
-        ;;
-
+        1)
+            echo "Installing base packages..."
+            base_install
+            echo "Done!"
+            ;;
+        2)
+            echo "Installing yay..."
+            aur_helper_install
+            echo "Done!"
+            ;;
+        3)
+            echo "Installing redshifter..."
+            redshifter_install
+            echo "Done!"
+            ;;
+        4)
+            echo "Installing zsh..."
+            zsh_install
+            echo "Done!"
+            ;;
+        5)
+            echo "Installing dwm..."
+            dwm_install
+            echo "Done!"
+            ;;
+        6)
+            echo "Installing extra packages..."
+            extra_packages_install
+            echo "Done!"
+            ;;
+        7)
+            echo "Configuring git..."
+            git_config
+            echo "Done!"
+            ;;
+        8)
+            echo "Installing Docker..."
+            docker_install
+            echo "Done!"
+            ;;
+        9)
+            echo "Setting up Bluetooth..."
+            bluetooth_manager
+            echo "Done!"
+            ;;
+        10)
+            echo "Generating SSH key..."
+            generate_ssh_key
+            echo "Done!"
+            ;;
+        11)
+            echo "Cloning dotfiles repository..."
+            clone_dotfiles_repo
+            echo "Done!"
+            ;;
+        12)
+            echo "Setting up cron job..."
+            set_cron
+            echo "Done!"
+            ;;
+        *)
+            echo "Invalid choice, please try again."
+            ;;
     esac
-
 }
 
 while true; do
-    choicerunner
+    choice_runner
 done
