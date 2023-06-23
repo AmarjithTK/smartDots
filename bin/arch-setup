@@ -92,14 +92,14 @@ function zsh_install() {
     touch .config/zsh/zsh_{func,alias,themes}
     read -p "Press y to reinstall old alias, any other key to skip: " y
     if [[ $y == "y" ]]; then
-        curl -fsSL https://raw.githubusercontent.com/starlighter4097/dotfiles/master/.zsh_extras >>~/.config/zsh/zsh_alias
+        curl -fsSL https://raw.githubusercontent.com/starlighter4097/dotfiles/master/.config/zsh/zsh_alias >>~/.config/zsh/zsh_alias
     fi
 
     curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k
     echo 'POWERLEVEL10K_DISABLE_CONFIGURATION_WIZARD=true' >>! ~/.zshrc
-    echo 'source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme' >>~/.config/zsh/zsh_themes
-    curl -fsSL https://raw.githubusercontent.com/starlighter4097/dotfiles/master/zsh-extras-config >>~/.zshrc
+    echo 'source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme' > ~/.config/zsh/zsh_themes
+    curl -fsSL https://raw.githubusercontent.com/starlighter4097/dotfiles/master/.zshrc >>~/.zshrc
 }
 
 function aur_helper_install() {
