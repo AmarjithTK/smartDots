@@ -1,0 +1,59 @@
+
+# ================ APP launchers ===================
+
+control+shift+j;{k,t,r,v,c,n}
+  {kdeconnect-app,thunar,rofi -show drun,kdenlive,google-chrome-stable,codium ~/notepad}
+
+control+shift+j;{x,g,y,a,u}
+  {xed,galculator,google-chrome-stable www.youtube.com,rhythmbox,codium}
+
+control+shift+j;{f}
+  {firewall.sh}
+
+# ================ script launchers ===================
+
+control+shift+h; {c,e}
+  {bash -l -c dmenu-config-editor,bash -l -c dmenu-powermenu}
+
+
+
+# ================ Terminal launcher ===================
+
+super + shift + Return
+  kitty 
+
+
+
+
+# ================ Scratchpad launchers  ===================
+
+alt+j 
+  kitty --class spranger -e ranger
+
+alt+k
+  kitty --class spmusic -e cmus
+	
+alt+l
+  kitty --class spterm 
+
+
+super + shift + m
+    sh -c ~/basescripts/editscripts.sh
+
+
+super + shift + e
+    sh -c ~/basescripts/powermenu-rofi.sh
+
+super + shift + s
+    sh -c ~/basescripts/restart-sxhkd.sh
+
+
+
+XF86AudioRaiseVolume
+    amixer -q sset Master 3%+
+
+XF86AudioLowerVolume
+    amixer -q sset Master 3%-
+
+XF86AudioMute
+    amixer -q sset Master toggle
