@@ -22,35 +22,38 @@ function choicerunner() {
         selected_setups=("$CHOICE")
     fi
 
+    # Get the absolute path of the directory where this script is located
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
     # Iterate over the selected setups
     for setup_number in "${selected_setups[@]}"; do
         case "$setup_number" in
             1)
-                source setups/gitsetup
+                source "$SCRIPT_DIR/setups/gitsetup"
                 ;;
             2)
-                source setups/nvimsetup
+                source "$SCRIPT_DIR/setups/nvimsetup"
                 ;;
             3)
-                source setups/vscodesetup
+                source "$SCRIPT_DIR/setups/vscodesetup"
                 ;;
             4)
-                source setups/nixsetup
+                source "$SCRIPT_DIR/setups/nixsetup"
                 ;;
             5)
-                source setups/dwmsetup
+                source "$SCRIPT_DIR/setups/dwmsetup"
                 ;;
             6)
-                source setups/binsetup
+                source "$SCRIPT_DIR/setups/binsetup"
                 ;;
             7)
-                source setups/basepackagesetup
+                source "$SCRIPT_DIR/setups/basepkgsetup"
                 ;;
             8)
-                source setups/packagesetup
+                source "$SCRIPT_DIR/setups/packagesetup"
                 ;;
             9)
-                source setups/zshsetup
+                source "$SCRIPT_DIR/setups/zshsetup"
                 ;;
             *)
                 echo "Invalid choice: $setup_number"
