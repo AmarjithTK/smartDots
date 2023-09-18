@@ -1,0 +1,76 @@
+
+# ================ APP launchers ===================
+
+control+shift+j;{k,t,r,v,c,n}
+  {kdeconnect-app,thunar,rofi -show drun,kdenlive,google-chrome-stable,codium ~/notepad}
+
+
+ control+shift+k 
+  nvim
+  
+control+shift+l
+  obs-studio
+
+# ================ script launchers ===================
+
+control + j
+  rofi -show drun
+
+
+# ================ Terminal launcher ===================
+
+super + shift + Return
+  kitty 
+
+
+
+
+# ================ Scratchpad launchers  ===================
+
+alt+j 
+  kitty --class spranger -e ranger
+
+alt+k
+  kitty --class spmusic -e cmus
+	
+alt+l
+  kitty --class spterm 
+
+
+super + shift + m
+    sh -c ~/basescripts/editscripts.sh
+
+
+super + shift + e
+    sh -c ~/basescripts/powermenu-rofi.sh
+
+super + shift + s
+    pkill -USR1 -x sxhkd
+
+
+XF86AudioRaiseVolume
+    amixer -q sset Master 3%+
+
+XF86AudioLowerVolume
+    amixer -q sset Master 3%-
+
+XF86AudioMute
+    amixer -q sset Master toggle
+
+# Increase brightness dynamically
+# Increase brightness
+super + shift + Up
+    sh -c "~/basescripts/brightness.sh increase"
+
+# Decrease brightness
+super + shift + Down
+    sh -c "~/basescripts/brightness.sh decrease"
+
+# Increase color temperature
+alt + shift + Up
+    sh -c "~/basescripts/colortemp.sh increase"
+
+# Decrease color temperature
+alt + shift + Down
+    sh -c "~/basescripts/colortemp.sh decrease"
+

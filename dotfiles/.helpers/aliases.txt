@@ -1,0 +1,22 @@
+# System Management
+alias spy="sudo pacman -Sy"
+alias sp="sudo pacman -S --noconfirm"
+alias spr="sudo pacman -R"
+alias ypy="yay -S"
+alias yp="yay -S --noconfirm"
+alias reflect="sudo reflector --latest 20 --protocol https --save /etc/pacman.d/mirrorlist"
+
+# Git Aliases
+alias gau="git add -u"
+
+# Development
+alias smci="rm -f ~/dwm/config.h && sudo make clean install"
+alias vimc="rm -rf ~/.cache/vim/swap"
+
+# KDE Connect
+
+# Miscellaneous
+alias sshb="ftp() { ssh admin@$1 -p 2222 ;}; ftp"
+alias vi="vim"
+alias copyclip='xclip -selection clipboard'
+

@@ -1,0 +1,70 @@
+#!/bin/bash
+
+
+# automating every install is not possible but some are
+
+# Define a multiline array of common programs
+read -r -d '' programs <<EOF
+ranger 
+cmus
+google-chrome
+vscodium-bin 
+scrot 
+htop
+neofetch
+chromium
+EOF
+
+
+
+# Check if yay is installed
+if ! command -v yay &>/dev/null; then
+    echo "Yay is not installed. Please install yay first."
+    exit 1
+fi
+
+
+
+# Convert the multiline string to an array
+IFS=$'\n' read -d '' -ra program_array <<< "$programs"
+
+# Display the list of available programs
+echo "Available programs:"
+for i in "${!program_array[@]}"; do
+    echo "$i) ${program_array[$i]}"
+done
+
+# Ask the user for a space-separated list of program numbers to exclude
+read -p "Enter a space-separated list of program numbers to exclude (e.g., '0 2 4'): " exclude_numbers
+
+# Convert the user input to an array
+IFS=' ' read -ra exclude_array <<< "$exclude_numbers"
+
+# Initialize an array for excluded programs
+excluded_programs=()
+
+# Exclude the selected programs
+for exclude_number in "${exclude_array[@]}"; do
+    if [[ ! $exclude_number =~ ^[0-9]+$ ]] || [ "$exclude_number" -lt 0 ] || [ "$exclude_number" -ge "${#program_array[@]}" ]; then
+        echo "Invalid program number: $exclude_number. Please enter valid numbers."
+        exit 1
+    fi
+    excluded_programs+=("${program_array[$exclude_number]}")
+done
+
+# Install the remaining programs using yay
+remaining_programs=()
+for program in "${program_array[@]}"; do
+    if [[ ! " ${excluded_programs[@]} " =~ " ${program} " ]]; then
+        remaining_programs+=("$program")
+    fi
+done
+
+if [ "${#remaining_programs[@]}" -eq 0 ]; then
+    echo "No programs to install."
+else
+    yay -S --noconfirm "${remaining_programs[@]}"
+    echo "Installed programs: ${remaining_programs[*]}"
+fi
+
+exit 0
