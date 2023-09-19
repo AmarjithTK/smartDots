@@ -111,5 +111,7 @@ alias vim="nvim"
 if [ -f ~/.zshconfig ]; then
     # Echo the command to add it to .zshrc
     source ~/.zshconfig
-  
-fi
+fi  
+alias vi="nvim"
+alias vim="nvim"
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true

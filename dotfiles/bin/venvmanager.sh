@@ -1,7 +1,28 @@
 #!/bin/bash
 
+# Set the base directory for virtual environments
+venv_base_dir="$HOME/.helpers/venv"
+
+# Create the base directory if it doesn't exist
+mkdir -p "$venv_base_dir"
+
+# Function to activate a virtual environment
+activate_venv() {
+    local venv_name="$1"
+    local activate_command="source $venv_base_dir/$venv_name/bin/activate"
+
+    if [ -f "$venv_base_dir/$venv_name/bin/activate" ]; then
+        echo "Activating virtual environment: $venv_name"
+        echo "Run the following command to activate:"
+        echo "$activate_command" >> ~/.helpers/venvcmd.txt
+        eval "$activate_command"
+    else
+        echo "Virtual environment not found: $venv_name"
+    fi
+}
+
 # Get a list of available virtual environments
-venv_list=$(find $HOME -maxdepth 5 -type f -name "activate" | grep "/bin/activate" | sed 's|/bin/activate||' | sed "s|$HOME/||")
+venv_list=$(find "$venv_base_dir" -maxdepth 1 -type d -exec basename {} \; | grep -v "$(basename $venv_base_dir)")
 
 # Display a numbered list of virtual environments
 echo "Available virtual environments:"
@@ -33,12 +54,11 @@ if [ "$choice" == "$counter" ]; then
     fi
 
     # Create the new virtual environment
-    python3 -m venv "$HOME/$new_venv_name"
+    python3 -m venv "$venv_base_dir/$new_venv_name"
     echo "Created new virtual environment: $new_venv_name"
 
     # Activate the new virtual environment
-    source "$HOME/$new_venv_name/bin/activate"
-    echo "Activated virtual environment: $new_venv_name"
+    activate_venv "$new_venv_name"
     exit 0
 fi
 
@@ -52,5 +72,5 @@ fi
 selected_venv=$(echo "$venv_list" | sed -n "${choice}p")
 
 # Activate the selected virtual environment
-source "$HOME/$selected_venv/bin/activate"
-echo "Activated virtual environment: $selected_venv"
+activate_venv "$selected_venv"
+

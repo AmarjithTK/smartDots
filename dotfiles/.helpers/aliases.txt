@@ -4,6 +4,7 @@ alias sp="sudo pacman -S --noconfirm"
 alias spr="sudo pacman -R"
 alias ypy="yay -S"
 alias yp="yay -S --noconfirm"
+alias basesetup="bash ~/basescripts/basescripts.sh"
 alias reflect="sudo reflector --latest 20 --protocol https --save /etc/pacman.d/mirrorlist"
 
 # Git Aliases

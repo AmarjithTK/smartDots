@@ -17,7 +17,7 @@ xfconf-query -c xsettings -p /Net/ThemeName -s "Nordic"
 xfconf-query -c xsettings -p /Net/IconThemeName -s "Papirus-Dark"
 
 # Set Roboto as the system font in XFCE
-xfconf-query -c xsettings -p /Gtk/FontName -s "Roboto 16"
+xfconf-query -c xsettings -p /Gtk/FontName -s "Roboto 13"
 
 # Set Roboto as the default font for GTK applications
 gsettings set org.gnome.desktop.interface font-name 'Roboto 16'
