@@ -4,7 +4,7 @@ sudo pacman -S --noconfirm \
         rofi zenity dmenu sxhkd redshift  \
         kitty ttf-firacode-nerd neovim ttf-fira-code \
         zsh powerline-fonts base-devel docker docker-compose \
-        ttf-jetbrains-mono ttf-jetbrains-mono-nerd tree
+        ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-roboto tree
 
 
 echo 'alias vi="nvim"' >> ~/.bashrc

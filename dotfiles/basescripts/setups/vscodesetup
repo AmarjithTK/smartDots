@@ -21,7 +21,7 @@ codium --install-extension vscodevim.vim --force
 
 # Configure settings for VSCodium
 echo '{
-  "editor.fontFamily": "Fira Code",
+  "editor.fontFamily": "Jetbrains Mono",
   "editor.fontSize": 17,
   "editor.fontLigatures": true,
   "workbench.colorTheme": "Material Theme Ocean High Contrast",

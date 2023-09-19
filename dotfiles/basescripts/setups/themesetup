@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Install the Papirus-Dark icons
+sudo pacman -S papirus-icon-theme ttf-roboto --noconfirm
+
+# Create the ~/.themes directory if it doesn't exist
+mkdir -p ~/.themes
+
+# Clone the Nordic theme from GitHub
+git clone https://github.com/EliverLara/Nordic.git ~/.themes/Nordic --depth 1 --single-branch
+
+# Set the Nordic theme for XFCE
+xfconf-query -c xfwm4 -p /general/theme -s "Nordic"
+xfconf-query -c xsettings -p /Net/ThemeName -s "Nordic"
+
+# Set the Papirus-Dark icon theme for XFCE
+xfconf-query -c xsettings -p /Net/IconThemeName -s "Papirus-Dark"
+
+# Set Roboto as the system font in XFCE
+xfconf-query -c xsettings -p /Gtk/FontName -s "Roboto 16"
+
+# Set Roboto as the default font for GTK applications
+gsettings set org.gnome.desktop.interface font-name 'Roboto 16'
+
+# Set the Nordic theme for GTK applications
+gsettings set org.gnome.desktop.interface gtk-theme "Nordic"
+gsettings set org.gnome.desktop.wm.preferences theme "Nordic"
+# Set the Papirus-Dark icon theme for GTK applications
+gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
+
+# Restart Thunar
+pkill thunar
+
+echo "Nordic theme, Papirus-Dark icons, and Roboto font applied to XFCE and GTK applications."

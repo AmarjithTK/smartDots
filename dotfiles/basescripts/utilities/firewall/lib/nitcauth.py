@@ -8,6 +8,13 @@ import time
 # _______________ To be abstracted to file ---------
 
 
+# this program has big flaw, it will consider timeout as nothing
+
+# ----------- supppose timeout happens, the program considers it as logged in as the variable did not chagnge to offline
+
+
+
+
 class NITCAuth:
 
 
@@ -77,7 +84,70 @@ class NITCAuth:
 
 
         array = [
+#!/bin/bash
+# Version : 2.0
+# Description : This bash script is used to login to NITC network without any browser. Can be used in Linux systems in robots, servers...etc, where no display is connected such as Raspberry Pi...etc, make sure you have logout.sh script also which can be used to logout later
 
+output=$(curl -m 3 -s 'http://www.gstatic.com/generate_204'--compressed)
+
+# variable used to check whether we are already logged in or not
+checkoutput=${output:0:6}
+
+if [ "$checkoutput" != '<html>' ]; then
+    echo "Something doesn't seem right. Check if you are already logged in"
+    exit
+fi
+
+#####################################################################################################################################################
+if ! [ -x "$(command -v dialog)" ]; then # if dialog is not installed 
+    # reading username and password to be used from user, the password will be hidden while typing
+    read -p 'Username: ' username
+
+    # using printf to hide the typing of the password
+    printf "Password: "
+    read -s password
+    printf "\n"
+
+else
+    # reading username and password to be used from user, the password will be hidden while typing
+    # creating empty file to store input text
+
+    uname_result="input.txt"
+    >$uname_result
+    #creating dialogue box for input
+    dialog --title "" \
+    --backtitle "### NITC FIREWALL AUTHENTICATION ###" \
+    --inputbox "Enter your username" 8 60 2>$uname_result
+
+    # get the return value  
+    response=$?
+    username=$(<$uname_result)
+    case $response in
+    0) 
+        data=$(tempfile 2>/dev/null)
+        # delete the password stored file, if program is exited pre-maturely.
+        trap "rm -f $data"
+        dialog --title "Password" \
+        --insecure \
+        --clear \
+        --passwordbox "Please enter password" 10 30 2> $data
+
+        reply=$?
+
+        case $reply in
+        0) password=$(cat $data);;
+        1) echo "You have pressed Cancel";;
+        255) [ -s $data ] &&  cat $data || echo "ESC pressed.";;
+        esac
+    ;;
+    1) echo "Cancelled." ;;
+    255) echo "Escape key pressed."
+    esac
+    rm $uname_result
+
+
+fi
+##############################################################################################################
 
             self.keepaliveurl,
             self.loginurl,
@@ -211,6 +281,9 @@ class NITCAuth:
             elif status == False and self.triggered == True:
                 self.logOutFromFirewall()
                 self.triggered = False
+
+           # if no internet curl or something
+           then set self.triggered = false     
 
 
             else:

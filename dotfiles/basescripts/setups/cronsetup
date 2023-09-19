@@ -1,0 +1,26 @@
+
+
+
+
+
+#!/bin/bash
+
+# Install the cronie package
+sudo pacman -S cronie
+
+# Start the cronie service
+sudo systemctl start cronie
+
+# Enable the cronie service to start at boot
+sudo systemctl enable cronie
+
+echo "Cron service installed and enabled."
+
+
+# Path to the script you want to run at reboot
+SCRIPT_PATH="~/basescripts/utilities/reboot.sh"
+
+# Add the cron job to run the script at reboot
+echo "@reboot /bin/bash $SCRIPT_PATH" | crontab -
+
+echo "Cron job to run $SCRIPT_PATH at reboot has been added."

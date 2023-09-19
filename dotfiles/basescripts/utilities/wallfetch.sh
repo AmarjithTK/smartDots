@@ -2,7 +2,7 @@
 
 # Directory to store wallpapers and log
 WALLPAPER_DIR="$HOME/.wallpapers"
-LOG_FILE="$WALLPAPER_DIR/log.txt"
+LOG_FILE="~/.helpers/wallpaper-log.txt"
 
 # Create the directory if it doesn't exist
 mkdir -p "$WALLPAPER_DIR"
@@ -20,7 +20,7 @@ fi
 curl -sLo "$WALLPAPER_DIR/$TODAYS_DATE-wallpaper.jpg" "https://source.unsplash.com/random/1920x1080"
 
 # Update the log file with today's date
-echo "$TODAYS_DATE" >> "$LOG_FILE"
+echo "$TODAYS_DATE" > "$LOG_FILE"
 
 # Get the number of image files (jpg, png, etc.) in the directory
 num_images=$(find "$WALLPAPER_DIR" -type f \( -iname \*.jpg -o -iname \*.png \) | wc -l)

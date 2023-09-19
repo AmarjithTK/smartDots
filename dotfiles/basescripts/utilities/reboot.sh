@@ -1,7 +1,4 @@
-# add this to cron to do on reboot !!!!
-
-@reboot bash -c ~/basescripts/utilities/reboot.sh
-
-
-run wallgen
-run backupofcodespace
+#!bin/bash
+bash ~/basescripts/utilities/wallfetch.sh &
+bash ~/basescripts/utilities/codespace.sh &
+bash ~/basescripts/utilities/dotsync.sh &
