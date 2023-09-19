@@ -1,3 +1,6 @@
+#!/bin/bash
+
+
 function choicerunner() {
     echo -e "Enter your choice:"
     echo -e "1) gitsetup \n2) nvimsetup \n3) vscodesetup \n4) nixsetup \n5) dwmsetup \n6) binsetup \n7) basepackagesetup \n8) packagesetup \n9) zshsetup \n10)cronsetup \n 11) themesetup"
