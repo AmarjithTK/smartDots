@@ -4,7 +4,7 @@
 [alias]
     a = add
     c = "!f() { git add -u && git commit -m \"$1\"; }; f"
-    p = "!f() { git push ${1:-origin}:${2:-main}; }; f"
+    p = "!f() { git push ${1:-origin} ${2:-main}; }; f"
     ra = "!f() { git remote add ${1:-origin} ${2:-main}; }; f"
     s = status
     ss = status --short
