@@ -1,4 +1,4 @@
 #!bin/bash
-bash ~/basescripts/utilities/wallfetch.sh &
-bash ~/basescripts/utilities/codespace.sh &
-bash ~/basescripts/utilities/dotsync.sh &
+nohup bash ~/basescripts/utilities/wallfetch.sh 2>&1 &
+nohup bash ~/basescripts/utilities/dotsync.sh 2>&1 &
+nohup bash ~/basescripts/utilities/codespace.sh 2>&1 &

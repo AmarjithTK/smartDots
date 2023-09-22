@@ -18,7 +18,7 @@ if [ "$current_day" -eq "0" ]; then
     else
         # Replace the following line with your actual commands for ~/smartDots
         cd ~/smartDots
-        git remote set-url origin git@github.com:starlighter4097/smartDots.git
+        git remote set-url origin git@github.com:AmarjithTK/smartDots.git
         git pull origin main
         # Perform dotfile operations
         git add . && git commit -m "Dotfile changes on $(date +%Y-%m-%d)" && git push origin

@@ -38,11 +38,11 @@ alt+l
 
 
 super + shift + m
-    sh -c ~/basescripts/editscripts.sh
+    sh -c ~/basescripts/utilities/editscripts.sh
 
 
 super + shift + e
-    sh -c ~/basescripts/powermenu-rofi.sh
+    sh -c ~/basescripts/utilities/powermenu-rofi.sh
 
 super + shift + s
     pkill -USR1 -x sxhkd

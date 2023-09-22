@@ -1,126 +1,112 @@
-/**
- * Nordic rofi theme
- * Adapted by undiabler <undiabler@gmail.com>
- *
- * Nord Color palette imported from https://www.nordtheme.com/
- *
- */
-
-
 * {
-	nord0: #2e3440;
-	nord1: #3b4252;
-	nord2: #434c5e;
-	nord3: #4c566a;
+    bg-col: #1e1e2e;
+    bg-col-light: #1e1e2e;
+    border-col: #1e1e2e;
+    selected-col: #1e1e2e;
+    blue: #89b4fa;
+    fg-col: #cdd6f4;
+    fg-col2: #f38ba8;
+    grey: #6c7086;
 
-	nord4: #d8dee9;
-	nord5: #e5e9f0;
-	nord6: #eceff4;
+    width: 600;
+    font: "JetBrainsMono Nerd Font 14";
+}
 
-	nord7: #8fbcbb;
-	nord8: #88c0d0;
-	nord9: #81a1c1;
-	nord10: #5e81ac;
-	nord11: #bf616a;
-
-	nord12: #d08770;
-	nord13: #ebcb8b;
-	nord14: #a3be8c;
-	nord15: #b48ead;
-
-    foreground:  @nord9;
-    backlight:   #ccffeedd;
-    background-color:  transparent;
-    
-    highlight:     underline bold #eceff4;
-
-    transparent: rgba(46,52,64,0);
+element-text, element-icon, mode-switcher {
+    background-color: inherit;
+    text-color: inherit;
 }
 
 window {
-    location: center;
-    anchor:   center;
-    transparency: "screenshot";
-    padding: 10px;
-    border:  0px;
-    border-radius: 6px;
-
-    background-color: @transparent;
-    spacing: 0;
-    children:  [mainbox];
-    orientation: horizontal;
+    height: 360px;
+    border: 3px solid; /* Add a white border */
+    border-color: white;
+    background-color: @bg-col;
 }
 
 mainbox {
-    spacing: 0;
-    children: [ inputbar, message, listview ];
-}
-
-message {
-    color: @nord0;
-    padding: 5;
-    border-color: @foreground;
-    border:  0px 2px 2px 2px;
-    background-color: @nord7;
+    background-color: @bg-col;
 }
 
 inputbar {
-    color: @nord6;
-    padding: 11px;
-    background-color: #3b4252;
-
-    border: 1px;
-    border-radius:  6px 6px 0px 0px;
-    border-color: @nord10;
-}
-
-entry, prompt, case-indicator {
-    text-font: inherit;
-    text-color:inherit;
+    children: [prompt, entry];
+    background-color: @bg-col;
+    border-radius: 5px;
+    padding: 2px;
 }
 
 prompt {
-    margin: 0px 1em 0em 0em ;
+    background-color: @blue;
+    padding: 6px;
+    text-color: @bg-col;
+    border-radius: 3px;
+    margin: 20px 0px 0px 20px;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: ":";
+}
+
+entry {
+    padding: 6px;
+    margin: 20px 0px 0px 10px;
+    text-color: @fg-col;
+    background-color: @bg-col;
 }
 
 listview {
- padding: 8px;
-    border-radius: 0px 0px 6px 6px;
-    border-color: @nord10;
-    border: 0px 1px 1px 1px;
-    background-color: @nord2;  /* Changed to a non-transparent background */
-    dynamic: false;
+    border: 0px 0px 0px;
+    padding: 6px 0px 0px;
+    margin: 10px 0px 0px 20px;
+    columns: 2;
+    lines: 5;
+    background-color: @bg-col;
 }
+
 element {
-    padding: 3px;
-    vertical-align: 0.5;
-    border-radius: 4px;
-    background-color: transparent;
-    color: @foreground;
-    text-color: rgb(216, 222, 233);
+    padding: 5px;
+    background-color: @bg-col;
+    text-color: @fg-col;
 }
 
-element selected.normal {
-	background-color: @nord7;
-	text-color: #2e3440;
+element-icon {
+    size: 25px;
 }
 
-element-text, element-icon {
-    background-color: inherit;
-    text-color:       inherit;
+element selected {
+    background-color: @selected-col;
+    text-color: @fg-col2;
+}
+
+mode-switcher {
+    spacing: 0;
 }
 
 button {
-    padding: 6px;
-    color: @foreground;
+    padding: 10px;
+    background-color: @bg-col-light;
+    text-color: @grey;
+    vertical-align: 0.5;
     horizontal-align: 0.5;
-
-    border: 2px 0px 2px 2px;
-    border-radius: 4px 0px 0px 4px;
-    border-color: @foreground;
 }
 
-button selected normal {
-    border: 2px 0px 2px 2px;
-    border-color: @foreground;
+button selected {
+    background-color: @bg-col;
+    text-color: @blue;
 }
+
+message {
+    background-color: @bg-col-light;
+    margin: 2px;
+    padding: 2px;
+    border-radius: 5px;
+}
+
+textbox {
+    padding: 6px;
+    margin: 20px 0px 0px 20px;
+    text-color: @blue;
+    background-color: @bg-col-light;
+}
+

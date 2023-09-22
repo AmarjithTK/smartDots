@@ -10,3 +10,6 @@
     ss = status --short
     l = log
     ll = log --oneline
+[core]
+	excludesfile = ~/.gitignore_global
+

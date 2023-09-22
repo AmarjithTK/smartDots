@@ -1,0 +1,33 @@
+#!/bin/bash
+sudo pacman -S gtk-layer-shell rust --noconfirm
+# Check if Cargo (Rust's package manager) is installed
+
+echo "Cargo is installed. Proceeding with the installation of eww..."
+
+# Use .local/cache as the build directory (you can change it to your liking)
+BUILD_DIR="$HOME/.local/cache/eww_build"
+
+# Create the build directory if it doesn't exist
+mkdir -p "$BUILD_DIR"
+
+# Change to the build directory
+cd "$BUILD_DIR"
+
+# Clone the eww repository
+git clone https://github.com/elkowar/eww.git
+
+# Change directory to eww
+cd eww
+
+# Build eww
+cargo build --release
+
+# Move the binary to the bin directory (assuming ~/bin is in your PATH)
+mv target/release/eww ~/bin/
+
+# Clean up by removing the cloned repository
+cd "$BUILD_DIR"
+rm -rf eww
+
+echo "Eww has been successfully installed and placed in your 'bin' directory."
+

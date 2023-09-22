@@ -22,7 +22,7 @@ if grep -q "$current_date" "$log_file"; then
 else
 
     cd ~/codespace
-    git remote set-url origin git@github.com:starlighter4097/codespace.git
+    git remote set-url origin git@github.com:AmarjithTK/codespace.git
     git pull origin main
     # Perform git operations
     git add .
