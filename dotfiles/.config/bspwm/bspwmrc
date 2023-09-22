@@ -26,3 +26,4 @@ bspc rule -a Screenkey manage=off
 
 
 feh --recursive --bg-fill --randomize ~/.wallpapers &
+bash ~/basescripts/utilities/autostart.sh &
