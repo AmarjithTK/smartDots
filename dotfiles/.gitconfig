@@ -1,6 +1,6 @@
 [user]
-	name = starlighter4097
-	email = starlighter4097@gmail.com
+	name = AmarjithTK    
+	email = amarjithraveendran@gmail.com
 [alias]
     a = add
     c = "!f() { git add -u && git commit -m \"$1\"; }; f"
