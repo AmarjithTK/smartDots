@@ -1,12 +1,12 @@
 #!/bin/bash
 
 sudo pacman -S --noconfirm \
-        rofi mupdf npm python-pip zenity dmenu sxhkd redshift  \
-        kitty feh ttf-firacode-nerd neovim ttf-fira-code \
+        rofi mupdf npm python-pip zenity gnome-tweaks qbittorrent cheese kdeconnect dmenu sxhkd redshift  \
+        kitty feh gparted rust ttf-firacode-nerd neovim ttf-fira-code archlinux-keyring\
         zsh powerline-fonts base-devel docker docker-compose \
         ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-roboto tree
 
 
-echo 'alias vi="nvim"' >> ~/.bashrc
-echo 'alias vim="nvim"' >> ~/.bashr
-echo 'alias vim="nvim"' >> ~/.zshrc 
+# echo 'alias vi="nvim"' >> ~/.bashrc
+# echo 'alias vim="nvim"' >> ~/.bashr
+# echo 'alias vim="nvim"' >> ~/.zshrc 

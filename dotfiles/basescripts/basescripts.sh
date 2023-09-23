@@ -3,7 +3,7 @@
 
 function choicerunner() {
     echo -e "Enter your choice:"
-    echo -e "1) gitsetup \n2) nvimsetup \n3) vscodesetup \n4) nixsetup \n5) dwmsetup \n6) binsetup \n7) basepackagesetup \n8) packagesetup \n9) zshsetup \n10)cronsetup \n 11) themesetup"
+    echo -e "1) gitsetup \n2) nvimsetup \n3) vscodesetup \n4) nixsetup \n5) dwmsetup  \n6) basepackagesetup \n7) packagesetup \n8) zshsetup \n9)cronsetup \n 10) themesetup"
     echo -e "Enter 'q' to quit"
     read CHOICE
     if [[ $CHOICE == 'q' ]]; then
@@ -46,22 +46,20 @@ function choicerunner() {
             5)
                 source "$SCRIPT_DIR/setups/dwmsetup"
                 ;;
+         
             6)
-                source "$SCRIPT_DIR/setups/binsetup"
-                ;;
-            7)
                 source "$SCRIPT_DIR/setups/basepkgsetup"
                 ;;
-            8)
+            7)
                 source "$SCRIPT_DIR/setups/packagesetup"
                 ;;
-            9)
+            8)
                 source "$SCRIPT_DIR/setups/zshsetup"
                 ;;
-            10)
+            9)
                 source "$SCRIPT_DIR/setups/cronsetup"
                 ;;
-            11)
+            10)
                 source "$SCRIPT_DIR/setups/themesetup"
                 ;;                
             *)

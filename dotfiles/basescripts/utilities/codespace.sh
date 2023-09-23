@@ -21,13 +21,25 @@ if grep -q "$current_date" "$log_file"; then
     echo "Git operations have already been performed today."
 else
 
-    cd ~/codespace
-    git remote set-url origin git@github.com:AmarjithTK/codespace.git
+    # Check if the Git repository exists, and if not, initialize it and checkout to "main"
+    if [ ! -d "$HOME/codespace/.git" ]; then
+        cd ~/codespace
+        git init
+        git remote add origin git@github.com:AmarjithTK/codespace.git
+        git checkout -b main
+    else
+        cd ~/codespace
+        git remote set-url origin git@github.com:AmarjithTK/codespace.git
+        # git pull origin main
+    fi
+
+    # cd ~/codespace
+    # git remote set-url origin git@github.com:AmarjithTK/codespace.git
     git pull origin main
     # Perform git operations
     git add .
     git commit -m "Changes till $(date +%Y-%m-%d) $(date +%H:%M:%S)"
-    git push origin
+    git push origin main
     echo "Git operations performed successfully."
 
     # Append the current date to the usage log file

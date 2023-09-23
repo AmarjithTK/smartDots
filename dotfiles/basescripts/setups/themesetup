@@ -10,7 +10,6 @@ mkdir -p ~/.themes
 git clone https://github.com/EliverLara/Nordic.git ~/.themes/Nordic --depth 1 --single-branch
 
 # Set the Nordic theme for XFCE
-xfconf-query -c xfwm4 -p /general/theme -s "Nordic"
 xfconf-query -c xsettings -p /Net/ThemeName -s "Nordic"
 
 # Set the Papirus-Dark icon theme for XFCE
