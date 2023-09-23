@@ -1,7 +1,12 @@
-## Latest Edition of my dotfiles, now even more smart with gnu stow
+# Latest Edition of my dotfiles, now even more smart with gnu stow
 
+![Description of the image](assets/scrot1.png)
+![Description of the image](assets/scrot2.png)
 
- TODOS for freetime, only when lots of free 12:36
+ ### TODOS for freetime, only when lots of free 
+
+    add check date and time getting removed D.T wlan0 in laptops
+    remove redundant rofi launcher sxhkd keybinds and cleanup the sxhdrc
 
     - add dunst theme , in catpuccin
     - add dynamic or something better wallpapers
