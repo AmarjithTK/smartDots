@@ -65,23 +65,23 @@ XF86AudioMute
 
 # Increase brightness dynamically
 # Increase brightness
-super + shift + Up
-    sh -c "~/basescripts/brightness.sh increase"
+control + shift + Up
+    sh -c "~/basescripts/utilities/brightness.sh increase"
 
 # Decrease brightness
-super + shift + Down
-    sh -c "~/basescripts/brightness.sh decrease"
+control + shift + Down
+    sh -c "~/basescripts/utilities/brightness.sh decrease"
 
 # Increase color temperature
-alt + shift + Up
-    sh -c "~/basescripts/colortemp.sh increase"
+control + Up
+    sh -c "~/basescripts/utilities/colortemp.sh increase"
 
 # Decrease color temperature
-alt + shift + Down
-    sh -c "~/basescripts/colortemp.sh decrease"
+control + Down
+    sh -c "~/basescripts/utilities/colortemp.sh decrease"
 
-
-
+alt + shift + i
+  bash -c walld
 # terminal emulator
 super + shift + Return
   kitty	
