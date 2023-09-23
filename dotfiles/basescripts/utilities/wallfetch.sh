@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+sleep 60
 # Directory to store wallpapers and log
 WALLPAPER_DIR="$HOME/.wallpapers"
 LOG_FILE="$HOME/.helpers/wallpaper-log.txt"
@@ -32,4 +34,6 @@ if [ "$num_images" -gt 50 ]; then
 fi
 
 echo "New wallpaper downloaded, logged, and old wallpapers cleaned."
+
+feh --recursive --bg-fill --randomize ~/.wallpapers &
 
