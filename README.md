@@ -5,6 +5,7 @@
 
  ### TODOS for freetime, only when lots of free 
 
+    add small indicator inside workspace number to tell the user how many windows are there in the workspace when in monocle layout and other normal modes
     add check date and time getting removed D.T wlan0 in laptops
     remove redundant rofi launcher sxhkd keybinds and cleanup the sxhdrc
 
