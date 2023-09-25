@@ -8,6 +8,9 @@
     add check date and time getting removed D.T wlan0 in laptops
     remove redundant rofi launcher sxhkd keybinds and cleanup the sxhdrc
 
+    - add restriction on the wlan0 name of wifi connected on polybar
+    - add restriction on if wlan0 connected then eth0 automatically removed and try to just use wifi symbol, use chatgpt for this purpose
+
     - add dunst theme , in catpuccin
     - add dynamic or something better wallpapers
     - use mountain wallpaper if possible source.unsplash/mountain or something
