@@ -40,4 +40,5 @@ copyn() {
 # Create an alias that calls the function
 alias copy='copyn'
 
+alias wifimenu="nmtui"
 
