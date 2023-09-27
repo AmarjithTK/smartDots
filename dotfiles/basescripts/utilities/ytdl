@@ -1,0 +1,18 @@
+
+
+
+
+#output="/home/starbackend/Videos"
+playlist="--yes-playlist"
+#quality="360"
+#url="https://www.youtube.com/watch?v=j-7JQt5m_v0"
+onlyaudio="--extract-audio --audio-format m4a"
+read -p "quality 360,480,720,1080: " quality
+read -p "enter url: " url
+read -p "enter folder to save : /home/$USER/ already there :" output
+
+output="/home/$USER/$output"
+
+cmd="yt-dlp -o '$output/%(title)s.%(ext)s' -f 'bestaudio[height<=$quality]+best[ext=mp4]/best[ext=mp4]' $playlist '$url' $onlyaudio"
+
+eval $cmd
