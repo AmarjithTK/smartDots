@@ -8,6 +8,14 @@
     add check date and time getting removed D.T wlan0 in laptops
     remove redundant rofi launcher sxhkd keybinds and cleanup the sxhdrc
 
+    - create a clipboard for yourself with nodejs and host it with a pincode that can be changed with time by master password and bit.ly or something short code
+    - add create basescripts/binaries folder and add it to path and move all the all time usage scripts to there
+        - add to path binaries folder
+
+    - add feature to download audio only playlist without video also and use audio only using framwork process
+    - make microsoft bat equivalent files of this using chatgpt or something
+    - chocolatey make ps1 script to setup windows easily with all setup and add it to a seperate branch
+
     - add restriction on the wlan0 name of wifi connected on polybar
     - add restriction on if wlan0 connected then eth0 automatically removed and try to just use wifi symbol, use chatgpt for this purpose
 
