@@ -5,6 +5,14 @@
 
  ### TODOS for freetime, only when lots of free 
 
+
+    ability to add different files for different devices that is joined with bspwrc bash devicespecificautostartetc.sh
+
+    add a workspace for chatgpt or a scratchpad for chatgpt with a keybinding also assign workspace
+    add natural langugage processing to make machine learn how add google calendar based on terminal input or simple text input from phone!!!
+
+    - press :W (capital) to get cheatsheet
+
     add check date and time getting removed D.T wlan0 in laptops
     remove redundant rofi launcher sxhkd keybinds and cleanup the sxhdrc
 
