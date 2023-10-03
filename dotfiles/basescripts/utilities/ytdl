@@ -13,6 +13,6 @@ read -p "enter folder to save : /home/$USER/ already there :" output
 
 output="/home/$USER/$output"
 
-cmd="yt-dlp -o '$output/%(title)s.%(ext)s' -f 'bestaudio[height<=$quality]+best[ext=mp4]/best[ext=mp4]' $playlist '$url' $onlyaudio"
+cmd="yt-dlp -o '$output/%(playlist_index)s-%(title)s.%(ext)s' -f 'bestaudio[height<=$quality]+best[ext=mp4]/best[ext=mp4]' $playlist '$url' $onlyaudio"
 
 eval $cmd
