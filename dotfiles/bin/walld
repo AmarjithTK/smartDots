@@ -1,3 +1,0 @@
-#!/bin/sh
-echo "$(tput setaf 4) Fetching background from unsplash $(tput setaf 9)"
-curl -sL https://source.unsplash.com/collection/1053828/1366x768 | feh --bg-fill -
