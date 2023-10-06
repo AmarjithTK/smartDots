@@ -6,10 +6,23 @@
 playlist="--yes-playlist"
 #quality="360"
 #url="https://www.youtube.com/watch?v=j-7JQt5m_v0"
-onlyaudio="--extract-audio --audio-format m4a"
-read -p "quality 360,480,720,1080: " quality
+
+onlyaudio=""
 read -p "enter url: " url
-read -p "enter folder to save : /home/$USER/ already there :" output
+read -p "Is it audio only y/n : " isAudioOnly
+
+
+if [ "$isAudioOnly" == "y" ]; then
+  onlyaudio="--extract-audio --audio-format m4a"
+  quality="144"
+elif [ "$isAudioOnly" == "n" ]; then
+  onlyaudio=""
+  read -p "Quality (360, 480, 720, 1080): " quality
+else
+  echo "What you entered is invalid"
+fi
+
+read -p "enter folder to save : /home/$USER/ already there : " output
 
 output="/home/$USER/$output"
 
