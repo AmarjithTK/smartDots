@@ -1,3 +1,9 @@
+#!/bin/bash
+if ! command -v zenity &> /dev/null; then
+    echo "Zenity is not installed. Installing it using pacman..."
+    sudo pacman -S --noconfirm zenity
+fi
+
 
 
 
@@ -22,10 +28,23 @@ else
   echo "What you entered is invalid"
 fi
 
-read -p "enter folder to save : /home/$USER/ already there : " output
 
-output="/home/$USER/$output"
+echo "select a folder to download files ------------------"
+# Prompt the user to select a folder using Zenity
+selected_folder=$(zenity --file-selection --directory --title="Select a Folder")
 
-cmd="yt-dlp -o '$output/%(playlist_index)s-%(title)s.%(ext)s' -f 'bestaudio[height<=$quality]+best[ext=mp4]/best[ext=mp4]' $playlist '$url' $onlyaudio"
+
+# Check if the user canceled folder selection
+if [ $? -eq 1 ]; then
+    echo "Folder selection canceled."
+    exit 1
+fi
+
+
+#read -p "enter folder to save : /home/$USER/ already there : " output
+
+#output="/home/$USER/$output"
+
+cmd="yt-dlp -o '$selected_folder/%(playlist_index)s-%(title)s.%(ext)s' -f 'bestaudio[height<=$quality]+best[ext=mp4]/best[ext=mp4]' $playlist '$url' $onlyaudio"
 
 eval $cmd
