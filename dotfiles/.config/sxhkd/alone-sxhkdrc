@@ -1,20 +1,15 @@
 
-# ================ APP launchers ===================
-
-control+shift+j;{k,t,r,v,c,n}
-  {kdeconnect-app,thunar,rofi -show drun,kdenlive,google-chrome-stable,codium ~/notepad}
 
 
- control+shift+k 
-  nvim
-  
-control+shift+l
-  obs-studio
+control+shift+j;{k,t,v,c}
+  {kdeconnect-app,thunar,kdenlive,google-chrome-stable}
 
-# ================ script launchers ===================
 
-control + j
-  rofi -show drun
+
+control+shift+k
+  bash -c ~/basescripts/utilities/weblauncher.sh
+
+
 
 
 # ================ Terminal launcher ===================
@@ -59,18 +54,33 @@ XF86AudioMute
 
 # Increase brightness dynamically
 # Increase brightness
-super + shift + Up
-    sh -c "~/basescripts/brightness.sh increase"
+control + shift + Up
+    sh -c "~/basescripts/utilities/brightness.sh increase"
 
 # Decrease brightness
-super + shift + Down
-    sh -c "~/basescripts/brightness.sh decrease"
+control + shift + Down
+    sh -c "~/basescripts/utilities/brightness.sh decrease"
 
 # Increase color temperature
-alt + shift + Up
-    sh -c "~/basescripts/colortemp.sh increase"
+control + Up
+    sh -c "~/basescripts/utilities/colortemp.sh increase"
 
 # Decrease color temperature
-alt + shift + Down
-    sh -c "~/basescripts/colortemp.sh decrease"
+control + Down
+    sh -c "~/basescripts/utilities/colortemp.sh decrease"
+
+alt + shift + i
+  bash -c walld
+# terminal emulator
+super + shift + Return
+  kitty	
+
+# program launcher
+super + space
+  rofi -show drun	
+
+# make sxhkd reload its configuration files:
+super + shift + Escape
+	pkill -USR1 -x sxhkd
+
 

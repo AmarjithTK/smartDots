@@ -1,6 +1,6 @@
 #! /bin/sh
 
-pkill -x sxhkd ; sxhkd -c ~/.config/sxhkd/sxhkdrc2 &
+pkill -x sxhkd ; sxhkd -c ~/.config/sxhkd/bspwm-sxhdrc ~/.config/sxhkd/alone-sxhkdrc &
 pkill -x polybar ; polybar &
 
 
@@ -26,5 +26,4 @@ bspc rule -a Screenkey manage=off
 
 
 bash ~/basescripts/utilities/autostart.sh &
-xhost +SI:localuser:$USER
 feh --bg-fill ~/Downloads/shame1.png
