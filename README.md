@@ -5,9 +5,31 @@
 
  ### TODOS for freetime, only when lots of free 
 
+
     add small indicator inside workspace number to tell the user how many windows are there in the workspace when in monocle layout and other normal modes
+
+
+    ability to add different files for different devices that is joined with bspwrc bash devicespecificautostartetc.sh
+
+    add a workspace for chatgpt or a scratchpad for chatgpt with a keybinding also assign workspace
+    add natural langugage processing to make machine learn how add google calendar based on terminal input or simple text input from phone!!!
+
+    - press :W (capital) to get cheatsheet
+
+
     add check date and time getting removed D.T wlan0 in laptops
     remove redundant rofi launcher sxhkd keybinds and cleanup the sxhdrc
+
+    - create a clipboard for yourself with nodejs and host it with a pincode that can be changed with time by master password and bit.ly or something short code
+    - add create basescripts/binaries folder and add it to path and move all the all time usage scripts to there
+        - add to path binaries folder
+
+    - add feature to download audio only playlist without video also and use audio only using framwork process
+    - make microsoft bat equivalent files of this using chatgpt or something
+    - chocolatey make ps1 script to setup windows easily with all setup and add it to a seperate branch
+
+    - add restriction on the wlan0 name of wifi connected on polybar
+    - add restriction on if wlan0 connected then eth0 automatically removed and try to just use wifi symbol, use chatgpt for this purpose
 
     - add dunst theme , in catpuccin
     - add dynamic or something better wallpapers
