@@ -6,6 +6,8 @@
  ### TODOS for freetime, only when lots of free 
 
 
+    amVim is the vimextension that works very well 
+
     add small indicator inside workspace number to tell the user how many windows are there in the workspace when in monocle layout and other normal modes
 
 
