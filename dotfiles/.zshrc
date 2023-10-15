@@ -115,3 +115,18 @@ fi
 alias vi="nvim"
 alias vim="nvim"
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+
+if [ -e /home/firestar/.nix-profile/etc/profile.d/nix.sh ]; then . /home/firestar/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+. /home/$USER/.nix-profile/etc/profile.d/nix.sh
+. /home/$USER/.nix-profile/etc/profile.d/nix.sh
+POWERLEVEL10K_DISABLE_CONFIGURATION_WIZARD=true
+source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
+if [ -f ~/.zshconfig ]; then
+    # Echo the command to add it to .zshrc
+    source ~/.zshconfig
+fi
+POWERLEVEL10K_DISABLE_CONFIGURATION_WIZARD=true
+source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
+if [ -f ~/.zshconfig ]; then 
+  source ~/.zshconfig 
+fi

@@ -6,6 +6,8 @@
  ### TODOS for freetime, only when lots of free 
 
 
+    use brillo to adjust screen brightness properly, add video group and set rules accordingly as needed 
+
     add small indicator inside workspace number to tell the user how many windows are there in the workspace when in monocle layout and other normal modes
 
 
@@ -15,6 +17,12 @@
     add natural langugage processing to make machine learn how add google calendar based on terminal input or simple text input from phone!!!
 
     - press :W (capital) to get cheatsheet
+
+
+
+    unset BROWSER
+    xdg-settings set default-web-browser google-chrome.desktop
+    for node run
 
 
     add check date and time getting removed D.T wlan0 in laptops
