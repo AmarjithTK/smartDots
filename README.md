@@ -6,6 +6,10 @@
  ### TODOS for freetime, only when lots of free 
 
 
+    on polybar add battery : battery percent
+
+    and add dunst notify for battery below 30 - 40 % 
+
     use brillo to adjust screen brightness properly, add video group and set rules accordingly as needed 
 
     add small indicator inside workspace number to tell the user how many windows are there in the workspace when in monocle layout and other normal modes
