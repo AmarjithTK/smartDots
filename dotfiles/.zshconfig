@@ -40,4 +40,4 @@ alias srestart='sudo systemctl restart'
 alias sstop='sudo systemctl stop'
 alias sdisable='sudo systemctl disable'
 alias sstatus='sudo systemctl status'
-
+alias spu="sudo pacman -S archlinux-keyring --noconfirm && sudo pacman -Syu"

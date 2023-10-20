@@ -1,1 +1,1 @@
-source /home/starwalker/.helpers/venv/chatbot/bin/activate
+source /home/firestar/.helpers/venv/chatbot-v1/bin/activate
