@@ -4,6 +4,7 @@
 declare -A websites
 websites=(
   ["Stack Overflow"]="https://stackoverflow.com/"
+  ["todolist"]="https://www.notion.so/Tasklist-a50f57b1557843d78543a75beb77b30b"
   ["GitHub"]="https://github.com/"
   ["W3Schools"]="https://www.w3schools.com/"
   ["GeeksforGeeks"]="https://www.geeksforgeeks.org/"
