@@ -15,6 +15,7 @@ TODAYS_DATE=$(date +%d-%m-%y)
 # Check if wallpapers were already downloaded today
 if grep -q "$TODAYS_DATE" "$LOG_FILE"; then
     echo "Wallpaper was already downloaded today."
+    feh --recursive --bg-fill --randomize ~/.wallpapers &
     exit
 fi
 

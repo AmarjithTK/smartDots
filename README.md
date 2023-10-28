@@ -6,15 +6,12 @@
  ### TODOS for freetime, only when lots of free 
 
 
-<<<<<<< HEAD
     amVim is the vimextension that works very well 
-=======
     on polybar add battery : battery percent
 
     and add dunst notify for battery below 30 - 40 % 
 
     use brillo to adjust screen brightness properly, add video group and set rules accordingly as needed 
->>>>>>> f33e5573ce8690f15848dd9a32f225d839f37073
 
     add small indicator inside workspace number to tell the user how many windows are there in the workspace when in monocle layout and other normal modes
 
@@ -54,6 +51,18 @@
     - implment scratchpad functionality ( using tdrop if possible )
     - add conkyrc if possible, not too much needed 
     - learn eww widgets, the least priority one, the most timewaste
+
+
+    for android setup
+        
+        namida video player
+        musicolet 
+        VolumeLockr - make a modified app of this for your purpose
+        Next video player, add exclude folders and that is it
+        localsend
+        
+        Wavelet
+
 
 
 
