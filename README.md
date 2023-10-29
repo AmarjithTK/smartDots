@@ -5,6 +5,9 @@
 
  ### TODOS for freetime, only when lots of free 
 
+    fzf fuzzy finder
+    use bluez or something else than blueman maybe blueberry good alternative
+    add some volume limiter and autoeq for that too, prolly don't worth the time spent
 
     amVim is the vimextension that works very well 
     on polybar add battery : battery percent
