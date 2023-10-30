@@ -23,8 +23,13 @@ bspc rule -a Chromium desktop='^2'
 bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
+<<<<<<< HEAD
+bspc rule -a realvnc-vncserverui-service hidden=on
+#RealVNC Server 
+=======
 
 bspc rule -a kdeconnect.app state=floating
+>>>>>>> f33e5573ce8690f15848dd9a32f225d839f37073
 
 bash ~/basescripts/utilities/autostart.sh &
 feh --bg-fill ~/Downloads/shame1.png

@@ -5,7 +5,11 @@
 
  ### TODOS for freetime, only when lots of free 
 
+    fzf fuzzy finder
+    use bluez or something else than blueman maybe blueberry good alternative
+    add some volume limiter and autoeq for that too, prolly don't worth the time spent
 
+    amVim is the vimextension that works very well 
     on polybar add battery : battery percent
 
     and add dunst notify for battery below 30 - 40 % 
@@ -50,6 +54,18 @@
     - implment scratchpad functionality ( using tdrop if possible )
     - add conkyrc if possible, not too much needed 
     - learn eww widgets, the least priority one, the most timewaste
+
+
+    for android setup
+        
+        namida video player
+        musicolet 
+        VolumeLockr - make a modified app of this for your purpose
+        Next video player, add exclude folders and that is it
+        localsend
+        
+        Wavelet
+
 
 
 
