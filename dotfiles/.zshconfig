@@ -28,6 +28,7 @@ alias sdisable='sudo systemctl disable'
 alias vi="nvim"
 alias vim="nvim" 
 
+alias mkp="mkdir -p"
 
 #-------------------aliases end here 
 
