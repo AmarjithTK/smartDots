@@ -29,5 +29,6 @@ bspc rule -a realvnc-vncserverui-service hidden=on
 bspc rule -a kdeconnect.app state=floating
 
 bash ~/basescripts/utilities/autostart.sh &
-feh --bg-fill ~/Downloads/shame1.png
 kdeconnect-cli -l &
+
+feh --recursive --bg-fill --randomize ~/.wallpapers &
