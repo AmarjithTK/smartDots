@@ -19,7 +19,7 @@ read -p "Is it audio only y/n : " isAudioOnly
 
 
 if [ "$isAudioOnly" == "y" ]; then
-  onlyaudio="--extract-audio --audio-format m4a --audio-quality 3"
+  onlyaudio="--extract-audio --audio-format m4a --audio-quality 8"
   quality="144"
 elif [ "$isAudioOnly" == "n" ]; then
   onlyaudio=""
