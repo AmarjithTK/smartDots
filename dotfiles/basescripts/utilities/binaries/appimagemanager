@@ -29,6 +29,7 @@ if [ "$ACTION" = "Install" ]; then
 
     # Move the AppImage to the appimages folder
     mv "$APPIMAGE" "$APPIMAGES_FOLDER/$APPIMAGE_FILENAME"
+    chmod +x "$APPIMAGES_FOLDER/$APPIMAGE_FILENAME"
 
     # Ask the user for a name for the desktop entry
     DESKTOP_NAME=$(zenity --entry --title="Desktop Entry" --text="Enter a name for the desktop entry:")

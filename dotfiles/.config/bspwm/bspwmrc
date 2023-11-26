@@ -32,3 +32,5 @@ kdeconnect-cli -l &
 
 feh --recursive --bg-fill --randomize ~/.wallpapers &
 watcher --start & 
+xfce4-power-manager &
+
