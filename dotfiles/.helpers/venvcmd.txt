@@ -1,1 +1,2 @@
 source /home/starwalker/.helpers/venv/chatbot/bin/activate
+source /home/starwalker/.helpers/venv/chatbot/bin/activate
