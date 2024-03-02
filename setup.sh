@@ -2,7 +2,6 @@
 
 
 
-
 # Check if stow is installed
 if ! pacman -Q stow &> /dev/null; then
     echo "Stow is not installed. Installing..."
