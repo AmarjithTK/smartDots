@@ -18,7 +18,7 @@ echo "Cron service installed and enabled."
 
 
 # Path to the script you want to run at reboot
-SCRIPT_PATH="~/basescripts/utilities/reboot.sh"
+SCRIPT_PATH="~/basescripts/utilities/cron.sh"
 
 # Add the cron job to run the script at reboot
 echo "@reboot /bin/bash $SCRIPT_PATH" | crontab -

@@ -3,10 +3,11 @@
  
  
  cd ~
-   git clone git@github.com:starlighter4097/dwm.git -b dwm-endeavour3 dwm
+   git clone git@github.com:AmarjithTK/dwm.git -b dwm-endeavour3 dwm
     cd dwm
     sudo make clean install
     sudo cp dwm.desktop /usr/share/xsessions/
     cd slstatus
+    sudo pacman -S --noconfirm dmenu
     sudo make clean install
     cd

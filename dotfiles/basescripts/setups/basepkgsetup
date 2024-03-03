@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo pacman -S --noconfirm \
-        rofi mupdf npm xclip python-pip zenity gnome-tweaks qbittorrent cheese kdeconnect dmenu sxhkd redshift  \
+        rofi mupdf npm xclip scrot neofetch htop ranger python-pip zenity gnome-tweaks qbittorrent cheese kdeconnect dmenu sxhkd redshift  \
         kitty feh gparted rust ttf-firacode-nerd neovim ttf-fira-code archlinux-keyring\
         zsh powerline-fonts base-devel docker docker-compose polybar vim bspwm \
         ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-roboto tree

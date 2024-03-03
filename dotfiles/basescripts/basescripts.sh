@@ -51,7 +51,7 @@ function choicerunner() {
                 source "$SCRIPT_DIR/setups/basepkgsetup"
                 ;;
             7)
-                source "$SCRIPT_DIR/setups/packagesetup"
+                echo "packagesetup is no more, USE basepackagesetup"
                 ;;
             8)
                 source "$SCRIPT_DIR/setups/zshsetup"
