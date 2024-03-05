@@ -28,6 +28,7 @@ alias sdisable='sudo systemctl disable'
 alias vi="nvim"
 alias vim="nvim" 
 
+alias mkp="mkdir -p"
 
 #-------------------aliases end here 
 
@@ -54,5 +55,6 @@ alias sstart='sudo systemctl start'
 alias srestart='sudo systemctl restart'
 alias sstop='sudo systemctl stop'
 alias sdisable='sudo systemctl disable'
+alias senable='sudo systemctl enable'
 alias sstatus='sudo systemctl status'
-
+alias spu="sudo pacman -S archlinux-keyring --noconfirm && sudo pacman -Syu"

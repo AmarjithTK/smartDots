@@ -1,4 +1,4 @@
-git clone https://github.com/AmarjithTK/smartDots.git -b main ~ 
+git clone https://github.com/AmarjithTK/smartDots.git -b main ~/smartDots 
 cd ~/smartDots 
 git remote set-url origin git@github.com:AmarjithTK/smartDots.git 
 bash ./setup.sh 

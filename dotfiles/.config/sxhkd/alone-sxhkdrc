@@ -1,6 +1,20 @@
 
 
 
+
+# brightness controllers
+
+
+alt+x+Down
+    sh -c "~/basescripts/utilities/binaries/btl i "
+alt+x+Up
+    sh -c "~/basescripts/utilities/binaries/btl d "
+
+
+
+
+
+
 control+shift+j;{k,t,v,c}
   {kdeconnect-app,thunar,kdenlive,google-chrome-stable}
 
@@ -72,6 +86,7 @@ control + Down
 
 alt + shift + i
   bash -c walld
+
 # terminal emulator
 super + shift + Return
   kitty	

@@ -14,7 +14,7 @@ activate_venv() {
     if [ -f "$venv_base_dir/$venv_name/bin/activate" ]; then
         echo "Activating virtual environment: $venv_name"
         echo "Run the following command to activate:"
-        echo "$activate_command" >> ~/.helpers/venvcmd.txt
+        echo "$activate_command" > ~/.helpers/venvcmd.txt
         eval "$activate_command"
     else
         echo "Virtual environment not found: $venv_name"

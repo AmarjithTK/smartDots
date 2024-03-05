@@ -19,7 +19,7 @@ read -p "Is it audio only y/n : " isAudioOnly
 
 
 if [ "$isAudioOnly" == "y" ]; then
-  onlyaudio="--extract-audio --audio-format m4a --audio-quality 3"
+  onlyaudio="--extract-audio --audio-format m4a --audio-quality 8"
   quality="144"
 elif [ "$isAudioOnly" == "n" ]; then
   onlyaudio=""
@@ -45,6 +45,6 @@ fi
 
 #output="/home/$USER/$output"
 
-cmd="yt-dlp -o '$selected_folder/%(playlist_index)s-%(title)s.%(ext)s' -f 'bestaudio[height<=$quality]+best[ext=mp4]/best[ext=mp4]' $playlist '$url' $onlyaudio"
+cmd="yt-dlp -o '$selected_folder/%(playlist_index)s-%(title)s.%(ext)s' -f 'bestaudio[height<=$quality]+best[ext=mp4]/best[ext=mp4]' $playlist '$url' --embed-thumbnail $onlyaudio"
 
 eval $cmd
