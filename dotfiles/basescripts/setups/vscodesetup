@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Install VSCodium
+#!/bin/bash
+
+# Check if VSCodium is installed
+if ! command -v codium &> /dev/null; then
+    echo "VSCodium not installed. Installing VSCodium..."
+    yay -S vscodium-bin --noconfirm
+fi
+
+# Install extensions for VSCodium
+codium --install-extension Equinusocio.vsc-material-theme --force
+codium --install-extension PKief.material-icon-theme --force
+codium --install-extension Dart-Code.flutter --force
+codium --install-extension vscodevim.vim --force
+
+    while read -r extension; do
+        codium --install-extension "$extension"
+    done < extensions.txt
+
+# Configure settings for VSCodium
+echo '{
+  "editor.fontFamily": "Jetbrains Mono",
+  "editor.fontSize": 17,
+  "editor.fontLigatures": true,
+  "workbench.colorTheme": "Material Theme Ocean High Contrast",
+  "workbench.iconTheme": "material-icon-theme",
+  "files.autoSave": "onFocusChange",
+  "dart.flutterSdkPath": "~/flutter",
+  "dart.sdkPath": "~/flutter/bin/cache/dart-sdk"
+}' > /home/$USER/.config/VSCodium/User/settings.json
+
+# Check if Fira Code font is installed
+if ! pacman -Q ttf-fira-code &> /dev/null; then
+    # Install Fira Code font
+    sudo pacman -S ttf-fira-code --noconfirm
+fi
+
+# Start VSCodium
+codium

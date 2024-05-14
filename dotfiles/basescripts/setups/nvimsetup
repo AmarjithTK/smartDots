@@ -1,0 +1,9 @@
+#!/bin/bash
+
+rm -rf ~/.local/share/nvim ~/.config/nvim
+sudo pacman -S neovim ttf-jetbrains-mono ttf-jetbrains-mono-nerd npm neovim-nvim-treesitter neovim-lsp_signature neovim-lspconfig --noconfirm
+# Set up Neovim configuration
+mkdir -p ~/.config/nvim
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+nvim 
+

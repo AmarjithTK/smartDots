@@ -1,0 +1,102 @@
+
+
+
+
+# brightness controllers
+
+
+alt+x+Down
+    sh -c "~/basescripts/utilities/binaries/btl i "
+alt+x+Up
+    sh -c "~/basescripts/utilities/binaries/btl d "
+
+
+
+
+
+
+control+shift+j;{k,t,v,c}
+  {kdeconnect-app,thunar,kdenlive,google-chrome-stable}
+
+
+
+control+shift+k
+  bash -c ~/basescripts/utilities/weblauncher.sh
+
+alt+t 
+  google-chrome-stable https://www.notion.so/Tasklist-a50f57b1557843d78543a75beb77b30b
+
+
+# ================ Terminal launcher ===================
+
+super + shift + Return
+  kitty 
+
+
+
+
+# ================ Scratchpad launchers  ===================
+
+alt+j 
+  kitty --class spranger -e ranger
+
+alt+k
+  kitty --class spmusic -e cmus
+	
+alt+l
+  kitty --class spterm 
+
+
+super + shift + m
+    sh -c ~/basescripts/utilities/editscripts.sh
+
+
+super + shift + e
+    sh -c ~/basescripts/utilities/powermenu-rofi.sh
+
+super + shift + s
+    pkill -USR1 -x sxhkd
+
+
+XF86AudioRaiseVolume
+    amixer -q sset Master 3%+
+
+XF86AudioLowerVolume
+    amixer -q sset Master 3%-
+
+XF86AudioMute
+    amixer -q sset Master toggle
+
+# Increase brightness dynamically
+# Increase brightness
+control + shift + Up
+    sh -c "~/basescripts/utilities/brightness.sh increase"
+
+# Decrease brightness
+control + shift + Down
+    sh -c "~/basescripts/utilities/brightness.sh decrease"
+
+# Increase color temperature
+control + Up
+    sh -c "~/basescripts/utilities/colortemp.sh increase"
+
+# Decrease color temperature
+control + Down
+    sh -c "~/basescripts/utilities/colortemp.sh decrease"
+
+alt + shift + i
+  bash -c walld
+
+# terminal emulator
+super + shift + Return
+  kitty	
+
+# program launcher
+super + space
+  rofi -show drun	
+
+# make sxhkd reload its configuration files:
+super + shift + Escape
+	pkill -USR1 -x sxhkd
+
+

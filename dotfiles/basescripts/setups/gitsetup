@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# Check if Git is installed
+if ! command -v git &> /dev/null; then
+    echo "Git is not installed. Please install Git and run the script again."
+    exit 1
+fi
+
+# Check if Git user.name and user.email are set
+if [ -z "$(git config user.name)" ] || [ -z "$(git config user.email)" ]; then
+    echo "Git user.name and/or user.email are not set."
+    read -p "Please enter your Git user.name: " username
+    read -p "Please enter your Git user.email: " useremail
+    git config --global user.name "$username"
+    git config --global user.email "$useremail"
+    echo "Git user.name and user.email set to:"
+    git config user.name
+    git config user.email
+fi
+
+# Check if SSH key exists, generate if not
+if [ ! -f ~/.ssh/id_rsa ]; then
+    echo "SSH key does not exist. Generating a new SSH key."
+    ssh-keygen -t rsa -b 4096 -C "$(git config user.email)"
+    echo "New SSH key generated at ~/.ssh/id_rsa."
+fi
+
+# Display the public key
+echo "Your public SSH key:"
+cat ~/.ssh/id_rsa.pub
+
+# Test SSH key authentication with GitHub
+
+
+echo "Testing SSH key authentication with GitHub..."
+if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
+    echo "SSH key authentication with GitHub successful."
+else
+    echo "SSH key authentication failed. Please make sure your SSH key is added to your GitHub account."
+    read -p "Do you want to add your SSH key to GitHub now? (y/n): " choice
+    if [ "$choice" == "y" ] || [ "$choice" == "Y" ]; then
+        read -p "Enter your GitHub personal access token: " token
+        curl -X POST -H "Authorization: token $token" -d "{\"title\":\"$(hostname)-$(date +%Y-%m-%d)\",\"key\":\"$(cat ~/.ssh/id_rsa.pub)\"}" https://api.github.com/user/keys
+        echo "SSH key added to your GitHub account."
+    else
+        echo "SSH key not added to your GitHub account. You can add it manually."
+    fi
+fi
+
+echo "Setup complete."
+

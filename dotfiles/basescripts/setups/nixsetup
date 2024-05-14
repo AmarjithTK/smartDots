@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Check if Nix is already installed
+if command -v nix-env > /dev/null; then
+    echo "Nix is already installed."
+    exit 0
+fi
+
+# Install Nix
+curl -L https://nixos.org/nix/install | sh
+
+# Add Nix environment variables to your shell profile
+echo '. /home/$USER/.nix-profile/etc/profile.d/nix.sh' >> ~/.bashrc
+echo '. /home/$USER/.nix-profile/etc/profile.d/nix.sh' >> ~/.zshrc
+
+# Reload your shell profile
+source ~/.bashrc
+source ~/.zshrc
+
+echo "Nix has been installed and configured."

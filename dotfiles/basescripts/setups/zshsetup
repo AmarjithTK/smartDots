@@ -1,0 +1,12 @@
+#!/bin/bash
+  
+
+sudo pacman -S zsh --noconfirm
+chsh -s $(which zsh)
+
+
+curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k
+echo 'POWERLEVEL10K_DISABLE_CONFIGURATION_WIZARD=true' >> ~/.zshrc
+echo 'source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
+echo 'if [ -f ~/.zshconfig ]; then source ~/.zshconfig fi' >> ~/.zshrc
