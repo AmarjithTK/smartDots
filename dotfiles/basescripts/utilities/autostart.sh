@@ -28,3 +28,6 @@ bash ~/basescripts/utilities/notifyidle.sh &
 bash ~/basescripts/utilities/notifybattery.sh &
 
 
+# if device processor == amd ryzen 5600g then do these
+#
+# if device names are these then do
