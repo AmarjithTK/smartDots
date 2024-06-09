@@ -11,8 +11,8 @@ alt+x+Up
     sh -c "~/basescripts/utilities/binaries/btl d "
 
 
-
-
+control+shift+t
+    bash -c "~/basescripts/utilities/binaries/jiotv serve; google-chrome-stable 'http://127.0.0.1:5001/?language=7&category=0'"
 
 
 control+shift+j;{k,t,v,c}

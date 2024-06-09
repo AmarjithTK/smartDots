@@ -109,4 +109,4 @@ fi
 export PATH="$PATH:$HOME/flutter/bin:$HOME/android-studio/bin:$HOME/Android/sdk"
 
 
-CHROME_EXECUTABLE=$(which google-chrome-stable)
+CHROME_EXECUTABLE=$(which google-chrome-stable)export PATH=/home/starwalker/basescripts/utilities/binaries:/home/starwalker/bin:/home/starwalker/.local/share/bin:/usr/local/bin:/home/starwalker/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/starwalker/flutter/bin:/home/starwalker/android-studio/bin:/home/starwalker/Android/sdk:/home/starwalker/.jiotv_go/bin:/home/starwalker/.jiotv_go/bin
