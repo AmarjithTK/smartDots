@@ -8,7 +8,7 @@ IDLE_TIME_THRESHOLD=600000
 #IDLE_TIME_THRESHOLD=0
 
 # Notification duration in seconds (2 minutes)
-NOTIFICATION_DURATION=60
+NOTIFICATION_DURATION=30
 
 # Function to play the notification sound in a loop for the specified duration
 play_notification_sound() {
@@ -29,6 +29,6 @@ while true; do
     fi
 
     # Wait for a minute before checking again
-    sleep 60
+    sleep 30
 done
 
