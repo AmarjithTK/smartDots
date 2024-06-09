@@ -1,11 +1,11 @@
 
-  control+t
+alt + t
   bash -c "~/basescripts/utilities/binaries/jiotv serve; google-chrome-stable 'http://127.0.0.1:5001/?language=7&category=0'"
 
-control+b
+alt + b
   bash -c ~/basescripts/utilities/weblauncher.sh
 
-control+n
+alt + n
   google-chrome-stable https://www.notion.so
 
 
