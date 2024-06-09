@@ -42,6 +42,11 @@ POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 export BROWSER='chrome'
 export CHROME_EXECUTABLE="/usr/bin/google-chrome-stable"
 
+alias powerlow="powerprofilesctl set power-saver "
+alias powerbalance="powerprofilesctl set balanced"
+alias powerperformance="powerprofilesctl set performance "
+alias powerstatus="powerprofilesctl"
+
 
 
 

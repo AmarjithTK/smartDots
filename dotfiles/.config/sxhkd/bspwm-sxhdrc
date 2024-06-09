@@ -2,7 +2,8 @@
 # wm independent hotkeys
 #
 
-
+XF86MonBrightness{Up,Down}  
+  brightnessctl s 10{+,-}
 
 
 # ================ APP launchers ===================
