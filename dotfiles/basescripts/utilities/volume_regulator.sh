@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Set your preset password here
-PRESET_PASSWORD="1234"
+PRESET_PASSWORD="12349"
+# Set the interval for checking the volume (in seconds)
+CHECK_INTERVAL=1
 
 # Function to check the current volume
 get_volume() {
@@ -10,33 +12,34 @@ get_volume() {
 
 # Function to prompt for password
 prompt_password() {
-  zenity --password --title="Authentication Required"
+  zenity --password --title="high levels of volume about news ....9"
 }
 
-# Function to increase volume
-increase_volume() {
-  amixer set Master "$1%+"
+# Function to set the volume
+set_volume() {
+  amixer set Master "$1%"
 }
 
-# Function to monitor volume changes
+# Monitor volume function
 monitor_volume() {
   current_volume=$(get_volume)
   while true; do
     new_volume=$(get_volume)
-    if [ "$new_volume" -gt "$current_volume" ] && [ "$current_volume" -le 50 ]; then
+    if [ "$current_volume" -le 30 ] && [ "$new_volume" -gt 30 ]; then
       password=$(prompt_password)
       if [ "$password" == "$PRESET_PASSWORD" ]; then
         current_volume=$new_volume
       else
-        amixer set Master "$current_volume%"
+        set_volume $current_volume
         zenity --error --text="Incorrect password. Volume change denied."
       fi
     else
       current_volume=$new_volume
     fi
-    sleep 1
+    sleep $CHECK_INTERVAL
   done
 }
 
-# Run the monitor function
+# Run the monitor volume function
 monitor_volume
+
