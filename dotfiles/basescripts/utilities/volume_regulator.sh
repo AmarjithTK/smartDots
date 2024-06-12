@@ -25,7 +25,7 @@ monitor_volume() {
   current_volume=$(get_volume)
   while true; do
     new_volume=$(get_volume)
-    if [ "$current_volume" -le 30 ] && [ "$new_volume" -gt 30 ]; then
+    if [ "$current_volume" -le 35 ] && [ "$new_volume" -gt 35 ]; then
       password=$(prompt_password)
       if [ "$password" == "$PRESET_PASSWORD" ]; then
         current_volume=$new_volume
