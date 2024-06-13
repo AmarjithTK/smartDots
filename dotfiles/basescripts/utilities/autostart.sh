@@ -36,6 +36,7 @@ if [[ "$HOSTNAME" == *"home-pc"* ]]; then
   bash ~/basescripts/utilities/volume_regulator.sh
 elif [[ "$HOSTNAME" == *"work-laptop"* ]]; then
   bash ~/basescripts/utilities/notifybattery.sh &
+  xautolock -time 10 -locker "i3lock" &
 else
   echo "No specific configuration for this hostname."
 fi
