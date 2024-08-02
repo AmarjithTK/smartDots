@@ -26,13 +26,10 @@ bspc rule -a realvnc-vncserverui-service hidden=on
 #RealVNC Server 
 bspc rule -a crx_nhnkgkmpokjdijjlfcknhephafdopocl state=floating
 bspc rule -a kdeconnect.app state=floating
+
+
 bash ~/basescripts/utilities/autostart.sh &
-kdeconnect-cli -l &
-
-feh --recursive --bg-fill --randomize ~/.wallpapers &
-xfce4-power-manager &
-nm-applet &
 
 
 
-bash ~/basescripts/utilities/livewall.sh &
+

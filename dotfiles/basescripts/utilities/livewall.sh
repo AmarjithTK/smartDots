@@ -1,5 +1,6 @@
 #!/bin/bash
 
+mkdir -p "$HOME/.wallpapers"
 # Set the file path for the wallpaper
 wallpaper_path="$HOME/.wallpapers/default.jpg"
 
@@ -12,7 +13,7 @@ check_internet() {
 # Check if there is internet connectivity
 if check_internet; then
     # If internet is available, download a new wallpaper
-    curl -sL -o "$wallpaper_path" "https://source.unsplash.com/1920x1080/?nature,water"
+    curl -sL -o "$wallpaper_path" "https://picsum.photos/1920/1080" 
 else
     echo "Internet not available. Using existing wallpaper."
 fi
