@@ -4,7 +4,7 @@
 SOUND_FILE="~/.helpers/musics/idle.mp3"
 
 # Idle time threshold in milliseconds (10 minutes = 600000 milliseconds)
-IDLE_TIME_THRESHOLD=600000
+IDLE_TIME_THRESHOLD=1200000
 #IDLE_TIME_THRESHOLD=0
 
 # Notification duration in seconds (2 minutes)
