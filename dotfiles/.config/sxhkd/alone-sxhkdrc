@@ -8,6 +8,10 @@ alt + b
 alt + n
   google-chrome-stable https://www.notion.so
 
+alt+j;{a}
+  {google-chrome-stable 'https://youtube.com/playlist?list=PLAd9p2GZlDxyI2oibVZ_0JZuBTL8D6r7_&si=xKxfXqr2rwjKaY6x'}
+
+
 
 # ================ Terminal launcher ===================
 
@@ -16,14 +20,7 @@ super + shift + Return
 
 # ================ Scratchpad launchers  ===================
 
-alt+j 
-  kitty --class spranger -e ranger
 
-alt+k
-  kitty --class spmusic -e cmus
-	
-alt+l
-  kitty --class spterm 
 
 
 super + shift + m
