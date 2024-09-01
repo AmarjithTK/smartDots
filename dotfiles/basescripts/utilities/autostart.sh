@@ -40,7 +40,7 @@ elif [[ "$HOSTNAME" == *"work-laptop"* ]]; then
   xrandr --output eDP-1 --mode 1920x1080 & 
   sleep 10
   bash ~/basescripts/utilities/sfwallpaper.sh &
-  xautolock -time 10 -locker "i3lock" &
+  xautolock -time 30 -locker "i3lock -i $HOME/Pictures/cat_wallpaper.jpg" &
 else
   echo "No specific configuration for this hostname."
 fi
