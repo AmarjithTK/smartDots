@@ -38,11 +38,11 @@ if [[ "$HOSTNAME" == *"home-pc"* ]]; then
 elif [[ "$HOSTNAME" == *"work-laptop"* ]]; then
   bash ~/basescripts/utilities/notifybattery.sh &
   xrandr --output eDP-1 --mode 1920x1080 & 
+  sleep 10
+  bash ~/basescripts/utilities/sfwallpaper.sh &
   xautolock -time 10 -locker "i3lock" &
 else
   echo "No specific configuration for this hostname."
 fi
 
-sleep 10
-bash ~/basescripts/utilities/sfwallpaper.sh &
 
