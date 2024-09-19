@@ -1,5 +1,7 @@
 #!/bin/bash
 
+IMAGE_PATH="$HOME/.wallpapers/default.jpg"
+feh --bg-fill "$IMAGE_PATH"
 # Load environment variables from .env file
 if [ -f .env ]; then
   export $(grep -v '^#' .env | xargs)
@@ -12,7 +14,7 @@ if [ -z "$PEXELS_KEY" ]; then
 fi
 
 # Fetch a random cat image from Pexels
-IMAGE_URL=$(curl -s "https://api.pexels.com/v1/search?query=army+navy+airforce+special+force&per_page=1&page=$((RANDOM % 100 + 1))" -H "Authorization: $PEXELS_KEY" | jq -r '.photos[0].src.original')
+IMAGE_URL=$(curl -s "https://api.pexels.com/v1/search?query=island+or+ocean&per_page=1&page=$((RANDOM % 100 + 1))" -H "Authorization: $PEXELS_KEY" | jq -r '.photos[0].src.original')
 
 # Check if the image URL was fetched successfully
 if [ -z "$IMAGE_URL" ]; then
@@ -21,12 +23,10 @@ if [ -z "$IMAGE_URL" ]; then
 fi
 
 # Define the path to save the image
-IMAGE_PATH="$HOME/Pictures/cat_wallpaper.jpg"
 
 # Download the image
 curl -s -o "$IMAGE_PATH" "$IMAGE_URL"
 
 # Set the downloaded image as wallpaper using feh
-feh --bg-fill "$IMAGE_PATH"
 
 echo "Cat wallpaper set successfully!"

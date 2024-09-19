@@ -9,7 +9,7 @@ alt + n
   google-chrome-stable https://www.notion.so
 
 alt+j;{a}
-  {google-chrome-stable 'https://youtube.com/playlist?list=PLAd9p2GZlDxyI2oibVZ_0JZuBTL8D6r7_&si=xKxfXqr2rwjKaY6x'}
+  {google-chrome-stable https://youtube.com/playlist?list=PLAd9p2GZlDxyI2oibVZ_0JZuBTL8D6r7_&si=xKxfXqr2rwjKaY6x}
 
 
 
@@ -19,9 +19,6 @@ super + shift + Return
   kitty 
 
 # ================ Scratchpad launchers  ===================
-
-
-
 
 super + shift + m
     sh -c ~/basescripts/utilities/editscripts.sh
@@ -73,4 +70,5 @@ super + space
   rofi -show drun	
 
 
-
+super+alt+d 
+  bash ~/basescripts/utilities/maindisplaytoggle.sh

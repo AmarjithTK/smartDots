@@ -5,19 +5,15 @@ if ! command -v redshift &>/dev/null; then
     exit 1
 fi
 
-# Location to store the log
-log_dir="$HOME/.config/colortemp"
-log_file="$log_dir/log"
-
-# Create log directory if not exist
-mkdir -p "$log_dir"
+# Location to store the color temperature
+temp_file="$HOME/.helpers/colortemp.txt"
 
 # Set default color temperature value
 default_temp=4000
 
-# Retrieve the last set temperature from the log file
-if [[ -f "$log_file" ]]; then
-    last_temp=$(cat "$log_file")
+# Retrieve the last set temperature from the temp file
+if [[ -f "$temp_file" ]]; then
+    last_temp=$(cat "$temp_file")
     current_temp=$last_temp
 else
     current_temp=$default_temp
@@ -44,6 +40,7 @@ fi
 # Apply new color temperature using redshift
 redshift -P -O "$new_temp"
 
-# Store the new temperature in the log file
-echo "$new_temp" > "$log_file"
+# Store the new temperature in the temp file
+echo "$new_temp" > "$temp_file"
 
+# Apply brightness using your custom brightness control script

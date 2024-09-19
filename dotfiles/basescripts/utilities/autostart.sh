@@ -1,4 +1,5 @@
 
+bash ~/basescripts/utilities/sfwallpaper.sh &
 
 
 # Todo - add window manager independant autostart scripts
@@ -9,9 +10,9 @@ blueman-applet &
 #sxhkd &
 #redshifter 3000 .9 &
 # nitrogen --restore &
-flameshot &
+#flameshot &
 nm-applet &
-slstatus &
+#slstatus &
 kdeconnect-cli -l& 
 #feh --recursive --bg-fill --randomize ~/.wallpapers &
 numlockx &
@@ -21,15 +22,14 @@ xfce4-power-manager &
 pkill -x sxhkd ; sxhkd -c ~/.config/sxhkd/bspwm-sxhdrc ~/.config/sxhkd/alone-sxhkdrc &
 pkill -x polybar ; polybar &
 
-
-bash ~/basescripts/utilities/livewall.sh &
+picom &
 
 #bash ~/basescripts/utilities/sfwallpaper.sh > $HOME/output-log 2>&1 &
 bash ~/basescripts/utilities/greeterwall.sh &
 bash ~/basescripts/utilities/notifyidle.sh &
 bash ~/basescripts/utilities/bedtime.sh &
 
-
+xrandr --output eDP-1 --auto --output HDMI-1 --same-as eDP-1
 # Load device-specific settings based on hostname
 HOSTNAME=$(hostname)
 
@@ -37,9 +37,8 @@ if [[ "$HOSTNAME" == *"home-pc"* ]]; then
   bash ~/basescripts/utilities/volume_regulator.sh &
 elif [[ "$HOSTNAME" == *"work-laptop"* ]]; then
   bash ~/basescripts/utilities/notifybattery.sh &
-  xrandr --output eDP-1 --mode 1920x1080 & 
+#  xrandr --output eDP-1 --mode 1368x768 & 
   sleep 10
-  bash ~/basescripts/utilities/sfwallpaper.sh &
   xautolock -time 30 -locker "i3lock -i $HOME/Pictures/cat_wallpaper.jpg" &
 else
   echo "No specific configuration for this hostname."
