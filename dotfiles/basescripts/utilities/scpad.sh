@@ -2,12 +2,13 @@
 
 winclass=""
 helperfile=""
+focus_command=""
 
 # Check the argument and set window class, command, and helper file accordingly
 case "$1" in
     keep)
         winclass="$(xdotool search --class padkeep)"
-        command="firefox --new-window https://keep.google.com --class padkeep"
+        command="firefox --new-instance --new-window https://keep.google.com --class padkeep"
         helperfile="$HOME/.helpers/padkeep"
         ;;
     term)
@@ -29,18 +30,13 @@ else
     # Toggle show/hide based on the helper file
     if [ ! -f "$helperfile" ]; then
         touch "$helperfile"
-        if [ "$1" = "term" ]; then
-            bspc node "$winclass" --flag hidden
-        else
-            wmctrl -i -r "$winclass" -b add,hidden
-        fi
+        # Hide the window using wmctrl
+        wmctrl -i -r "$winclass" -b add,hidden
     elif [ -f "$helperfile" ]; then
         rm "$helperfile"
-        if [ "$1" = "term" ]; then
-            bspc node "$winclass" --flag hidden=off
-        else
-            wmctrl -i -r "$winclass" -b remove,hidden
-        fi
+        # Show the window and give focus using wmctrl
+        wmctrl -i -r "$winclass" -b remove,hidden
+        xdotool windowactivate "$winclass"
     fi
 fi
 
