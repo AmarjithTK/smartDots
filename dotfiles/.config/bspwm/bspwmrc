@@ -34,7 +34,7 @@ bspc rule -a Blueman-manager state=floating
 bspc rule -a pavucontrol state=floating
 
 
-bspc rule -a firepad sticky=on state=fullscreen border=0 margin=0 rectangle=1920x1080+0+0
+bspc rule -a firepad sticky=on state=fullscreen rectange=1920x1080+0+0
 bspc rule -a padterm sticky=on state=floating border=0 margin=0 rectangle=1920x1080+0+0
 
 bash ~/basescripts/utilities/autostart.sh &

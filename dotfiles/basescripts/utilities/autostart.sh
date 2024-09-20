@@ -28,6 +28,9 @@ picom &
 bash ~/basescripts/utilities/greeterwall.sh &
 bash ~/basescripts/utilities/notifyidle.sh &
 bash ~/basescripts/utilities/bedtime.sh &
+bash ~/basescripts/utilities/brightness_control.sh apply
+
+
 
 xrandr --output eDP-1 --auto --output HDMI-1 --same-as eDP-1
 # Load device-specific settings based on hostname
