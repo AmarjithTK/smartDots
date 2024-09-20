@@ -82,5 +82,10 @@ super+shift+m
   bash ~/basescripts/utilities/scpad.sh term
 
 
+super+shift+v
+  bash ~/basescripts/utilities/scpad.sh gpt
+
+
+
 super+shift+b 
   bash ~/basescripts/utilities/shrutibox.sh

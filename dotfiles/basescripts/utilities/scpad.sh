@@ -2,13 +2,18 @@
 
 winclass=""
 helperfile=""
-focus_command=""
+command=""
 
 # Check the argument and set window class, command, and helper file accordingly
 case "$1" in
     keep)
-        winclass="$(xdotool search --class padkeep)"
-        command="firefox --new-instance --new-window https://keep.google.com --class padkeep"
+        winclass="$(xdotool search --class firepad)"
+        command="firefox --new-instance --new-window https://keep.google.com --class firepad"
+        helperfile="$HOME/.helpers/padkeep"
+        ;;
+    gpt)
+        winclass="$(xdotool search --class firepad)"
+        command="firefox --new-instance --new-window https://chat.openai.com --class firepad"
         helperfile="$HOME/.helpers/padkeep"
         ;;
     term)
@@ -17,7 +22,7 @@ case "$1" in
         helperfile="$HOME/.helpers/padterm"
         ;;
     *)
-        echo "Invalid parameter. Use 'keep' or 'term'."
+        echo "Invalid parameter. Use 'keep', 'gpt', or 'term'."
         exit 1
         ;;
 esac
@@ -30,13 +35,11 @@ else
     # Toggle show/hide based on the helper file
     if [ ! -f "$helperfile" ]; then
         touch "$helperfile"
-        # Hide the window using wmctrl
-        wmctrl -i -r "$winclass" -b add,hidden
+        wmctrl -i -r "$winclass" -b add,hidden  # Hide the window
     elif [ -f "$helperfile" ]; then
         rm "$helperfile"
-        # Show the window and give focus using wmctrl
-        wmctrl -i -r "$winclass" -b remove,hidden
-        xdotool windowactivate "$winclass"
+        wmctrl -i -r "$winclass" -b remove,hidden  # Show the window
+        xdotool windowactivate "$winclass"  # Focus the window
     fi
 fi
 
