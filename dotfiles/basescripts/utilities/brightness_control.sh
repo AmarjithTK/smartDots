@@ -6,9 +6,6 @@ STEP=0.05
 # File to store the current brightness
 BRIGHTNESS_FILE=~/.helpers/brightness.txt
 
-# Get the connected display
-CONNECTED_DISPLAY=HDMI-1
-
 # Check if the brightness file exists, otherwise initialize it with a value of 1.0
 if [ ! -f "$BRIGHTNESS_FILE" ]; then
   echo "1.0" > "$BRIGHTNESS_FILE"
@@ -16,12 +13,6 @@ fi
 
 # Get the current brightness from the file
 CURRENT_BRIGHTNESS=$(cat "$BRIGHTNESS_FILE")
-
-# Check if the current brightness is a valid number
-#if ! [[ "$CURRENT_BRIGHTNESS" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
- # echo "Error: Invalid brightness value in $BRIGHTNESS_FILE"
-  #exit 1
-#fi
 
 # Handle the command based on the argument
 case "$1" in
@@ -53,6 +44,15 @@ case "$1" in
     ;;
 esac
 
-# Apply the brightness value to the connected display
-xrandr --output "$CONNECTED_DISPLAY" --brightness "$NEW_BRIGHTNESS"
+# Get a list of all connected displays, ensuring no extra spaces or newlines
+CONNECTED_DISPLAYS=$(xrandr --query | grep " connected" | awk '{print $1}' | xargs)
+
+# Apply the brightness value to all connected displays
+for CDISPLAY in $CONNECTED_DISPLAYS; do
+  # Trim any unwanted characters from the display name
+  CDISPLAY=$(echo "$CDISPLAY" | tr -d '\n\r ')
+  if [ -n "$CDISPLAY" ]; then  # Ensure the display variable is not empty
+    xrandr --output "$CDISPLAY" --brightness "$NEW_BRIGHTNESS"
+  fi
+done
 
