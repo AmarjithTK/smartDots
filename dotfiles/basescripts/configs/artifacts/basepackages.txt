@@ -43,3 +43,4 @@ picom
 xdotool
 xdo
 mpv
+wmctrl
