@@ -75,17 +75,17 @@ super + space
 super+alt+d 
   bash ~/basescripts/utilities/maindisplaytoggle.sh
 
+super+alt+f
+  bash ~/basescripts/utilities/grayscale_toggle.sh
+
 super+shift+n
   bash ~/basescripts/utilities/scpad.sh keep
 
 super+shift+m
   bash ~/basescripts/utilities/scpad.sh term
 
-
 super+shift+v
   bash ~/basescripts/utilities/scpad.sh gpt
-
-
 
 super+shift+b 
   bash ~/basescripts/utilities/shrutibox.sh
