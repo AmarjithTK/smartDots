@@ -26,7 +26,6 @@ picom &
 
 #bash ~/basescripts/utilities/sfwallpaper.sh > $HOME/output-log 2>&1 &
 bash ~/basescripts/utilities/greeterwall.sh &
-bash ~/basescripts/utilities/notifyidle.sh &
 bash ~/basescripts/utilities/bedtime.sh &
 bash ~/basescripts/utilities/brightness_control.sh apply
 
@@ -39,6 +38,8 @@ HOSTNAME=$(hostname)
 if [[ "$HOSTNAME" == *"home-pc"* ]]; then
   bash ~/basescripts/utilities/volume_regulator.sh &
 elif [[ "$HOSTNAME" == *"work-laptop"* ]]; then
+
+  bash ~/basescripts/utilities/notifyidle.sh &
   bash ~/basescripts/utilities/notifybattery.sh &
 #  xrandr --output eDP-1 --mode 1368x768 & 
   sleep 10
