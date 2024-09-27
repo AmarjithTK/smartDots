@@ -89,3 +89,7 @@ super+shift+v
 
 super+shift+b 
   bash ~/basescripts/utilities/shrutibox.sh
+
+
+super+shift+u 
+  bash ~/basescripts/utilities/chrome_rofi.sh

@@ -31,18 +31,20 @@ bash ~/basescripts/utilities/brightness_control.sh apply
 
 
 
-xrandr --output eDP-1 --auto --output HDMI-1 --same-as eDP-1
 # Load device-specific settings based on hostname
 HOSTNAME=$(hostname)
-
+ 
 if [[ "$HOSTNAME" == *"home-pc"* ]]; then
   bash ~/basescripts/utilities/volume_regulator.sh &
+  xrandr --output eDP-1 --auto --output HDMI-1 --same-as eDP-1
 elif [[ "$HOSTNAME" == *"work-laptop"* ]]; then
 
+  xrandr --output eDP-1 --off --output HDMI-1 --auto
   bash ~/basescripts/utilities/notifyidle.sh &
   bash ~/basescripts/utilities/notifybattery.sh &
 #  xrandr --output eDP-1 --mode 1368x768 & 
   sleep 10
+  bash ~/basescripts/utilities/grayscale_toggle.sh
   xautolock -time 30 -locker "i3lock -i $HOME/Pictures/cat_wallpaper.jpg" &
 else
   echo "No specific configuration for this hostname."

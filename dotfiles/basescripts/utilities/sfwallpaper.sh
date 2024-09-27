@@ -14,7 +14,7 @@ if [ -z "$PEXELS_KEY" ]; then
 fi
 
 # Fetch a random cat image from Pexels
-IMAGE_URL=$(curl -s "https://api.pexels.com/v1/search?query=army+with+weapon&per_page=1&page=$((RANDOM % 100 + 1))" -H "Authorization: $PEXELS_KEY" | jq -r '.photos[0].src.original')
+IMAGE_URL=$(curl -s "https://api.pexels.com/v1/search?query=army+with+weapon+special+forces&per_page=1&page=$((RANDOM % 100 + 1))" -H "Authorization: $PEXELS_KEY" | jq -r '.photos[0].src.original')
 
 # Check if the image URL was fetched successfully
 if [ -z "$IMAGE_URL" ]; then
