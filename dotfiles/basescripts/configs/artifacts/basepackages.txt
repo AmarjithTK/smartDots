@@ -44,3 +44,5 @@ xdotool
 xdo
 mpv
 wmctrl
+network-manager-applet
+

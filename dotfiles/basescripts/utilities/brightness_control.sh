@@ -1,25 +1,58 @@
 #!/bin/bash
 
 # Set the step value for brightness adjustment
-STEP=0.05
+STEP=10  # Adjust step size to 5 for a 0-100 range
 
 # File to store the current brightness
 BRIGHTNESS_FILE=~/.helpers/brightness.txt
 
-# Check if the brightness file exists, otherwise initialize it with a value of 1.0
+# Check if the brightness file exists; if not, initialize it with a value of 100 (100%)
 if [ ! -f "$BRIGHTNESS_FILE" ]; then
-  echo "1.0" > "$BRIGHTNESS_FILE"
+  echo "100" > "$BRIGHTNESS_FILE"
 fi
 
 # Get the current brightness from the file
 CURRENT_BRIGHTNESS=$(cat "$BRIGHTNESS_FILE")
 
+# Function to apply brightness using ddcutil
+apply_ddcutil_brightness() {
+  local new_brightness=$1
+  local ddc_displays=$(ddcutil detect | grep "Display" | awk '{print $1}' | xargs)
+
+  echo "the new $new_brightness"
+  for ddc_display in $ddc_displays; do
+    # Set brightness in the range 0-100
+    ddcutil set 10 "$new_brightness"
+  done
+}
+
+# Function to apply brightness using xrandr
+apply_xrandr_brightness() {
+  local new_brightness=$1
+  local xrandr_displays=$(xrandr --query | grep " connected" | awk '{print $1}' | xargs)
+
+  for xrandr_display in $xrandr_displays; do
+    # Normalize the brightness value for xrandr (0.0 to 1.0)
+    local normalized_brightness=$(echo "scale=2; $new_brightness / 100" | bc)
+    echo "normalized_brightness = $normalized_brightness"
+    echo "display is $xrandr_display"
+    xrandr --output "$xrandr_display" --brightness "$normalized_brightness"
+  done
+}
+
+# Check for connected displays using ddcutil
+if ddcutil detect | grep -q "Display"; then
+  DISPLAY_TYPE="ddcutil"
+else
+  DISPLAY_TYPE="xrandr"
+fi
+
 # Handle the command based on the argument
 case "$1" in
   increase)
     NEW_BRIGHTNESS=$(echo "$CURRENT_BRIGHTNESS + $STEP" | bc)
-    if (( $(echo "$NEW_BRIGHTNESS > 1.0" | bc -l) )); then
-      NEW_BRIGHTNESS=1.0
+    if (( NEW_BRIGHTNESS > 100 )); then
+      NEW_BRIGHTNESS=100
     fi
     # Save the new brightness value to the file
     echo "$NEW_BRIGHTNESS" > "$BRIGHTNESS_FILE"
@@ -27,8 +60,8 @@ case "$1" in
 
   decrease)
     NEW_BRIGHTNESS=$(echo "$CURRENT_BRIGHTNESS - $STEP" | bc)
-    if (( $(echo "$NEW_BRIGHTNESS < 0.1" | bc -l) )); then
-      NEW_BRIGHTNESS=0.1
+    if (( NEW_BRIGHTNESS < 0 )); then
+      NEW_BRIGHTNESS=0
     fi
     # Save the new brightness value to the file
     echo "$NEW_BRIGHTNESS" > "$BRIGHTNESS_FILE"
@@ -44,15 +77,10 @@ case "$1" in
     ;;
 esac
 
-# Get a list of all connected displays, ensuring no extra spaces or newlines
-CONNECTED_DISPLAYS=$(xrandr --query | grep " connected" | awk '{print $1}' | xargs)
-
-# Apply the brightness value to all connected displays
-for CDISPLAY in $CONNECTED_DISPLAYS; do
-  # Trim any unwanted characters from the display name
-  CDISPLAY=$(echo "$CDISPLAY" | tr -d '\n\r ')
-  if [ -n "$CDISPLAY" ]; then  # Ensure the display variable is not empty
-    xrandr --output "$CDISPLAY" --brightness "$NEW_BRIGHTNESS"
-  fi
-done
+# Apply brightness based on the detected display type
+if [ "$DISPLAY_TYPE" == "ddcutil" ]; then
+  apply_ddcutil_brightness "$NEW_BRIGHTNESS"
+else
+  apply_xrandr_brightness "$NEW_BRIGHTNESS"
+fi
 
