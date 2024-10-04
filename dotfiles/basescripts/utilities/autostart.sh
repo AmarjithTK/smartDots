@@ -1,5 +1,6 @@
 
 bash ~/basescripts/utilities/sfwallpaper.sh &
+bash ~/basescripts/utilities/foodalarm.sh &
 
 
 # Todo - add window manager independant autostart scripts
