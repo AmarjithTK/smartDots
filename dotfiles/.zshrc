@@ -72,7 +72,6 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
-source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -99,8 +98,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
-source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
 if [ -f ~/.zshconfig ]; then
        	source ~/.zshconfig 
 fi
@@ -110,3 +107,9 @@ export PATH="$PATH:$HOME/flutter/bin:$HOME/android-studio/bin:$HOME/Android/sdk"
 
 
 CHROME_EXECUTABLE=$(which google-chrome-stable)export PATH=/home/starwalker/basescripts/utilities:/home/starwalker/bin:/home/starwalker/.local/share/bin:/usr/local/bin:/home/starwalker/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/starwalker/flutter/bin:/home/starwalker/android-studio/bin:/home/starwalker/Android/sdk:/home/starwalker/.jiotv_go/bin:/home/starwalker/.jiotv_go/bin:$HOME/basescripts/utilities/binaries/
+
+
+
+POWERLEVEL10K_DISABLE_CONFIGURATION_WIZARD=true
+source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
+if [ -f ~/.zshconfig ]; then source ~/.zshconfig; fi
