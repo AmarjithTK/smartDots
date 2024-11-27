@@ -15,9 +15,6 @@ codium --install-extension PKief.material-icon-theme --force
 codium --install-extension Dart-Code.flutter --force
 codium --install-extension vscodevim.vim --force
 
-    while read -r extension; do
-        codium --install-extension "$extension"
-    done < extensions.txt
 
 # Configure settings for VSCodium
 echo '{
