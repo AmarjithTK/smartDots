@@ -1,18 +1,14 @@
 rofi
-mupdf
+
 npm
 xclip
-scrot
 neofetch
 htop
 ranger
 python-pip
 zenity
 gnome-tweaks
-qbittorrent
-cheese
 kdeconnect
-dmenu
 sxhkd
 redshift
 kitty
@@ -41,7 +37,6 @@ xautolock
 i3lock
 picom
 xdotool
-xdo
 mpv
 wmctrl
 network-manager-applet
