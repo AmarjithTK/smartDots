@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-sudo pacman -S --noconfirm $(<~/basescripts/configs/artifacts/basepackages.txt)
+sudo dnf install -y $(<~/basescripts/configs/artifacts/basepackages.txt)
 
 
 # echo 'alias vi="nvim"' >> ~/.bashrc

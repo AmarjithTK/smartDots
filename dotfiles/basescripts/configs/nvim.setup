@@ -5,7 +5,15 @@ rm -rf ~/.config/nvim
 rm -rf ~/.local/state/nvim
 rm -rf ~/.local/share/nvim
 
-sudo pacman -S neovim ttf-jetbrains-mono ttf-jetbrains-mono-nerd npm --noconfirm 
+
+# Enable the COPR repository for Nerd Fonts
+sudo dnf copr enable che/nerd-fonts -y
+
+# Install a popular Nerd Font, e.g., Hack Nerd Font
+sudo dnf install -y  nvim nerd-fonts
+
+
+# sudo pacman -S neovim ttf-jetbrains-mono ttf-jetbrains-mono-nerd npm --noconfirm 
 # Set up Neovim configuration
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 nvim 
