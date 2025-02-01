@@ -113,3 +113,6 @@ CHROME_EXECUTABLE=$(which google-chrome-stable)export PATH=/home/starwalker/base
 POWERLEVEL10K_DISABLE_CONFIGURATION_WIZARD=true
 source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
 if [ -f ~/.zshconfig ]; then source ~/.zshconfig; fi
+POWERLEVEL10K_DISABLE_CONFIGURATION_WIZARD=true
+source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
+if [ -f ~/.zshconfig ]; then source ~/.zshconfig; fi
