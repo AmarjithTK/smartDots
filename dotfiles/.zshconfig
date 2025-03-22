@@ -37,7 +37,7 @@ alias mkp="mkdir -p"
 
 alias venvcmd='eval "$(cat ~/.helpers/venvcmd.txt)"'
 
-export EDITOR=nvim
+export EDITOR=vim
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 export BROWSER='chrome'
 export CHROME_EXECUTABLE="/usr/bin/google-chrome-stable"
@@ -63,3 +63,22 @@ alias sdisable='sudo systemctl disable'
 alias senable='sudo systemctl enable'
 alias sstatus='sudo systemctl status'
 alias spu="sudo pacman -S archlinux-keyring --noconfirm && sudo pacman -Syu"
+
+
+alias a='distrobox enter archbox --'  # Run commands inside archbox
+alias ax='distrobox export --app'  # Export apps from archbox
+
+# Creative names
+alias archie='distrobox enter archbox'  # Enter the container
+alias archway='distrobox create --name archbox --image archlinux:latest'  # Create the container
+alias archdown='distrobox stop archbox'  # Stop the container
+alias archwipe='distrobox rm archbox'  # Remove the container
+alias archlist='distrobox list'  # List available containers
+
+# Override sudo to always run inside archbox
+
+
+
+export WORKON_HOME=~/.virtualenvs
+source /usr/bin/virtualenvwrapper_lazy.sh
+
