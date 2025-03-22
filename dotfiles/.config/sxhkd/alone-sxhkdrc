@@ -1,0 +1,95 @@
+
+alt+j
+  bash -c "~/basescripts/utilities/binaries/jiotv serve; google-chrome-stable 'http://127.0.0.1:5001/?language=7&category=0'"
+
+alt + n
+  google-chrome-stable https://www.notion.so
+
+alt+j;{a}
+  {google-chrome-stable https://youtube.com/playlist?list=PLAd9p2GZlDxyI2oibVZ_0JZuBTL8D6r7_&si=xKxfXqr2rwjKaY6x}
+
+
+# Super launcher --- keychord
+# alt + k
+# then 
+# a - austinlist
+# n - notion
+# l - weblauncher script
+# other letters == > much much more
+
+
+alt+k;{a,n,l}
+    {google-chrome-stable "https://youtube.com/playlist?list=PLAd9p2GZlDxyI2oibVZ_0JZuBTL8D6r7_&si=xKxfXqr2rwjKaY6x",google-chrome-stable "https://www.notion.so",bash basescripts/utilities/weblauncher.sh}
+
+
+
+
+# ================ Terminal launcher ===================
+
+super + shift + Return
+  kitty 
+
+# ================ Scratchpad launchers  ===================
+
+
+super + shift + e
+    sh -c ~/basescripts/utilities/powermenu-rofi.sh
+
+super + shift + s
+    pkill -USR1 -x sxhkd
+
+
+XF86AudioRaiseVolume
+    amixer -q sset Master 3%+
+
+XF86AudioLowerVolume
+    amixer -q sset Master 3%-
+
+XF86AudioMute
+    amixer -q sset Master toggle
+
+# ____________ True brightness controllers 
+
+control+shift+Up
+    ~/basescripts/utilities/brightness_control.sh increase
+
+# Decrease brightness
+control+shift+Down
+    ~/basescripts/utilities/brightness_control.sh decrease
+
+# ____________ True color temp controllers 
+
+# Increase color temperature
+control + Up
+    sh -c "~/basescripts/utilities/colortemp.sh increase"
+
+# Decrease color temperature
+control + Down
+    sh -c "~/basescripts/utilities/colortemp.sh decrease"
+
+
+# ____________ True Rofi launcher
+super + space
+  rofi -show drun	
+
+super+alt+d 
+  bash ~/basescripts/utilities/maindisplaytoggle.sh
+
+super+alt+f
+  bash ~/basescripts/utilities/grayscale_toggle.sh
+
+super+shift+n
+  bash ~/basescripts/utilities/scpad.sh keep
+
+super+shift+m
+  bash ~/basescripts/utilities/scpad.sh term
+
+super+shift+v
+  bash ~/basescripts/utilities/scpad.sh gpt
+
+super+shift+b 
+  bash ~/basescripts/utilities/shrutibox.sh
+
+
+super+shift+u 
+  bash ~/basescripts/utilities/chrome_rofi.sh

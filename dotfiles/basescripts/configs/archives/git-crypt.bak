@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Directory containing the git-crypt keys
+KEY_DIR="$HOME/smartDots/.git/git-crypt/keys"
+
+# Check if the directory exists
+if [[ ! -d "$KEY_DIR" ]]; then
+  zenity --error --text="The directory $KEY_DIR does not exist. Please create it and place your git-crypt keys there."
+  exit 1
+fi
+
+# Select the git-crypt key using zenity
+KEY_FILE=$(zenity --file-selection --title="Select the git-crypt key file" --filename="$KEY_DIR/")
+
+# Check if a file was selected
+if [[ -z "$KEY_FILE" ]]; then
+  zenity --error --text="No key file selected. Exiting."
+  exit 1
+fi
+
+# Verify that the selected file is a git-crypt key
+if [[ ! -f "$KEY_FILE" ]]; then
+  zenity --error --text="The selected file does not exist or is not a valid file."
+  exit 1
+fi
+
+# Set the selected key as the default in git-crypt
+KEY_NAME=$(basename "$KEY_FILE")
+DEFAULT_KEY_FILE="$HOME/smartDots/.git/git-crypt/default.key"
+
+# Backup the existing default key if it exists
+if [[ -f "$DEFAULT_KEY_FILE" ]]; then
+  mv "$DEFAULT_KEY_FILE" "$DEFAULT_KEY_FILE.bak"
+fi
+
+# Copy the selected key to the default location
+cp "$KEY_FILE" "$DEFAULT_KEY_FILE"
+
+# Inform the user of success
+zenity --info --text="The key has been set as the default successfully."
+
+exit 0
+

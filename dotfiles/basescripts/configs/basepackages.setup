@@ -1,0 +1,9 @@
+#!/bin/bash
+
+
+sudo pacman -S --noconfirm $(<~/basescripts/configs/artifacts/basepackages.txt)
+
+
+# echo 'alias vi="nvim"' >> ~/.bashrc
+# echo 'alias vim="nvim"' >> ~/.bashr
+# echo 'alias vim="nvim"' >> ~/.zshrc 

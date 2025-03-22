@@ -1,0 +1,36 @@
+#!/bin/bash
+
+check_firefox_installed() {
+    if ! command -v firefox &> /dev/null; then
+        echo "Firefox not found. Installing Firefox..."
+        sudo pacman -S firefox --noconfirm
+    else
+        echo "Firefox is already installed."
+    fi
+}
+
+
+check_firefox_installed
+
+
+# Path to your centralized userChrome.css
+USERCHROME="$HOME/.config/firefox/userChrome.css"
+
+# Locate all Firefox profile directories
+PROFILE_DIRS=$(find ~/.mozilla/firefox/ -maxdepth 1 -name "*.default*" -type d)
+
+# Iterate through each profile and symlink the userChrome.css
+for PROFILE in $PROFILE_DIRS; do
+    CHROME_DIR="$PROFILE/chrome"
+    
+    # Create the chrome directory if it doesn't exist
+    if [ ! -d "$CHROME_DIR" ]; then
+        mkdir "$CHROME_DIR"
+    fi
+    
+    # Create a symlink for userChrome.css
+    ln -sf "$USERCHROME" "$CHROME_DIR/userChrome.css"
+    
+    echo "Linked $USERCHROME to $CHROME_DIR/userChrome.css"
+done
+

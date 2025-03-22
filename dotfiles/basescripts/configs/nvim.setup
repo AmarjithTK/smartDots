@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+rm -rf ~/.config/nvim
+rm -rf ~/.local/state/nvim
+rm -rf ~/.local/share/nvim
+
+sudo pacman -S neovim ttf-jetbrains-mono ttf-jetbrains-mono-nerd npm --noconfirm 
+# Set up Neovim configuration
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+nvim 
+

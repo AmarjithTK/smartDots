@@ -1,0 +1,53 @@
+#!/bin/bash
+
+if ! command -v zenity &> /dev/null; then
+  echo "Zenity is not installed. Installing it using pacman..."
+  sudo pacman -S --noconfirm zenity
+fi
+
+playlist="--yes-playlist"
+#quality="360"
+#url="https://www.youtube.com/watch?v=j-7JQt5m_v0"
+
+read -p "Enter URL: " url
+
+read -p "Is it audio only (y/n)? " isAudioOnly
+
+if [ "$isAudioOnly" == "y" ]; then
+  # Audio Only Download with mp3 format
+  onlyaudio="--extract-audio --audio-format mp3 --audio-quality 8"
+  # No need for video quality selection here (commented out)
+  # quality=""
+else
+  # Video Download with quality selection
+  onlyaudio=""
+  read -p "Quality (360, 480, 720, 1080): " quality
+fi
+
+echo "Select a folder to download files ------------------"
+# Prompt the user to select a folder using Zenity
+selected_folder=$(zenity --file-selection --directory --title="Select a Folder")
+
+# Check if the user canceled folder selection
+if [ $? -eq 1 ]; then
+  echo "Folder selection canceled."
+  exit 1
+fi
+
+# Build the command based on audio or video selection
+cmd="yt-dlp -o '$selected_folder/%(playlist_index)s-%(title)s.%(ext)s' "
+
+if [ "$isAudioOnly" == "y" ]; then
+  # Use bestaudio format for audio-only download
+  cmd="$cmd -f 'bestaudio'"
+else
+  # Use bestaudio with height restriction for video download
+  cmd="$cmd -f 'bestaudio[height<=$quality]+best[ext=mp4]/best[ext=mp4]'"
+fi
+
+# Add playlist flag and URL
+cmd="$cmd $playlist '$url' --embed-thumbnail $onlyaudio"
+
+# Execute the command
+eval $cmd
+
