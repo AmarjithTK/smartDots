@@ -1,86 +1,121 @@
-# Latest Edition of my dotfiles, now even more smart with gnu stow
+# SmartDots - Latest Edition of my dotfiles with GNU Stow
 
-![Description of the image](assets/scrot1.png)
-![Description of the image](assets/scrot2.png)
+A modern dotfiles configuration with intelligent defaults and GNU Stow integration.
 
- ### TODOS for freetime, only when lots of free 
+## Quick Install
 
-    fzf fuzzy finder
-    use bluez or something else than blueman maybe blueberry good alternative
-    add some volume limiter and autoeq for that too, prolly don't worth the time spent
+```bash
+git clone -b main2 --single-branch --depth 1 git@github.com:AmarjithTK/smartDots.git && bash ~/smartDots/setup.sh
+```
 
-    amVim is the vimextension that works very well 
-    on polybar add battery : battery percent
+Alternative method:
+```bash
+curl -Lo install.sh raw.github.usercontent/install.sh | bash install.sh | rm install.sh
+```
 
-    and add dunst notify for battery below 30 - 40 % 
+![Desktop Preview](assets/scrot1.png)
 
-    use brillo to adjust screen brightness properly, add video group and set rules accordingly as needed 
+## Current Features
 
-    add small indicator inside workspace number to tell the user how many windows are there in the workspace when in monocle layout and other normal modes
+* Arch Linux with multiple WM options:
+  * BSPWM
+  * DWM
+  * XFCE (lightweight fallback)
+* Shell & Terminal:
+  * ZSH with custom configs
+  * Rofi launcher
+* Development Environment:
+  * NVIM with NvChad
+  * Preconfigured VSCodium with amVim extension
+  * SSH autoconfig script
+  * Automatic venv activation
+  * AppImage management with launchers
+* Fonts:
+  * JetBrains Mono
+  * Fira Code
+* Legacy Features:
+  * Firewall for NITC Students (Deprecated)
 
+## Planned Improvements
 
-    ability to add different files for different devices that is joined with bspwrc bash devicespecificautostartetc.sh
+### System & WM
+- [ ] Workspace enhancements:
+  - Window count indicator for monocle layout
+  - ChatGPT workspace/scratchpad with keybinding
+- [ ] Device-specific configurations via `devicespecificautostartetc.sh`
+- [ ] System tray for BSPWM
+- [ ] Scratchpad functionality (via tdrop)
+- [ ] Dynamic wallpapers (mountain themes from unsplash)
+- [ ] Conky configuration
+- [ ] EWW widgets (low priority)
 
-    add a workspace for chatgpt or a scratchpad for chatgpt with a keybinding also assign workspace
-    add natural langugage processing to make machine learn how add google calendar based on terminal input or simple text input from phone!!!
+### Tools & Utilities
+- [ ] FZF fuzzy finder integration
+- [ ] Bluetooth management (bluez/blueberry replacement for blueman)
+- [ ] Volume control:
+  - Volume limiter
+  - AutoEQ implementation
+- [ ] Custom clipboard manager:
+  - NodeJS backend
+  - Time-based PIN security
+  - Shortened URLs (bit.ly)
+- [ ] Binary management:
+  - Create `basescripts/binaries` folder
+  - Add to PATH
+  - Migrate frequently used scripts
 
-    - press :W (capital) to get cheatsheet
+### UI/UX Improvements
+- [ ] Battery management:
+  - Polybar battery indicator
+  - Dunst notifications (30-40% threshold)
+- [ ] Screen brightness control (brillo)
+- [ ] Network indicators:
+  - Better wlan0 name handling
+  - Automatic eth0/wlan0 switching
+- [ ] Dunst theming (Catppuccin)
 
+### Documentation
+- [ ] Vim cheatsheet (`:W` command)
+- [ ] Cleanup redundant rofi launcher bindings
+- [ ] Organize sxhkd configuration
 
+### Cross-platform Support
+- [ ] Windows setup script (Chocolatey-based)
+- [ ] BAT file equivalents
 
-    unset BROWSER
-    xdg-settings set default-web-browser google-chrome.desktop
-    for node run
+### Automation
+- [ ] Natural language processing for Google Calendar
+- [ ] Audio-only playlist downloader
+- [ ] Browser configuration:
+```bash
+unset BROWSER
+xdg-settings set default-web-browser google-chrome.desktop
+```
 
+### Android Integration
+Recommended apps:
+- Media:
+  - Namida (Video player)
+  - Next Video player (with folder exclusion)
+  - Musicolet
+  - Wavelet
+- Utilities:
+  - VolumeLockr (custom mod planned)
+  - LocalSend
 
-    add check date and time getting removed D.T wlan0 in laptops
-    remove redundant rofi launcher sxhkd keybinds and cleanup the sxhdrc
+## Contributing
 
-    - create a clipboard for yourself with nodejs and host it with a pincode that can be changed with time by master password and bit.ly or something short code
-    - add create basescripts/binaries folder and add it to path and move all the all time usage scripts to there
-        - add to path binaries folder
+Feel free to submit issues and enhancement requests.
 
-    - add feature to download audio only playlist without video also and use audio only using framwork process
-    - make microsoft bat equivalent files of this using chatgpt or something
-    - chocolatey make ps1 script to setup windows easily with all setup and add it to a seperate branch
+## Browser Configuration
+To set default browser:
+```bash
+unset BROWSER
+xdg-settings set default-web-browser google-chrome.desktop
+```
 
-    - add restriction on the wlan0 name of wifi connected on polybar
-    - add restriction on if wlan0 connected then eth0 automatically removed and try to just use wifi symbol, use chatgpt for this purpose
-
-    - add dunst theme , in catpuccin
-    - add dynamic or something better wallpapers
-    - use mountain wallpaper if possible source.unsplash/mountain or something
-    - implement system tray for bspwm
-    - implment scratchpad functionality ( using tdrop if possible )
-    - add conkyrc if possible, not too much needed 
-    - learn eww widgets, the least priority one, the most timewaste
-
-
-    for android setup
-        
-        namida video player
-        musicolet 
-        VolumeLockr - make a modified app of this for your purpose
-        Next video player, add exclude folders and that is it
-        localsend
-        
-        Wavelet
-
-
-
-
-* Arch Linux + bspwm/ DWM , XFCE and lightweight distro
-* ZSH
-* Rofi
-* NVIM nvchad
-* preconfigured vscodium
-* ssh autoconfig script
-* automatic venv activation script
-* script to manage appimages and provide launchers for them
-* coding eye friendly jetbrains mono/ fira code fonts
-* Firewall for NITC Students ( Deprecated )
-
-
-## To install just hit
-
-    curl -Lo install.sh raw.github.usercontent/install.sh (get the actual url ) | bash install.sh | rm install.sh
+## Installation
+Make sure to check the installation script before running:
+```bash
+curl -Lo install.sh raw.github.usercontent/install.sh | bash install.sh | rm install.sh
+```
