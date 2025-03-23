@@ -15,3 +15,7 @@ fi
 # stow dotfiles -t ~/ *
 
 stow -d ~/smartDots -t ~ dotfiles
+
+
+
+bash ~/basescripts/runner.sh
