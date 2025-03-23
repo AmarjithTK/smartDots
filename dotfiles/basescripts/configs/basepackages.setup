@@ -1,9 +1,10 @@
 #!/bin/bash
 
-
+# Install packages from basepackages.txt
 sudo pacman -S --noconfirm $(<~/basescripts/configs/artifacts/basepackages.txt)
 
-
-# echo 'alias vi="nvim"' >> ~/.bashrc
-# echo 'alias vim="nvim"' >> ~/.bashr
-# echo 'alias vim="nvim"' >> ~/.zshrc 
+# Install additional packages
+sudo pacman -S --noconfirm python-virtualenvwrapper 
+sudo pacman -Syu --noconfirm --needed base-devel git gcc npm distrobox 
+yay -S --noconfirm visual-studio-code-bin rustdesk-bin anydesk-bin
+sudo pacman -S proton-vpn-gtk-app
