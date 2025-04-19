@@ -3,6 +3,12 @@ export PATH=$HOME/bin:$HOME/.local/share/bin:/usr/local/bin:$PATH
 
 
 
+
+export PATH="$PATH:$HOME/flutter/bin"
+
+
+
+
 export PATH=$HOME/basescripts/utilities/binaries:$PATH
 
 # . /home/$USER/.nix-profile/etc/profile.d/nix.sh#
