@@ -8,7 +8,6 @@ ORIG_VOL=$(amixer get Master | grep -oP '\[\d+%\]' | head -1)
 
 while true; do
     # Set volume to 50%
-    amixer set Master 50% > /dev/null
 
     # Play the sound (plays for 1s)
     paplay "$SOUND_FILE" &
@@ -18,7 +17,6 @@ while true; do
     pkill paplay
 
     # Restore original volume
-    amixer set Master "$ORIG_VOL" > /dev/null
 
     # Wait 5 minutes
     sleep 180

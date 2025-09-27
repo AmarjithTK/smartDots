@@ -12,6 +12,7 @@
     ll = log --oneline
 [core]
 	excludesfile = ~/.gitignore_global
+    sshCommand = ssh -i ~/.ssh/id_amarjith -o IdentitiesOnly=yes
 
 [init]
     defaultBranch = main

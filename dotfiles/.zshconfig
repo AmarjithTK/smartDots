@@ -85,4 +85,8 @@ alias archlist='distrobox list'  # List available containers
 
 
 
-
+HISTFILE=~/.zsh_history       # path to history file
+HISTSIZE=10000                # number of commands in memory
+SAVEHIST=10000                # number of commands saved to file
+setopt APPEND_HISTORY          # append to history, don’t overwrite
+setopt INC_APPEND_HISTORY  
