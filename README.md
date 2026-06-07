@@ -10,6 +10,7 @@ KDE Plasma dotfiles bootstrap. Minimal files, maximum automation.
 | [`zsh-setup.sh`](zsh-setup.sh) | Installs ZSH + oh-my-zsh + powerlevel10k + generates `.zshrc` / `.zshconfig` |
 | [`brillo-setup.sh`](brillo-setup.sh) | Installs Brillo KDE display brightness plasmoid widget |
 | [`system-setup.sh`](system-setup.sh) | Menu-driven setup: base packages, ACPI backlight, GRUB, Git/SSH, TLP |
+| [`vscode-setup.sh`](vscode-setup.sh) | Installs VSCodium + Material Theme + vim + Flutter extensions |
 | [`.gitconfig`](.gitconfig) | Git configuration — copy to `~/` |
 | [`.gitignore_global`](.gitignore_global) | Global gitignore rules — copy to `~/` |
 
