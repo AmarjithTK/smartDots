@@ -88,8 +88,23 @@ install_bins() {
   mkdir -p "$HOME/.local/bin"
   for script in "$SMARTDOTS_DIR/linux/bin/"*; do
     if [[ -f "$script" ]]; then
-      cp "$script" "$HOME/.local/bin/"
-      chmod +x "$HOME/.local/bin/$(basename "$script")"
+      local name
+      name=$(basename "$script")
+      # Fail-safe: backup existing, don't overwrite silently
+      if [ -f "$HOME/.local/bin/$name" ]; then
+        # Only overwrite if source is newer or different
+        if ! cmp -s "$script" "$HOME/.local/bin/$name"; then
+          cp "$script" "$HOME/.local/bin/$name"
+          chmod +x "$HOME/.local/bin/$name"
+          echo "  - updated: $name"
+        else
+          echo "  - skipped (same): $name"
+        fi
+      else
+        cp "$script" "$HOME/.local/bin/$name"
+        chmod +x "$HOME/.local/bin/$name"
+        echo "  - installed: $name"
+      fi
     fi
   done
   echo "=== Scripts installed ==="

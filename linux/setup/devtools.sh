@@ -45,7 +45,20 @@ setup_nvim() {
   echo "--- Setting up Neovim ---"
   sudo pacman -S --noconfirm neovim
 
-  rm -rf "$HOME/.config/nvim" "$HOME/.local/state/nvim" "$HOME/.local/share/nvim"
+  # Fail-safe: backup existing config instead of nuking it
+  if [ -d "$HOME/.config/nvim" ]; then
+    echo "  ⚠️  Existing Neovim config found at ~/.config/nvim"
+    read -p "     Overwrite? (y = replace, n = skip) [n]: " nvim_choice
+    if [ "$nvim_choice" != "y" ] && [ "$nvim_choice" != "Y" ]; then
+      echo "  ℹ️  Skipping NvChad install (existing config kept)"
+      return
+    fi
+    local bak="$HOME/.config/nvim.bak.$(date +%Y%m%d-%H%M%S)"
+    mv "$HOME/.config/nvim" "$bak"
+    echo "  📦 Backed up old config to $bak"
+  fi
+
+  rm -rf "$HOME/.local/state/nvim" "$HOME/.local/share/nvim"
   git clone https://github.com/NvChad/NvChad "$HOME/.config/nvim" --depth 1
   echo "NvChad installed. Run 'nvim' to complete setup."
 }
@@ -64,7 +77,13 @@ setup_vscodium() {
     codium --install-extension vscodevim.vim --force
 
     mkdir -p "$HOME/.config/VSCodium/User"
-    cat > "$HOME/.config/VSCodium/User/settings.json" <<'EOF'
+
+    # Fail-safe: don't overwrite existing settings
+    if [ -f "$HOME/.config/VSCodium/User/settings.json" ]; then
+      echo "  ℹ️  VSCodium settings already exist — skipping overwrite"
+      echo "  📍  Defaults available at: ~/smartDots/linux/setup/devtools.sh (search 'VSCodium')"
+    else
+      cat > "$HOME/.config/VSCodium/User/settings.json" <<'EOF'
 {
   "editor.fontFamily": "Jetbrains Mono",
   "editor.fontSize": 17,
@@ -76,7 +95,8 @@ setup_vscodium() {
   "dart.sdkPath": "~/flutter/bin/cache/dart-sdk"
 }
 EOF
-    echo "VSCodium configured"
+      echo "VSCodium configured"
+    fi
   fi
 }
 
