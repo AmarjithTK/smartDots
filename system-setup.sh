@@ -44,17 +44,15 @@ install_base_packages() {
 
   # Core packages
   sudo pacman -S --noconfirm --needed \
-    base-devel git stow curl wget \
-    zsh kitty rofi dunst feh \
-    brightnessctl ddcutil redshift xclip \
+    base-devel git curl wget \
+    brightnessctl ddcutil xclip \
     neovim python python-pip \
     nodejs npm distrobox \
     docker docker-compose \
     noto-fonts ttf-jetbrains-mono ttf-jetbrains-mono-nerd \
-    ttf-fira-code ttf-firacode-nerd powerline-fonts \
+    ttf-fira-code ttf-firacode-nerd \
     github-cli neofetch htop tree \
-    xdotool wmctrl xprintidle zenity jq \
-    papirus-icon-theme \
+    xprintidle zenity jq \
     --noconfirm 2>&1 | tail -1
 
   # AUR helper check
