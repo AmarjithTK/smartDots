@@ -224,12 +224,17 @@ ZSHRCEOF
 
   # Backup only if exists
   if [ -f "$HOME/.zshconfig" ]; then
-    local bak2="$HOME/.zshconfig.bak.$(date +%Y%m%d-%H%M%S)"
+    local ts
+    ts="$(date +%Y%m%d-%H%M%S)"
+    local bak2="$HOME/.zshconfig.bak.$ts"
     cp "$HOME/.zshconfig" "$bak2"
     warn "Backed up existing .zshconfig -> $bak2"
   fi
 
-  cat > "$HOME/.zshconfig" <<ZSHEOF
+  # Write .zshconfig (use temp file for safety)
+  local zshcfg_tmp
+  zshcfg_tmp="$(mktemp)"
+  cat > "$zshcfg_tmp" <<ZSHEOF
 # ═══════════════════════════════════════════════════════════════
 #  .zshconfig — custom ZSH configuration
 #  ═══════════════════════════════════════════════════════════════
@@ -267,6 +272,7 @@ SAVEHIST=10000
 setopt APPEND_HISTORY
 setopt INC_APPEND_HISTORY
 ZSHEOF
+  mv "$zshcfg_tmp" "$HOME/.zshconfig"
   ok "~/.zshconfig created"
 
   # ── 6. Change default shell ────────────────────────────────
