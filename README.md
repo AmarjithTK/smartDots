@@ -9,6 +9,7 @@ KDE Plasma dotfiles bootstrap. Minimal files, maximum automation.
 | [`aliasmanager.sh`](aliasmanager.sh) | ~89 aliases inline + `helper()` command — standalone, no dependencies |
 | [`zsh-setup.sh`](zsh-setup.sh) | Installs ZSH + oh-my-zsh + powerlevel10k + generates `.zshrc` / `.zshconfig` |
 | [`brillo-setup.sh`](brillo-setup.sh) | Installs Brillo KDE display brightness plasmoid widget |
+| [`system-setup.sh`](system-setup.sh) | Menu-driven setup: base packages, ACPI backlight, GRUB, Git/SSH, TLP |
 | [`.gitconfig`](.gitconfig) | Git configuration — copy to `~/` |
 | [`.gitignore_global`](.gitignore_global) | Global gitignore rules — copy to `~/` |
 
@@ -18,17 +19,16 @@ KDE Plasma dotfiles bootstrap. Minimal files, maximum automation.
 # 1. Aliases (source for immediate use)
 . ./aliasmanager.sh
 
-# Or install permanently:
-bash aliasmanager.sh --generate
-bash aliasmanager.sh --install   # adds source line to ~/.zshrc
+# 2. System setup (packages, backlight, GRUB, etc.)
+bash system-setup.sh
 
-# 2. ZSH environment
+# 3. ZSH environment
 bash zsh-setup.sh
 
-# 3. Brillo KDE brightness widget
+# 4. Brillo KDE brightness widget
 bash brillo-setup.sh
 
-# 4. Git config
+# 5. Git config
 cp .gitconfig ~/
 cp .gitignore_global ~/
 ```
@@ -52,4 +52,4 @@ bash aliasmanager.sh --generate
 | Branch | Description |
 |---|---|
 | `main3` | Full smartDots ecosystem (bspwm, polybar, stow packages) |
-| `main4-plasma` | **Current** — KDE Plasma bootstrap (aliasmanager + ZSH + Brillo) |
+| `main4-plasma` | **Current** — KDE Plasma bootstrap (aliasmanager + ZSH + Brillo + system-setup) |
