@@ -161,6 +161,17 @@ export EDITOR="nvim"
 export BROWSER="chrome"
 export CHROME_EXECUTABLE="/usr/bin/google-chrome-stable"
 
+# ─── Flutter SDK ──────────────────────────────────────────────
+export PATH="\$PATH:\$HOME/flutter/bin"
+export FLUTTER_ROOT="\$HOME/flutter"
+
+# ─── Android SDK ──────────────────────────────────────────────
+export ANDROID_HOME="\$HOME/Android/Sdk"
+export PATH="\$PATH:\$ANDROID_HOME/platform-tools"
+export PATH="\$PATH:\$ANDROID_HOME/tools"
+export PATH="\$PATH:\$ANDROID_HOME/tools/bin"
+export PATH="\$PATH:\$ANDROID_HOME/emulator"
+
 # ─── Shortcuts ────────────────────────────────────────────────
 export cfg="\$HOME/.config"
 
