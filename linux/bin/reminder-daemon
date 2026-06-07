@@ -1,0 +1,111 @@
+#!/bin/bash
+# Reminder Daemon — pushup, timer, bedtime, sleepr, shrutibox
+# Usage: reminder-daemon pushup [--interval 30m]
+#        reminder-daemon timer [--interval 5m]
+#        reminder-daemon bedtime [--time 22:00]
+#        reminder-daemon sleepr [--time 22:30]
+#        reminder-daemon shrutibox --toggle
+
+set -euo pipefail
+
+SOUND_DIR="$HOME/.helpers/musics"
+
+# ─── Pushup reminder ──────────────────────────────────────────
+pushup() {
+  local interval=1800  # 30 minutes
+  while true; do
+    sleep "$interval"
+    paplay /usr/share/sounds/freedesktop/stereo/phone-incoming-call.oga &
+    notify-send "🆙 PUSH-UP TIME!" "Do 10 push-ups & 20 squats. Tiny steps = huge gains 💪"
+    sleep 5
+  done
+}
+
+# ─── 5-minute timer ───────────────────────────────────────────
+timer() {
+  local interval=300  # 5 minutes
+  while true; do
+    paplay /usr/share/sounds/freedesktop/stereo/complete.oga &
+    sleep 1
+    pkill paplay 2>/dev/null || true
+    sleep "$interval"
+  done
+}
+
+# ─── Bedtime shutdown ─────────────────────────────────────────
+bedtime() {
+  local target_time="${1:-22:00}"
+  while true; do
+    if [[ "$(date +%H:%M)" == "$target_time" ]]; then
+      notify-send -u critical -t 60000 \
+        "Shutdown Warning" "The system will shut down in 20 minutes. It's bedtime!"
+      sleep 1200
+      shutdown now
+      break
+    fi
+    sleep 60
+  done
+}
+
+# ─── Sleepr (late-night harassment) ───────────────────────────
+sleepr() {
+  local target_hour=22
+  local target_min=30
+  local sound_path="/usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga"
+
+  play_noise() {
+    pactl set-sink-volume @DEFAULT_SINK@ 100% 2>/dev/null
+    if command -v ffplay &>/dev/null; then
+      ffplay -nodisp -autoexit -t 2 "$sound_path" >/dev/null 2>&1
+    elif command -v paplay &>/dev/null; then
+      paplay "$sound_path" &
+      sleep 2 && kill $! 2>/dev/null
+    fi
+  }
+
+  while true; do
+    local h min
+    h=$(date +%H)
+    m=$(date +%M)
+    if (( 10#$h > target_hour || (10#$h == target_hour && 10#$m >= target_min) )); then
+      echo "🚨 After $target_hour:$target_min — annoying time!"
+      while true; do
+        play_noise
+        sleep 15
+      done
+    fi
+    sleep 30
+  done
+}
+
+# ─── Shrutibox (MP3 toggle) ───────────────────────────────────
+shrutibox() {
+  local song="$SOUND_DIR/a_sharp.mp3"
+  if pgrep -f "mpv --loop=inf $song" >/dev/null; then
+    pkill -f "mpv --loop=inf $song"
+    echo "Shrutibox stopped"
+  else
+    mpv --loop=inf "$song" &
+    echo "Shrutibox started"
+  fi
+}
+
+# ─── Main ─────────────────────────────────────────────────────
+case "${1:-}" in
+  pushup)    pushup ;;
+  timer)     timer ;;
+  bedtime)   bedtime "${2:-22:00}" ;;
+  sleepr)    sleepr ;;
+  shrutibox) shrutibox ;;
+  *)
+    echo "Reminder Daemon — pushup, timer, bedtime, sleepr, shrutibox"
+    echo ""
+    echo "Usage:"
+    echo "  reminder-daemon pushup              # 30-min pushup reminder"
+    echo "  reminder-daemon timer               # 5-min beep"
+    echo "  reminder-daemon bedtime [HH:MM]     # Shutdown at time (default 22:00)"
+    echo "  reminder-daemon sleepr              # Harass after 22:30"
+    echo "  reminder-daemon shrutibox --toggle  # Toggle MP3 loop"
+    exit 1
+    ;;
+esac

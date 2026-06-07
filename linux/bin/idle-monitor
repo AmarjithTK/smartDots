@@ -1,0 +1,77 @@
+#!/bin/bash
+# Idle Monitor — detect idle time, check for media playback, trigger shutdown dialog
+# Usage: idle-monitor [--limit 560] [--check 10]
+
+set -euo pipefail
+
+IDLE_LIMIT=560          # 9m 20s
+CHECK_INTERVAL=10
+ALARM_SOUND="$HOME/.helpers/musics/idle.mp3"
+
+# Parse args
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --limit)    IDLE_LIMIT="$2"; shift 2 ;;
+    --check)    CHECK_INTERVAL="$2"; shift 2 ;;
+    *) echo "Usage: idle-monitor [--limit 560] [--check 10]"; exit 1 ;;
+  esac
+done
+
+get_idle() {
+  echo $(($(xprintidle) / 1000))
+}
+
+is_media_playing() {
+  if pactl list sink-inputs 2>/dev/null | grep -q -E "State: RUNNING|Corked: no"; then
+    return 0
+  fi
+  local active_win_id
+  active_win_id=$(xdotool getactivewindow 2>/dev/null)
+  if xprop -id "$active_win_id" _NET_WM_STATE 2>/dev/null | grep -q _NET_WM_STATE_FULLSCREEN; then
+    return 0
+  fi
+  return 1
+}
+
+trigger_alarm() {
+  echo "Idle detected! Triggering alarm..."
+  local sinks
+  sinks=$(pactl list short sinks | awk '{print $2}')
+  for s in $sinks; do
+    pactl set-sink-volume "$s" 100%
+    pactl set-sink-mute "$s" 0
+  done
+
+  timeout 3s paplay "$ALARM_SOUND" &
+  local alarm_pid=$!
+
+  zenity --question \
+    --title="Idle Alert" \
+    --text="You have been idle for over $(($IDLE_LIMIT / 60)) minutes.\n\nDo you want to shut down?" \
+    --ok-label="Shutdown" --cancel-label="Cancel" --default-cancel --width=300
+
+  local choice=$?
+  kill "$alarm_pid" 2>/dev/null
+  wait "$alarm_pid" 2>/dev/null
+
+  for s in $sinks; do
+    pactl set-sink-volume "$s" 50%
+  done
+
+  [[ $choice -eq 0 ]] && systemctl poweroff
+}
+
+echo "Idle monitor started (limit: ${IDLE_LIMIT}s, check: ${CHECK_INTERVAL}s)"
+while :; do
+  idle=$(get_idle)
+  if (( idle >= IDLE_LIMIT )); then
+    if is_media_playing; then
+      echo "[$(date +%T)] Media active — suppressing alarm"
+    else
+      trigger_alarm
+    fi
+    sleep "$IDLE_LIMIT"
+  else
+    sleep "$CHECK_INTERVAL"
+  fi
+done

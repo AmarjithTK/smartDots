@@ -1,0 +1,58 @@
+#!/bin/bash
+# Config Editor — quickly edit config files via rofi/dmenu
+# Usage: config-editor
+
+set -euo pipefail
+
+declare -A configs=(
+  ["zshrc"]="$HOME/.zshrc"
+  ["zshconfig"]="$HOME/.zshconfig"
+  ["kitty"]="$HOME/.config/kitty/kitty.conf"
+  ["rofi"]="$HOME/.config/rofi/config.rasi"
+  ["dunst"]="$HOME/.config/dunst/dunstrc"
+  ["aliases"]="$HOME/.config/aliases.sh"
+  ["picom"]="$HOME/.config/picom/picom.conf"
+  ["polybar"]="$HOME/.config/polybar/config"
+  ["bspwm"]="$HOME/.config/bspwm/bspwmrc"
+  ["sxhkd"]="$HOME/.config/sxhkd/sxhkdrc"
+  ["nvim"]="$HOME/.config/nvim/init.vim"
+)
+
+# Build the options list
+options=()
+for key in "${!configs[@]}"; do
+  options+=("$key")
+done
+options+=("basescripts")
+options+=("quit")
+
+# ─── Selector ─────────────────────────────────────────────────
+choose() {
+  if command -v rofi &>/dev/null; then
+    printf '%s\n' "${options[@]}" | rofi -dmenu -p "Edit config"
+  elif command -v dmenu &>/dev/null; then
+    printf '%s\n' "${options[@]}" | dmenu -p "Edit config"
+  else
+    echo "Select config to edit:"
+    select c in "${options[@]}"; do echo "$c"; break; done
+  fi
+}
+
+choice=$(choose)
+[[ -z "$choice" || "$choice" == "quit" ]] && exit 0
+
+if [[ "$choice" == "basescripts" ]]; then
+  local dir="$HOME/basescripts"
+  local script
+  if command -v rofi &>/dev/null; then
+    script=$(ls "$dir" | rofi -dmenu -p "Choose script")
+  else
+    script=$(ls "$dir" | dmenu -p "Choose script")
+  fi
+  [[ -n "$script" ]] && vim "$dir/$script"
+elif [[ -n "${configs[$choice]:-}" ]]; then
+  vim "${configs[$choice]}"
+else
+  echo "Unknown config: $choice"
+  exit 1
+fi

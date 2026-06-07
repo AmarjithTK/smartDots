@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Reminder Daemon
+Comment=Pushup, timer, and bedtime reminders
+Exec=$HOME/.local/bin/reminder-daemon pushup
+Terminal=false
+X-KDE-autostart-phase=2

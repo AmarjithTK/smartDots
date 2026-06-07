@@ -1,0 +1,50 @@
+#!/bin/bash
+# Power Menu — lock, logout, reboot, shutdown
+# Auto-detects: rofi → dmenu → text prompt
+
+set -euo pipefail
+
+options="Lock\nLogout\nReboot\nShutdown"
+
+# ─── Rofi variant ─────────────────────────────────────────────
+rofi_menu() {
+  local choice
+  choice=$(echo -e "$options" | rofi -dmenu -p "Power Menu")
+  echo "$choice"
+}
+
+# ─── dmenu variant ────────────────────────────────────────────
+dmenu_menu() {
+  local choice
+  choice=$(echo -e "$options" | dmenu -p "Power Menu")
+  echo "$choice"
+}
+
+# ─── Fallback text prompt ─────────────────────────────────────
+text_menu() {
+  echo "Select action: Lock / Logout / Reboot / Shutdown"
+  read -r choice
+  echo "$choice"
+}
+
+# ─── Execute action ───────────────────────────────────────────
+action() {
+  case "$1" in
+    Lock)     i3lock -c 000000 ;;
+    Logout)   i3-msg exit ;;
+    Reboot)   systemctl reboot ;;
+    Shutdown) systemctl poweroff ;;
+    *)        echo "Unknown action: $1"; exit 1 ;;
+  esac
+}
+
+# ─── Main ─────────────────────────────────────────────────────
+if command -v rofi &>/dev/null; then
+  choice=$(rofi_menu)
+elif command -v dmenu &>/dev/null; then
+  choice=$(dmenu_menu)
+else
+  choice=$(text_menu)
+fi
+
+[[ -n "$choice" ]] && action "$choice"

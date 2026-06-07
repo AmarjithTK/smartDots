@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Battery Monitor
+Comment=Alert on low battery
+Exec=$HOME/.local/bin/battery-monitor
+Terminal=false
+X-KDE-autostart-phase=2

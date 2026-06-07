@@ -1,0 +1,37 @@
+#!/bin/bash
+# Battery Monitor — alert when battery is low and not charging
+# Usage: battery-monitor [--threshold 45] [--interval 300]
+
+set -euo pipefail
+
+THRESHOLD=45
+INTERVAL=300
+SOUND_FILE="$HOME/.helpers/musics/low_battery.mp3"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --threshold) THRESHOLD="$2"; shift 2 ;;
+    --interval)  INTERVAL="$2";  shift 2 ;;
+    *) echo "Usage: battery-monitor [--threshold 45] [--interval 300]"; exit 1 ;;
+  esac
+done
+
+play_sound() {
+  local end=$((SECONDS + 15))
+  while (( SECONDS < end )); do
+    paplay "$SOUND_FILE" 2>/dev/null || true
+  done
+}
+
+while true; do
+  battery=$(upower -i "$(upower -e | grep BAT)" 2>/dev/null \
+    | grep -E percentage | awk '{print $2}' | sed 's/%//')
+  charging=$(upower -i "$(upower -e | grep BAT)" 2>/dev/null \
+    | grep -E state | awk '{print $2}')
+
+  if [[ -n "$battery" ]] && (( battery < THRESHOLD )) && [[ "$charging" != "charging" ]]; then
+    play_sound
+  fi
+
+  sleep "$INTERVAL"
+done

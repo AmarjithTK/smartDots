@@ -1,0 +1,34 @@
+#!/bin/bash
+# YouTube/Media Downloader — audio or video via yt-dlp
+# Usage: yt-dlp [URL]
+
+set -euo pipefail
+
+if ! command -v zenity &>/dev/null; then
+  sudo pacman -S --noconfirm zenity
+fi
+
+read -p "Enter URL: " url
+read -p "Audio only? (y/n): " is_audio
+
+# Quality selection for video
+quality=""
+if [[ "$is_audio" != "y" ]]; then
+  read -p "Quality (360, 480, 720, 1080): " quality
+fi
+
+# Folder selection
+folder=$(zenity --file-selection --directory --title="Select download folder")
+[[ $? -eq 1 ]] && exit 1
+
+# Build yt-dlp command
+cmd="yt-dlp -o '$folder/%(playlist_index)s-%(title)s.%(ext)s'"
+
+if [[ "$is_audio" == "y" ]]; then
+  cmd="$cmd -f 'bestaudio' --extract-audio --audio-format mp3 --audio-quality 8"
+else
+  cmd="$cmd -f 'bestaudio[height<=$quality]+best[ext=mp4]/best[ext=mp4]'"
+fi
+
+cmd="$cmd --yes-playlist '$url' --embed-thumbnail"
+eval "$cmd"

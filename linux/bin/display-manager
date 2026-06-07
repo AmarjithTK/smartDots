@@ -1,0 +1,67 @@
+#!/bin/bash
+# Display Manager — brightness & color temperature control
+# Usage: display-manager brightness [inc|dec]
+#        display-manager colortemp [inc|dec]
+
+set -euo pipefail
+
+BRIGHTNESS_HELPER="$HOME/.helpers/brightness.txt"
+
+# ─── Brightness ───────────────────────────────────────────────
+brightness() {
+  if ! command -v brightnessctl &>/dev/null; then
+    echo "Installing brightnessctl..."
+    sudo pacman -S --noconfirm brightnessctl
+  fi
+
+  case "${1:-}" in
+    inc|increase) brightnessctl set +5% ;;
+    dec|decrease) brightnessctl set 5%- ;;
+    *) echo "Usage: display-manager brightness [inc|dec]"; exit 1 ;;
+  esac
+}
+
+# ─── Color Temperature ────────────────────────────────────────
+colortemp() {
+  command -v redshift &>/dev/null || { echo "redshift not installed"; exit 1; }
+
+  local temp_file="$HOME/.helpers/colortemp.txt"
+  local default_temp=4000
+  local increment=300
+  local current_temp
+
+  if [[ -f "$temp_file" ]]; then
+    current_temp=$(cat "$temp_file")
+  else
+    current_temp=$default_temp
+  fi
+
+  if [[ "${1:-}" == "dec" || "${1:-}" == "decrease" ]]; then
+    increment=-$increment
+  fi
+
+  local new_temp=$((current_temp + increment))
+  (( new_temp < 1000 )) && new_temp=1000
+  (( new_temp > 10000 )) && new_temp=10000
+
+  redshift -P -O "$new_temp"
+  echo "$new_temp" > "$temp_file"
+}
+
+# ─── Main ─────────────────────────────────────────────────────
+case "${1:-}" in
+  brightness) brightness "${2:-}" ;;
+  colortemp)  colortemp "${2:-}" ;;
+  *)
+    echo "Display Manager — control brightness and color temperature"
+    echo ""
+    echo "Usage:"
+    echo "  display-manager brightness [inc|dec]"
+    echo "  display-manager colortemp [inc|dec]"
+    echo ""
+    echo "Examples:"
+    echo "  display-manager brightness inc     # Increase brightness by 5%"
+    echo "  display-manager colortemp dec      # Decrease color temperature"
+    exit 1
+    ;;
+esac

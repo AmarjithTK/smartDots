@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Idle Monitor
+Comment=Detect idle time and prompt shutdown
+Exec=$HOME/.local/bin/idle-monitor
+Terminal=false
+X-KDE-autostart-phase=2

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Daily Wallpaper
+Comment=Fetch daily wallpaper on login
+Exec=$HOME/.local/bin/wallpaper fetch
+Terminal=false
+X-KDE-autostart-phase=2

@@ -1,0 +1,63 @@
+#!/bin/bash
+# AppImage Manager — install or delete AppImage applications
+# Usage: appimage install|delete
+
+set -euo pipefail
+
+APPIMAGES_DIR="$HOME/appimages"
+mkdir -p "$APPIMAGES_DIR"
+
+install() {
+  local appimage
+  appimage=$(zenity --file-selection --file-filter='AppImage files | *.AppImage' --title="Select AppImage")
+  [[ -z "$appimage" ]] && exit 1
+
+  local filename
+  filename=$(basename "$appimage")
+  mv "$appimage" "$APPIMAGES_DIR/$filename"
+  chmod +x "$APPIMAGES_DIR/$filename"
+
+  local name
+  name=$(zenity --entry --title="Desktop Entry" --text="Name for desktop entry:")
+  [[ -z "$name" ]] && exit 1
+
+  local desktop="$HOME/.local/share/applications/$name.desktop"
+  cat > "$desktop" <<EOF
+[Desktop Entry]
+Name=$name
+Exec=$APPIMAGES_DIR/$filename %U
+Icon=$filename
+Terminal=false
+Type=Application
+Categories=Utility;
+EOF
+  chmod +x "$desktop"
+  echo "Installed: $name"
+}
+
+delete() {
+  local entries=()
+  while IFS= read -r f; do
+    entries+=("$(basename "$f")")
+  done < <(find "$HOME/.local/share/applications" -name "*.desktop" 2>/dev/null)
+
+  [[ ${#entries[@]} -eq 0 ]] && echo "No AppImage entries found" && exit 1
+
+  local selected
+  selected=$(printf '%s\n' "${entries[@]}" | zenity --list --title="Select to Delete" --column="AppImage")
+  [[ -z "$selected" ]] && exit 1
+
+  rm -f "$HOME/.local/share/applications/$selected"
+  rm -f "$APPIMAGES_DIR/$selected"
+  echo "Deleted: $selected"
+}
+
+case "${1:-}" in
+  install) install ;;
+  delete)  delete ;;
+  *)
+    echo "AppImage Manager"
+    echo "Usage: appimage install|delete"
+    exit 1
+    ;;
+esac

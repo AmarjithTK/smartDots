@@ -1,0 +1,48 @@
+#!/bin/bash
+# Python Virtual Environment Manager
+# Usage: venv
+
+set -euo pipefail
+
+VENV_BASE="$HOME/.helpers/venv"
+mkdir -p "$VENV_BASE"
+
+activate() {
+  local name="$1"
+  if [[ -f "$VENV_BASE/$name/bin/activate" ]]; then
+    echo "source $VENV_BASE/$name/bin/activate" > "$HOME/.helpers/venvcmd.txt"
+    echo "Activated: $name"
+    echo "Run: source $VENV_BASE/$name/bin/activate"
+  else
+    echo "Virtual env not found: $name"
+    exit 1
+  fi
+}
+
+# List environments
+venvs=()
+while IFS= read -r d; do
+  venvs+=("$(basename "$d")")
+done < <(find "$VENV_BASE" -maxdepth 1 -type d ! -path "$VENV_BASE")
+
+echo "Available virtual environments:"
+for i in "${!venvs[@]}"; do
+  echo "$((i+1))) ${venvs[$i]}"
+done
+
+echo "$((${#venvs[@]}+1))) Create new"
+echo "$((${#venvs[@]}+2))) Quit"
+read -p "Choice: " choice
+
+if (( choice == ${#venvs[@]}+2 )); then
+  exit 0
+elif (( choice == ${#venvs[@]}+1 )); then
+  read -p "Name for new venv: " name
+  python3 -m venv "$VENV_BASE/$name"
+  activate "$name"
+elif (( choice >= 1 && choice <= ${#venvs[@]} )); then
+  activate "${venvs[$((choice-1))]}"
+else
+  echo "Invalid choice"
+  exit 1
+fi

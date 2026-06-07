@@ -1,0 +1,13 @@
+#!/bin/bash
+# Check for system updates
+# Usage: check-updates
+
+set -euo pipefail
+
+echo "Checking for Arch Linux updates..."
+if command -v checkupdates &>/dev/null; then
+  checkupdates
+elif command -v pacman &>/dev/null; then
+  sudo pacman -Sy --noconfirm
+  pacman -Qu
+fi
