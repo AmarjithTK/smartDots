@@ -257,9 +257,18 @@ install_self() {
   if ! grep -q "aliasmanager" "$rcfile" 2>/dev/null; then
     { echo ""; echo "# aliasmanager — standalone alias bootstrap"; echo "$source_line"; } >> "$rcfile"
     echo "  Added source line to $rcfile"
-    echo "  Run: . $rcfile  (or restart shell)"
   else
     echo "  aliasmanager already sourced in $rcfile"
+  fi
+
+  # Create symlink in ~/.local/bin for CLI access
+  local bindir="$HOME/.local/bin"
+  mkdir -p "$bindir"
+  if [ ! -f "$bindir/aliasmanager" ]; then
+    ln -s "$script_path" "$bindir/aliasmanager"
+    echo "  Created: $bindir/aliasmanager → aliasmanager"
+  else
+    echo "  $bindir/aliasmanager already exists"
   fi
 }
 
