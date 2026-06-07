@@ -18,13 +18,13 @@
 set -eo pipefail
 
 # ─── Colors ──────────────────────────────────────────────────────
-R='\033[0;31m' G='\033[0;32m' Y='\033[1;33m' C='\033[0;36m'
-B='\033[1;37m' N='\033[0m'
+R=$'\033[0;31m' G=$'\033[0;32m' Y=$'\033[1;33m' C=$'\033[0;36m'
+B=$'\033[1;37m' N=$'\033[0m'
 
-info()  { echo -e "  ${C}ℹ️${N}  $1"; }
-ok()    { echo -e "  ${G}✅${N} $1"; }
-warn()  { echo -e "  ${Y}⚠️${N}  $1"; }
-fail()  { echo -e "  ${R}❌${N} $1"; }
+info()  { echo "  ${C}ℹ️${N}  $1"; }
+ok()    { echo "  ${G}✅${N} $1"; }
+warn()  { echo "  ${Y}⚠️${N}  $1"; }
+fail()  { echo "  ${R}❌${N} $1"; }
 
 prompt_yes() {
   local d="${2:-y}"
@@ -278,14 +278,14 @@ ZSHEOF
   # ── 6. Change default shell ────────────────────────────────
   echo ""
   info "Changing default shell to ZSH..."
-  if [ "$SHELL" = "$(which zsh)" ]; then
+  if [ "$SHELL" = "$(command -v zsh)" ]; then
     ok "Default shell is already ZSH"
   else
     if [ "${1:-}" = "--yes" ]; then
-      chsh -s "$(which zsh)" 2>/dev/null && ok "Default shell changed to ZSH"
+      chsh -s "$(command -v zsh)" 2>/dev/null && ok "Default shell changed to ZSH"
     else
       if prompt_yes "Change default shell to ZSH? (log out/in to apply)" "y"; then
-        chsh -s "$(which zsh)" 2>/dev/null && ok "Default shell changed to ZSH"
+        chsh -s "$(command -v zsh)" 2>/dev/null && ok "Default shell changed to ZSH"
       else
         info "Skipping shell change"
       fi

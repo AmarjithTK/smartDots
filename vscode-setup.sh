@@ -12,16 +12,16 @@
 
 set -euo pipefail
 
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-CYAN='\033[0;36m'
-RESET='\033[0m'
+GREEN=$'\033[0;32m'
+YELLOW=$'\033[1;33m'
+RED=$'\033[0;31m'
+CYAN=$'\033[0;36m'
+RESET=$'\033[0m'
 
-ok()   { echo -e "  ${GREEN}✓${RESET} $1"; }
-warn() { echo -e "  ${YELLOW}→${RESET} $1"; }
-fail() { echo -e "  ${RED}✗${RESET} $1"; }
-info() { echo -e "  ${CYAN}i${RESET} $1"; }
+ok()   { echo "  ${GREEN}✓${RESET} $1"; }
+warn() { echo "  ${YELLOW}→${RESET} $1"; }
+fail() { echo "  ${RED}✗${RESET} $1"; }
+info() { echo "  ${CYAN}i${RESET} $1"; }
 
 setup_vscode() {
   echo ""
@@ -81,9 +81,9 @@ setup_vscode() {
   local installed=0 failed=0
   for ext in "${extensions[@]}"; do
     if code --install-extension "$ext" --force &>/dev/null; then
-      ((installed++))
+      installed=$((installed + 1))
     else
-      ((failed++))
+      failed=$((failed + 1))
       warn "Failed to install: $ext"
     fi
   done

@@ -19,13 +19,13 @@
 set -euo pipefail
 
 # ─── Colors ──────────────────────────────────────────────────────
-R='\033[0;31m' G='\033[0;32m' Y='\033[1;33m' C='\033[0;36m'
-B='\033[1;37m' N='\033[0m'
+R=$'\033[0;31m' G=$'\033[0;32m' Y=$'\033[1;33m' C=$'\033[0;36m'
+B=$'\033[1;37m' N=$'\033[0m'
 
-info()  { echo -e "  ${C}ℹ️${N}  $1"; }
-ok()    { echo -e "  ${G}✅${N} $1"; }
-warn()  { echo -e "  ${Y}⚠️${N}  $1"; }
-fail()  { echo -e "  ${R}❌${N} $1"; }
+info()  { echo "  ${C}ℹ️${N}  $1"; }
+ok()    { echo "  ${G}✅${N} $1"; }
+warn()  { echo "  ${Y}⚠️${N}  $1"; }
+fail()  { echo "  ${R}❌${N} $1"; }
 
 prompt_yes() {
   local d="${2:-y}"
@@ -286,7 +286,7 @@ import configparser, re
 c = configparser.ConfigParser()
 c.read('$panel_config')
 for s in c.sections():
-    if s.startswith('Containements]['):
+    if s.startswith('Containments]['):
         try:
             if c.get(s, 'plugin') == 'org.kde.panel':
                 print(re.search(r'Containments\]\[(\d+)\]', s).group(1))
