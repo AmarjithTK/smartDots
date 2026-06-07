@@ -11,26 +11,42 @@ SETUP_DIR="$SMARTDOTS_DIR/linux/setup"
 STOW_DIR="$SMARTDOTS_DIR/linux/stow"
 ARCHIVE_DIR="$SMARTDOTS_DIR/archive/stow"
 
-# ─── Stow active dotfiles ─────────────────────────────────────
+# ─── Stow active dotfiles (safe: backups existing files) ─────
 stow_active() {
   echo "=== Symlinking active dotfiles ==="
   cd "$SMARTDOTS_DIR"
 
   # Active (KDE-compatible) stow packages
   for pkg in shell kitty rofi dunst firefox plasma-autostart; do
-    if [[ -d "$STOW_DIR/$pkg" ]]; then
-      stow -d "$STOW_DIR" -t "$HOME" "$pkg" 2>/dev/null || \
-        stow -d "$STOW_DIR" -t "$HOME" "$pkg" --adopt
-      echo "  - stow: $pkg"
+    if [[ ! -d "$STOW_DIR/$pkg" ]]; then
+      continue
     fi
+
+    local ts
+    ts=$(date +%Y%m%d-%H%M%S)
+
+    # Backup existing files that would be overwritten
+    while IFS= read -r -d '' relpath; do
+      local target="$HOME/$relpath"
+      if [[ -f "$target" && ! -L "$target" ]]; then
+        local bak="$target.bak.$ts"
+        mv "$target" "$bak"
+        echo "  📦 backed up: ~/$relpath → ~/$relpath.bak.$ts"
+      fi
+    done < <(cd "$STOW_DIR/$pkg" && find . -type f -print0)
+
+    # Stow without --adopt (files are already backed up)
+    stow -d "$STOW_DIR" -t "$HOME" "$pkg" 2>/dev/null
+    echo "  - stow: $pkg"
   done
 
-  # Shared git config
+  # Shared git config (no-clobber: user's existing config is kept)
   mkdir -p "$HOME/.config/git"
   cp -n "$SMARTDOTS_DIR/shared/git/.gitconfig" "$HOME/" 2>/dev/null || true
   cp -n "$SMARTDOTS_DIR/shared/git/.gitignore_global" "$HOME/" 2>/dev/null || true
 
   echo "=== Dotfiles symlinked ==="
+  echo "📦 Backups created with .bak.$ts suffix"
 }
 
 # ─── CLI Toolkit install ──────────────────────────────────────
