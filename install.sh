@@ -139,6 +139,23 @@ run_bootstrap() {
   echo "🚀 Running smartDots bootstrap..."
   cd "$DEST"
   bash linux/setup/bootstrap.sh
+
+  # Offer CLI Toolkit install after bootstrap
+  echo ""
+  echo "🛠️  Install CLI Toolkit (60 aliases + helper command)?"
+  read -p "   This adds 'helper', 'gs', 'fpg', 'nd' etc. [Y/n]: " install_tk
+  install_tk="${install_tk:-y}"
+  if [ "$install_tk" = "y" ] || [ "$install_tk" = "Y" ]; then
+    echo ""
+    sh "$DEST/cli-toolkit/install.sh"
+  fi
+}
+
+install_cli_toolkit() {
+  echo ""
+  echo "🚀 Installing CLI Toolkit (aliases + helper)..."
+  cd "$DEST"
+  sh cli-toolkit/install.sh
 }
 
 # ─── Platform Detection ───────────────────────────────────────────────
