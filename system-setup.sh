@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════════
-#  system-setup — base packages, configs, git/ssh, TLP, updates
+#  system-setup — system update, packages, configs, git/ssh
 #  ═══════════════════════════════════════════════════════════════════
 #  A simple while-loop menu for setting up Arch Linux.
 #
@@ -28,7 +28,19 @@ state_mark() { mkdir -p "$HOME/.aliasmanager"; sed -i "/^$1=/d" "$STATE_FILE" 2>
 check() { if state_done "$1"; then echo "${GREEN}✓${RESET}"; else echo " "; fi; }
 
 # ═══════════════════════════════════════════════════════════════════
-#  1. BASE PACKAGES
+#  1. SYSTEM UPDATE (always do this first)
+#  ═══════════════════════════════════════════════════════════════════
+
+system_update() {
+  echo ""
+  info "Updating system..."
+  sudo pacman -Syu --noconfirm 2>&1 | tail -3
+  ok "System updated"
+  state_mark "system_updated"
+}
+
+# ═══════════════════════════════════════════════════════════════════
+#  2. BASE PACKAGES
 #  ═══════════════════════════════════════════════════════════════════
 
 install_base_packages() {
@@ -61,19 +73,23 @@ install_base_packages() {
 }
 
 # ═══════════════════════════════════════════════════════════════════
-#  2. CONFIG FILES
+#  3. CONFIG FILES
 #  ═══════════════════════════════════════════════════════════════════
 
 install_configs() {
   echo ""
   info "Installing config files..."
+  echo "  ┌─────────────────────────────────────────────────────────┐"
+  echo "  │  .gitconfig        → Git user name/email + aliases        │"
+  echo "  │  .gitignore_global → Global gitignore (Node/Python/...)  │"
+  echo "  └─────────────────────────────────────────────────────────┘"
 
   local script_dir
   script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
   for f in .gitconfig .gitignore_global; do
     if [ -f "$script_dir/$f" ]; then
-      cp -n "$script_dir/$f" "$HOME/" 2>/dev/null && ok "Copied $f to ~/" || info "$f already exists — skipped"
+      cp -n "$script_dir/$f" "$HOME/" 2>/dev/null && ok "Copied $f → ~/$f" || info "$f already exists in ~/ — not overwritten"
     fi
   done
 
@@ -83,7 +99,7 @@ install_configs() {
 }
 
 # ═══════════════════════════════════════════════════════════════════
-#  3. GIT + SSH KEY
+#  4. GIT + SSH KEY
 #  ═══════════════════════════════════════════════════════════════════
 
 setup_git_ssh() {
@@ -141,34 +157,6 @@ setup_git_ssh() {
 }
 
 # ═══════════════════════════════════════════════════════════════════
-#  4. LAPTOP POWER (TLP)
-#  ═══════════════════════════════════════════════════════════════════
-
-setup_laptop_power() {
-  echo ""
-  info "Setting up laptop power management (TLP)..."
-  sudo pacman -Syy --noconfirm
-  sudo pacman -S --noconfirm tlp tlp-rdw 2>&1 | tail -1
-  sudo systemctl enable tlp.service 2>/dev/null
-  sudo systemctl enable NetworkManager-dispatcher.service 2>/dev/null
-  sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket 2>/dev/null
-  ok "TLP enabled"
-  state_mark "laptop_power"
-}
-
-# ═══════════════════════════════════════════════════════════════════
-#  5. SYSTEM UPDATE
-#  ═══════════════════════════════════════════════════════════════════
-
-system_update() {
-  echo ""
-  info "Updating system..."
-  sudo pacman -Syu --noconfirm 2>&1 | tail -3
-  ok "System updated"
-  state_mark "system_updated"
-}
-
-# ═══════════════════════════════════════════════════════════════════
 #  INSTALL EVERYTHING
 #  ═══════════════════════════════════════════════════════════════════
 
@@ -177,11 +165,10 @@ install_all() {
   echo "  ┌─────────────────────────────────────────────────────┐"
   echo "  │  Installing EVERYTHING                              │"
   echo "  └─────────────────────────────────────────────────────┘"
+  system_update
   install_base_packages
   install_configs
   setup_git_ssh
-  setup_laptop_power
-  system_update
   ok "All done!"
 }
 
@@ -194,11 +181,12 @@ while true; do
   echo "  ┌─────────────────────────────────────────────────────┐"
   echo "  │  SYSTEM SETUP                                       │"
   echo "  ├─────────────────────────────────────────────────────┤"
-  printf "  │  %s1%s) Base packages        [%s]                   │\n" "$BOLD" "$RESET" "$(check base_packages)"
-  printf "  │  %s2%s) Config files         [%s]                   │\n" "$BOLD" "$RESET" "$(check configs)"
-  printf "  │  %s3%s) Git + SSH key        [%s]                   │\n" "$BOLD" "$RESET" "$(check git_ssh)"
-  printf "  │  %s4%s) Laptop power (TLP)   [%s]                   │\n" "$BOLD" "$RESET" "$(check laptop_power)"
-  printf "  │  %s5%s) System update        [%s]                   │\n" "$BOLD" "$RESET" "$(check system_updated)"
+  printf "  │  %s1%s) System update        [%s]                   │\n" "$BOLD" "$RESET" "$(check system_updated)"
+  printf "  │  %s2%s) Base packages        [%s]                   │\n" "$BOLD" "$RESET" "$(check base_packages)"
+  printf "  │  %s3%s) Config files         [%s]                   │\n" "$BOLD" "$RESET" "$(check configs)"
+  echo "  │       • .gitconfig (Git user/aliases)               │"
+  echo "  │       • .gitignore_global (Node/Python/Rust/...)    │"
+  printf "  │  %s4%s) Git + SSH key        [%s]                   │\n" "$BOLD" "$RESET" "$(check git_ssh)"
   echo "  │                                              │"
   echo "  │  a) Install ALL                              │"
   echo "  │  q) Quit                                     │"
@@ -208,11 +196,10 @@ while true; do
 
   for c in "${choices[@]}"; do
     case "$c" in
-      1) install_base_packages ;;
-      2) install_configs ;;
-      3) setup_git_ssh ;;
-      4) setup_laptop_power ;;
-      5) system_update ;;
+      1) system_update ;;
+      2) install_base_packages ;;
+      3) install_configs ;;
+      4) setup_git_ssh ;;
       a|A) install_all ;;
       q|Q) echo ""; echo "  Done."; exit 0 ;;
       *) warn "Unknown: $c" ;;
