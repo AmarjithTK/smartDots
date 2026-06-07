@@ -7,16 +7,15 @@
 #
 #  USAGE:
 #    . aliasmanager.sh                       # Source → aliases + helper ready
-#    bash aliasmanager.sh --generate         # Write ~/.aliasmanager/registry.txt
-#    bash aliasmanager.sh --load             # Define aliases in current shell
-#    bash aliasmanager.sh --list             # List all categories
+#    bash aliasmanager.sh                    # Sync + regenerate registry
+#    bash aliasmanager.sh --list             # Show all categories
 #    bash aliasmanager.sh --install          # Add source line to shell config
 #    bash aliasmanager.sh --help             # Show this help
 #
 #  ADDING ALIASES:
 #    1. Edit the ALIASES array below (one line per entry)
-#    2. Run: bash aliasmanager.sh --generate
-#    3. Re-source: . aliasmanager.sh
+#    2. Run: bash aliasmanager.sh          # syncs ~/.aliasmanager/ + registry
+#    3. Run: . ~/.aliasmanager/aliasmanager.sh   # apply to current shell
 #    Done. That's it.
 #  ═══════════════════════════════════════════════════════════════════
 
@@ -49,7 +48,6 @@ ALIASES=(
   "flutter|fbl|flutter build linux"
   "flutter|fan|flutter analyze"
   "flutter|ffix|dart fix --apply"
-  "flutter|finstall|(shell function) install APK to all ADB devices"
 
   # ── Git ──────────────────────────────────────────────────────
   "git|gs|git status"
@@ -276,11 +274,10 @@ aliasmanager.sh — standalone alias bootstrap
 
 USAGE:
   . aliasmanager.sh              Source → aliases + helper ready
-  bash aliasmanager.sh --generate  Write ~/.aliasmanager/registry.txt
-  bash aliasmanager.sh --load      Define aliases in current shell
-  bash aliasmanager.sh --list      Show all categories
-  bash aliasmanager.sh --install   Add source line to shell config
-  bash aliasmanager.sh --help      Show this help
+  bash aliasmanager.sh           Sync → copies to ~/.aliasmanager/ + regenerates registry
+  bash aliasmanager.sh --list    Show all categories
+  bash aliasmanager.sh --install Add source line to shell config
+  bash aliasmanager.sh --help    Show this help
 
 AFTER SOURCING:
   helper                  List all aliases by category
@@ -288,14 +285,14 @@ AFTER SOURCING:
 
 ADDING NEW ALIASES:
   1. Edit the ALIASES array in aliasmanager.sh
-  2. Run: bash aliasmanager.sh --generate
-  3. Re-source: . aliasmanager.sh
+  2. Run: bash aliasmanager.sh          # syncs ~/.aliasmanager/ + registry
+  3. Run: . ~/.aliasmanager/aliasmanager.sh   # apply to current shell
   Done.
 
 EXAMPLE:
   Add "docker|dprune|docker system prune -af"
-  → bash aliasmanager.sh --generate
-  → . aliasmanager.sh
+  → bash aliasmanager.sh
+  → . ~/.aliasmanager/aliasmanager.sh
   → dprune  # works instantly
 HELP
 }
@@ -303,6 +300,49 @@ HELP
 # ═══════════════════════════════════════════════════════════════════
 #  MAIN / CLI
 #  ═══════════════════════════════════════════════════════════════════
+
+# ─── Detect if script is being sourced or executed ───────────────
+# Works in both bash and zsh.
+is_sourced() {
+  if [ -n "$ZSH_EVAL_CONTEXT" ]; then
+    case $ZSH_EVAL_CONTEXT in *:file:*) return 0;; esac
+    return 1
+  elif [ -n "$BASH_SOURCE" ] && [ "${BASH_SOURCE[0]}" != "$0" ]; then
+    return 0
+  fi
+  return 1
+}
+
+# ─── When executed (bash aliasmanager.sh): sync + regenerate + guide ──
+# ─── When sourced (. aliasmanager.sh):        sync + regenerate + load ──
+sync_and_source() {
+  # 1. Copy self to ~/.aliasmanager/ for persistence
+  local src_path
+  if [ -n "${BASH_SOURCE[0]:-}" ]; then
+    src_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)/$(basename "${BASH_SOURCE[0]}")"
+  elif [ -n "$ZSH_SCRIPT" ]; then
+    src_path="$ZSH_SCRIPT"
+  else
+    src_path="./aliasmanager.sh"
+  fi
+
+  local dst="$HOME/.aliasmanager/aliasmanager.sh"
+  mkdir -p "$HOME/.aliasmanager"
+  if [ -f "$src_path" ]; then
+    cp "$src_path" "$dst"
+  fi
+
+  # 2. Regenerate registry (always — picks up edits)
+  generate_registry >/dev/null
+
+  # 3. If sourced → load aliases into current shell
+  #    If executed → tell user to re-source
+  if is_sourced; then
+    load_aliases
+  else
+    echo "✅ aliasmanager synced — run: . ~/.aliasmanager/aliasmanager.sh"
+  fi
+}
 
 case "${1:-}" in
   --generate|-g)
@@ -322,11 +362,7 @@ case "${1:-}" in
     show_help
     ;;
   "")
-    # Silently load aliases when sourced
-    if [ ! -f "$REGISTRY" ]; then
-      generate_registry >/dev/null
-    fi
-    load_aliases
+    sync_and_source
     ;;
   *)
     echo "Unknown option: $1"
