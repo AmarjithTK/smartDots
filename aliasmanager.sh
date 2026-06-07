@@ -51,6 +51,7 @@ ALIASES=(
   "flutter|fbl|flutter build linux"
   "flutter|fan|flutter analyze"
   "flutter|ffix|dart fix --apply"
+  "flutter|finstall|(shell function) install APK to all ADB devices"
 
   # ── Git ──────────────────────────────────────────────────────
   "git|gs|git status"
