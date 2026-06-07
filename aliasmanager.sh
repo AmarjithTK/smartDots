@@ -20,8 +20,6 @@
 #    Done. That's it.
 #  ═══════════════════════════════════════════════════════════════════
 
-set -euo pipefail
-
 ALIASMAN_DIR="${ALIASMAN_DIR:-$HOME/.aliasmanager}"
 REGISTRY="$ALIASMAN_DIR/registry.txt"
 
@@ -178,12 +176,12 @@ generate_registry() {
     echo "# Format: category|alias|command"
     echo "#"
     for entry in "${ALIASES[@]}"; do
-      echo "$entry"
-    done
-  } > "$REGISTRY"
-  local count
-  count=$(grep -c '^[a-z]' "$REGISTRY" 2>/dev/null || echo 0)
-  echo "  Generated: $REGISTRY ($count aliases)"
+        echo "$entry"
+      done
+    } > "$REGISTRY"
+    local count
+    count=$(grep -c '^[a-z]' "$REGISTRY" 2>/dev/null || echo 0)
+    echo "$count"
 }
 
 # ─── load: define all aliases for current shell ───────────────────
@@ -195,7 +193,6 @@ load_aliases() {
     case "$category" in ''|\#*) continue ;; esac
     alias "$alias_name"="$command" 2>/dev/null || true
   done < "$REGISTRY"
-  echo "  Aliases loaded ($(grep -c '^[a-z]' "$REGISTRY" 2>/dev/null || echo 0) total)"
 }
 
 # ─── helper: list/search aliases by category ──────────────────────
@@ -325,12 +322,11 @@ case "${1:-}" in
     show_help
     ;;
   "")
-    # When sourced with no args: ensure registry exists, load aliases
+    # Silently load aliases when sourced
     if [ ! -f "$REGISTRY" ]; then
-      generate_registry
+      generate_registry >/dev/null
     fi
     load_aliases
-    echo "  aliasmanager ready — try 'helper' to see all aliases"
     ;;
   *)
     echo "Unknown option: $1"
