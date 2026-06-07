@@ -41,7 +41,8 @@ interactive_menu() {
     echo "1) Install base packages"
     echo "2) Install dev tools (ZSH, NVIM, VSCodium)"
     echo "3) Setup Firefox theme"
-    echo "4) Archive: stow BSPWM/Polybar/Picom configs"
+    echo "4) Brillo: KDE brightness widget + DDC/CI (desktops)"
+    echo "5) Archive: stow BSPWM/Polybar/Picom configs"
     echo "q) Quit"
     echo ""
     read -p "Select (space-separated): " -a choices
@@ -51,7 +52,8 @@ interactive_menu() {
         1) bash "$SETUP_DIR/packages.sh" ;;
         2) bash "$SETUP_DIR/devtools.sh" ;;
         3) bash "$SETUP_DIR/firefox.sh" ;;
-        4) stow_archive ;;
+        4) bash "$SETUP_DIR/plasmoid-brillo.sh" ;;
+        5) stow_archive ;;
         q|Q) exit 0 ;;
         *) echo "Invalid: $c" ;;
       esac

@@ -1,0 +1,26 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "",
+                "Name": "AmarjithTK"
+            }
+        ],
+        "Category": "Hardware",
+        "Description": "Brightness slider for desktop/laptop monitors via DDC/CI or backlight",
+        "EnabledByDefault": true,
+        "Icon": "brightnesssettings",
+        "Id": "org.amarjithtk.brillo",
+        "License": "MIT",
+        "Name": "Brillo — Display Brightness",
+        "ServiceTypes": [
+            "Plasma/Applet"
+        ],
+        "Version": "1.0",
+        "Website": ""
+    },
+    "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-MainScript": "ui/main.qml",
+    "X-KDE-ParentApp": "",
+    "X-KDE-PluginInfo-EnabledByDefault": true
+}

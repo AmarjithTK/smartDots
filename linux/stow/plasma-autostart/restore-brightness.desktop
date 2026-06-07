@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Restore Display Brightness
+Comment=Restore monitor brightness from last saved state (supports DDC/CI)
+Exec=$HOME/.local/bin/display-manager brightness restore
+Terminal=false
+X-KDE-autostart-phase=2

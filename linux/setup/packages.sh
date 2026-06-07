@@ -14,6 +14,9 @@ sudo pacman -S --noconfirm --needed \
   pulseaudio pavucontrol \
   noto-fonts noto-fonts-emoji ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-fira-code
 
+# DDC/CI brightness control for desktop monitors
+sudo pacman -S --noconfirm --needed ddcutil python 2>/dev/null || true
+
 # Development
 sudo pacman -S --noconfirm --needed \
   neovim python python-pip python-virtualenvwrapper \
