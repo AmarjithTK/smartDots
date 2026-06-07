@@ -1,0 +1,30 @@
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.code-workspace
+
+# Shell
+*.history
+.zsh_history
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# General
+*.log
+*.bak
+*.tmp
+
+# Alias manager generated files
+.aliasmanager/
