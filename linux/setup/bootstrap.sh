@@ -11,19 +11,46 @@ SETUP_DIR="$SMARTDOTS_DIR/linux/setup"
 STOW_DIR="$SMARTDOTS_DIR/linux/stow"
 ARCHIVE_DIR="$SMARTDOTS_DIR/archive/stow"
 
+# ─── Ensure .zshrc sources .zshconfig (merge, not replace) ──
+ensure_zshrc_sources_zshconfig() {
+  local zshrc="$HOME/.zshrc"
+  local zshconfig_source='[ -f "$HOME/.zshconfig" ] && . "$HOME/.zshconfig"'
+
+  if [[ ! -f "$zshrc" ]]; then
+    # No .zshrc exists — create one that sources .zshconfig
+    cat > "$zshrc" <<'ZSHEOF'
+# Default .zshrc — loads smartDots config
+POWERLEVEL10K_DISABLE_CONFIGURATION_WIZARD=true
+source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
+[ -f "$HOME/.zshconfig" ] && . "$HOME/.zshconfig"
+ZSHEOF
+    echo "  📝 created: ~/.zshrc (sources .zshconfig)"
+  elif ! grep -q "zshconfig" "$zshrc" 2>/dev/null; then
+    # .zshrc exists but doesn't source .zshconfig — append ONE line
+    {
+      echo ""
+      echo "# smartDots: load custom config"
+      echo '[ -f "$HOME/.zshconfig" ] && . "$HOME/.zshconfig"'
+    } >> "$zshrc"
+    echo "  📝 appended: ~/.zshrc now sources .zshconfig (existing config preserved)"
+  else
+    echo "  ℹ️  ~/.zshrc already sources .zshconfig — no change"
+  fi
+}
+
 # ─── Stow active dotfiles (safe: backups existing files) ─────
 stow_active() {
   echo "=== Symlinking active dotfiles ==="
   cd "$SMARTDOTS_DIR"
 
+  local ts
+  ts=$(date +%Y%m%d-%H%M%S)
+
   # Active (KDE-compatible) stow packages
-  for pkg in shell kitty rofi dunst firefox plasma-autostart; do
+  for pkg in kitty rofi dunst firefox plasma-autostart; do
     if [[ ! -d "$STOW_DIR/$pkg" ]]; then
       continue
     fi
-
-    local ts
-    ts=$(date +%Y%m%d-%H%M%S)
 
     # Backup existing files that would be overwritten
     while IFS= read -r -d '' relpath; do
@@ -35,10 +62,30 @@ stow_active() {
       fi
     done < <(cd "$STOW_DIR/$pkg" && find . -type f -print0)
 
-    # Stow without --adopt (files are already backed up)
     stow -d "$STOW_DIR" -t "$HOME" "$pkg" 2>/dev/null
     echo "  - stow: $pkg"
   done
+
+  # Shell package: stow only .zshconfig (never replace .zshrc)
+  if [[ -d "$STOW_DIR/shell" ]]; then
+    # Stow only .zshconfig from the shell package
+    while IFS= read -r -d '' relpath; do
+      local target="$HOME/$relpath"
+      # Only handle .zshconfig, skip .zshrc
+      [[ "$relpath" == ".zshrc" ]] && continue
+      if [[ -f "$target" && ! -L "$target" ]]; then
+        local bak="$target.bak.$ts"
+        mv "$target" "$bak"
+        echo "  📦 backed up: ~/$relpath"
+      fi
+    done < <(cd "$STOW_DIR/shell" && find . -type f -print0)
+
+    stow -d "$STOW_DIR" -t "$HOME" "shell" 2>/dev/null
+    echo "  - stow: shell/.zshconfig"
+  fi
+
+  # Ensure .zshrc sources .zshconfig (merge, never replace)
+  ensure_zshrc_sources_zshconfig
 
   # Shared git config (no-clobber: user's existing config is kept)
   mkdir -p "$HOME/.config/git"
