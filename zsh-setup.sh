@@ -50,6 +50,7 @@ setup_zsh() {
   if command -v zsh &>/dev/null; then
     ok "ZSH already installed ($(zsh --version 2>/dev/null | head -1))"
   else
+    sudo pacman -Syy --noconfirm
     sudo pacman -S --noconfirm zsh 2>&1 | tail -1
     ok "ZSH installed"
   fi

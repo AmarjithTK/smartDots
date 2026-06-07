@@ -92,7 +92,8 @@ setup_vscode() {
 
   # ── 3. Fira Code font ──────────────────────────────────────
   if ! pacman -Q ttf-fira-code &>/dev/null 2>&1; then
-    sudo pacman -S ttf-fira-code --noconfirm 2>&1 | tail -1
+    sudo pacman -Syy --noconfirm
+    sudo pacman -S --noconfirm ttf-fira-code 2>&1 | tail -1
     ok "Fira Code font installed"
   else
     info "Fira Code font already installed"

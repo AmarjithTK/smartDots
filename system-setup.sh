@@ -39,6 +39,9 @@ install_base_packages() {
   info "Installing base packages..."
   info "This includes: git, zsh, kitty, neovim, rofi, docker, fonts, and more"
 
+  # Refresh package databases
+  sudo pacman -Syy --noconfirm
+
   # Core packages
   sudo pacman -S --noconfirm --needed \
     base-devel git stow curl wget \
@@ -398,6 +401,7 @@ setup_laptop_power() {
   echo ""
   info "Setting up laptop power management (TLP)..."
 
+  sudo pacman -Syy --noconfirm
   sudo pacman -S --noconfirm tlp tlp-rdw 2>&1 | tail -1
   sudo systemctl enable tlp.service 2>/dev/null
   sudo systemctl enable NetworkManager-dispatcher.service 2>/dev/null
@@ -414,7 +418,7 @@ setup_laptop_power() {
 system_update() {
   echo ""
   info "Updating system..."
-  sudo pacman -Syu 2>&1 | tail -3
+  sudo pacman -Syu --noconfirm 2>&1 | tail -3
   ok "System updated"
   state_mark "system_updated"
 }
