@@ -9,17 +9,17 @@
 #  ═══════════════════════════════════════════════════════════════════
 
 # ── Style ─────────────────────────────────────────────────────────
-BOLD='\033[1m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-CYAN='\033[0;36m'
-RESET='\033[0m'
+BOLD=$'\033[1m'
+GREEN=$'\033[0;32m'
+YELLOW=$'\033[1;33m'
+RED=$'\033[0;31m'
+CYAN=$'\033[0;36m'
+RESET=$'\033[0m'
 
-ok()   { echo -e "  ${GREEN}✓${RESET} $1"; }
-warn() { echo -e "  ${YELLOW}→${RESET} $1"; }
-fail() { echo -e "  ${RED}✗${RESET} $1"; }
-info() { echo -e "  ${CYAN}i${RESET} $1"; }
+ok()   { echo "  ${GREEN}✓${RESET} $1"; }
+warn() { echo "  ${YELLOW}→${RESET} $1"; }
+fail() { echo "  ${RED}✗${RESET} $1"; }
+info() { echo "  ${CYAN}i${RESET} $1"; }
 
 # ── State tracking ────────────────────────────────────────────────
 STATE_FILE="$HOME/.aliasmanager/setup-state.txt"
@@ -89,10 +89,16 @@ install_configs() {
 
   for f in .gitconfig .gitignore_global; do
     if [ -f "$script_dir/$f" ]; then
-      cp -n "$script_dir/$f" "$HOME/" 2>/dev/null && ok "Copied $f → ~/$f" || info "$f already exists in ~/ — not overwritten"
+      if [ -f "$HOME/$f" ]; then
+        info "$f already exists in ~/ — not overwritten"
+      else
+        cp "$script_dir/$f" "$HOME/" && ok "Copied $f → ~/$f"
+      fi
     fi
   done
 
+  # Ensure critical git settings are always applied (even if config already existed)
+  git config --global core.excludesfile ~/.gitignore_global 2>/dev/null || true
   git config --global init.defaultBranch main 2>/dev/null || true
   ok "Config files installed"
   state_mark "configs"
@@ -120,15 +126,32 @@ setup_git_ssh() {
   fi
   ok "Git configured: $name <$email>"
 
-  local keyfile="$HOME/.ssh/id_ed25519"
-  if [ -f "$keyfile.pub" ]; then
-    ok "SSH key found: $keyfile.pub"
+  # Detect any existing SSH key (ed25519, rsa, ecdsa)
+  local keyfile=""
+  for candidate in id_ed25519 id_rsa id_ecdsa id_dsa; do
+    if [ -f "$HOME/.ssh/${candidate}.pub" ]; then
+      keyfile="$HOME/.ssh/$candidate"
+      break
+    fi
+  done
+
+  if [ -n "$keyfile" ]; then
+    ok "SSH key found: $keyfile"
   else
+    # No key exists — generate ed25519
+    keyfile="$HOME/.ssh/id_ed25519"
     if command -v ssh-keygen &>/dev/null; then
       mkdir -p "$HOME/.ssh"
       ssh-keygen -t ed25519 -C "$email" -f "$keyfile" -N "" 2>/dev/null
-      ok "SSH key generated: $keyfile.pub"
+      ok "SSH key generated: $keyfile"
+    else
+      warn "ssh-keygen not found — cannot generate SSH key"
     fi
+  fi
+
+  # Sync sshCommand in .gitconfig to match the actual key
+  if [ -n "$keyfile" ] && [ -f "$keyfile" ]; then
+    git config --global core.sshCommand "ssh -i $keyfile -o IdentitiesOnly=yes"
   fi
 
   if [ -f "$keyfile.pub" ]; then
@@ -137,7 +160,7 @@ setup_git_ssh() {
     echo "  │  YOUR SSH PUBLIC KEY                                │"
     echo "  │  Add to GitHub: https://github.com/settings/keys    │"
     echo "  ├─────────────────────────────────────────────────────┤"
-    cat "$keyfile.pub" | sed 's/^/  │  /'
+    sed 's/^/  │  /' "$keyfile.pub"
     echo "  └─────────────────────────────────────────────────────┘"
     echo ""
 
@@ -181,18 +204,20 @@ while true; do
   echo "  ┌─────────────────────────────────────────────────────┐"
   echo "  │  SYSTEM SETUP                                       │"
   echo "  ├─────────────────────────────────────────────────────┤"
-  printf "  │  %s1%s) System update        [%s]                   │\n" "$BOLD" "$RESET" "$(check system_updated)"
-  printf "  │  %s2%s) Base packages        [%s]                   │\n" "$BOLD" "$RESET" "$(check base_packages)"
-  printf "  │  %s3%s) Config files         [%s]                   │\n" "$BOLD" "$RESET" "$(check configs)"
-  echo "  │       • .gitconfig (Git user/aliases)               │"
+  echo "  │                                                     │"
+  echo "  │  ${BOLD}1${RESET}) System update                        [$(check system_updated)]         │"
+  echo "  │  ${BOLD}2${RESET}) Base packages                        [$(check base_packages)]         │"
+  echo "  │  ${BOLD}3${RESET}) Config files                         [$(check configs)]         │"
+  echo "  │       • .gitconfig (user/aliases)                   │"
   echo "  │       • .gitignore_global (Node/Python/Rust/...)    │"
-  printf "  │  %s4%s) Git + SSH key        [%s]                   │\n" "$BOLD" "$RESET" "$(check git_ssh)"
-  echo "  │                                              │"
-  echo "  │  a) Install ALL                              │"
-  echo "  │  q) Quit                                     │"
+  echo "  │  ${BOLD}4${RESET}) Git + SSH key                        [$(check git_ssh)]         │"
+  echo "  │                                                     │"
+  echo "  │  ${BOLD}a${RESET}) Install ALL                                     │"
+  echo "  │  ${BOLD}q${RESET}) Quit                                            │"
+  echo "  │                                                     │"
   echo "  └─────────────────────────────────────────────────────┘"
   echo ""
-  read -p "  Select (e.g. '1 3 5' or 'a'): " -a choices
+  read -p "  Select (e.g. '1 3 a' or 'a'): " -a choices
 
   for c in "${choices[@]}"; do
     case "$c" in
