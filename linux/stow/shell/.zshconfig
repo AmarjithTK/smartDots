@@ -1,0 +1,92 @@
+
+export PATH=$HOME/bin:$HOME/.local/share/bin:/usr/local/bin:$PATH
+
+
+
+
+export PATH="$PATH:$HOME/flutter/bin"
+
+
+
+
+export PATH=$HOME/basescripts/utilities/binaries:$PATH
+
+# . /home/$USER/.nix-profile/etc/profile.d/nix.sh#
+
+
+
+if [ -f ~/.helpers/aliases.txt ]; then
+    # Echo the command to add it to .zshrc
+    source ~/.helpers/aliases.txt
+  
+fi
+# ----------aliases start here 
+#
+
+
+alias senable='sudo systemctl enable'
+alias sstart='sudo systemctl start'
+alias srestart='sudo systemctl restart'
+alias sstatus='sudo systemctl status'
+alias sdisable='sudo systemctl disable'
+
+
+alias vi="nvim"
+alias vim="nvim" 
+
+alias mkp="mkdir -p"
+
+#-------------------aliases end here 
+
+
+
+
+alias venvcmd='eval "$(cat ~/.helpers/venvcmd.txt)"'
+
+export EDITOR=vim
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+export BROWSER='chrome'
+export CHROME_EXECUTABLE="/usr/bin/google-chrome-stable"
+
+alias powerlow="powerprofilesctl set power-saver "
+alias powerbalance="powerprofilesctl set balanced"
+alias powerperformance="powerprofilesctl set performance "
+alias powerstatus="powerprofilesctl"
+
+
+
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+
+export cfg="$HOME/.config"
+
+
+
+alias sstart='sudo systemctl start'
+alias srestart='sudo systemctl restart'
+alias sstop='sudo systemctl stop'
+alias sdisable='sudo systemctl disable'
+alias senable='sudo systemctl enable'
+alias sstatus='sudo systemctl status'
+alias spu="sudo pacman -S archlinux-keyring --noconfirm && sudo pacman -Syu"
+
+
+alias a='distrobox enter archbox --'  # Run commands inside archbox
+alias ax='distrobox export --app'  # Export apps from archbox
+
+# Creative names
+alias archie='distrobox enter archbox'  # Enter the container
+alias archway='distrobox create --name archbox --image archlinux:latest'  # Create the container
+alias archdown='distrobox stop archbox'  # Stop the container
+alias archwipe='distrobox rm archbox'  # Remove the container
+alias archlist='distrobox list'  # List available containers
+
+# Override sudo to always run inside archbox
+
+
+
+HISTFILE=~/.zsh_history       # path to history file
+HISTSIZE=10000                # number of commands in memory
+SAVEHIST=10000                # number of commands saved to file
+setopt APPEND_HISTORY          # append to history, don’t overwrite
+setopt INC_APPEND_HISTORY  

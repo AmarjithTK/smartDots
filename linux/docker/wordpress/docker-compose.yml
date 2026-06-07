@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: wordpress_db
+    environment:
+      MYSQL_ROOT_PASSWORD: examplepassword  # Set your MySQL root password here
+      MYSQL_DATABASE: wordpress           # The WordPress database name
+      MYSQL_USER: wordpress_user          # A user for WordPress to connect to the database
+      MYSQL_PASSWORD: wordpress_password  # Password for the WordPress user
+    volumes:
+      - wordpress_db_data:/var/lib/mysql   # Persistent data volume for MySQL
+    networks:
+      - wordpress_network
+    restart: unless-stopped
+
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress
+    depends_on:
+      - db
+    ports:
+      - 8081:80  # Exposes port 8080 on your machine to port 80 in the container
+    environment:
+      WORDPRESS_DB_HOST: db:3306          # The address of the DB container
+      WORDPRESS_DB_NAME: wordpress        # The name of the database
+      WORDPRESS_DB_USER: wordpress_user   # The WordPress DB user
+      WORDPRESS_DB_PASSWORD: wordpress_password  # The DB user's password
+    volumes:
+      - wordpress_data:/var/www/html     # Persistent data volume for WordPress files
+    networks:
+      - wordpress_network
+    restart: unless-stopped
+
+networks:
+  wordpress_network:
+    driver: bridge
+
+volumes:
+  wordpress_db_data:
+    driver: local
+  wordpress_data:
+    driver: local
