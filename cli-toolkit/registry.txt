@@ -1,0 +1,69 @@
+# smartDots CLI Toolkit — Alias Registry
+# Format: category|alias|command
+#
+# FLUTTER
+flutter|fpg|flutter pub get
+flutter|fpc|flutter pub cache repair
+flutter|fpu|flutter pub upgrade
+flutter|fc|flutter clean
+flutter|fcp|flutter clean && flutter pub get
+flutter|fr|flutter run
+flutter|frc|flutter run -d chrome
+flutter|frw|flutter run -d web-server
+flutter|frl|flutter run -d linux
+flutter|fra|flutter run -d android
+flutter|fba|flutter build apk
+flutter|fbas|flutter build apk --split-per-abi
+flutter|fbaa|flutter build appbundle
+flutter|fbw|flutter build web
+flutter|fbl|flutter build linux
+flutter|fan|flutter analyze
+flutter|ffix|dart fix --apply
+# GIT
+git|gs|git status
+git|gl|git log --oneline --graph
+git|gd|git diff
+git|ga|git add .
+git|gau|git add -u
+git|gap|git add -p
+git|gc|git commit
+git|gcm|git commit -m
+git|gca|git add . && git commit -m
+git|gcap|git add . && git commit -m && git push
+git|gp|git pull
+git|gps|git push
+git|gpsu|git push -u origin HEAD
+git|gb|git branch
+git|gco|git checkout
+git|gsw|git switch
+# NPM
+npm|ni|npm install
+npm|nid|npm install --save-dev
+npm|ns|npm start
+npm|nd|npm run dev
+npm|nb|npm run build
+npm|nt|npm test
+npm|nr|npm run
+# PNPM
+pnpm|pi|pnpm install
+pnpm|pd|pnpm dev
+pnpm|pb|pnpm build
+# BUN
+bun|bi|bun install
+bun|bd|bun dev
+bun|bb|bun build
+# DOCKER
+docker|dps|docker ps
+docker|dimg|docker images
+docker|dc|docker compose
+docker|dcu|docker compose up
+docker|dcd|docker compose down
+docker|dcl|docker compose logs
+# SYSTEM
+system|ll|ls -lah
+system|la|ls -A
+system|c|clear
+system|h|history
+system|p|pwd
+system|myip|curl ifconfig.me
+system|ports|ss -tulpn
