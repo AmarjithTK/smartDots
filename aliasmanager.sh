@@ -148,6 +148,23 @@ ALIASES=(
 )
 
 # ═══════════════════════════════════════════════════════════════════
+#  SHELL FUNCTIONS (multi-step — too complex for aliases)
+#  ═══════════════════════════════════════════════════════════════════
+
+# Install Flutter APK to all connected ADB devices in parallel
+# Usage: finstall [path/to/app.apk]
+finstall() {
+  local apk="${1:-build/app/outputs/flutter-apk/app-arm64-v8a-release.apk}"
+  local devices
+  devices=$(adb devices | tail -n +2 | grep -v "^$" | cut -sf 1)
+  if [ -z "$devices" ]; then
+    echo "No ADB devices found"
+    return 1
+  fi
+  echo "$devices" | xargs -I {} -P 4 adb -s {} install -r "$apk"
+}
+
+# ═══════════════════════════════════════════════════════════════════
 #  FUNCTIONS
 #  ═══════════════════════════════════════════════════════════════════
 
