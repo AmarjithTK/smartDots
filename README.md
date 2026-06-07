@@ -11,10 +11,18 @@ A unified dotfiles repository supporting **Linux (KDE Plasma)** and **Windows (A
 
 ## Quick Start
 
-### Linux (KDE Plasma)
+### Linux (KDE Plasma) — SSH-First Install
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/AmarjithTK/smartDots/main3/install.sh)
+bash <(curl -sL https://raw.githubusercontent.com/AmarjithTK/smartDots/main3/install.sh)
 ```
+
+The installer will:
+1. Attempt **SSH clone** (recommended for updates)
+2. If SSH fails → check for SSH keys
+3. No key? → **Auto-generate** ed25519 key pair
+4. Try **`gh` CLI** upload to GitHub automatically
+5. Show **pretty-printed public key** + clickable GitHub URL
+6. **HTTPS fallback** as last resort
 
 ### Windows (AutoHotkey)
 ```powershell
