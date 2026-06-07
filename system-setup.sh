@@ -226,20 +226,64 @@ setup_grub() {
   sudo cp /etc/default/grub "$bak"
   ok "Backed up GRUB config → $bak"
 
-  # Security: set GRUB password if not set
-  local grub_password_set=false
-  if grep -q "GRUB_PASSWORD" /etc/default/grub 2>/dev/null; then
-    info "GRUB password already set"
-    grub_password_set=true
+  # ── Generic GRUB tweaks (safe for all systems) ───────────
+  local changes_made=false
+
+  # loglevel + quiet + nowatchdog
+  if grep -q "GRUB_CMDLINE_LINUX_DEFAULT" /etc/default/grub 2>/dev/null; then
+    local current
+    current=$(grep "^GRUB_CMDLINE_LINUX_DEFAULT" /etc/default/grub | sed 's/GRUB_CMDLINE_LINUX_DEFAULT="//' | sed 's/"//')
+    # Add loglevel=3 quiet nowatchdog if missing
+    local new="$current"
+    echo "$current" | grep -q "loglevel=3" || new="$new loglevel=3"
+    echo "$new" | grep -q "quiet" || new="$new quiet"
+    echo "$new" | grep -q "nowatchdog" || new="$new nowatchdog"
+    if [ "$new" != "$current" ]; then
+      sudo sed -i "s/GRUB_CMDLINE_LINUX_DEFAULT=\"$current\"/GRUB_CMDLINE_LINUX_DEFAULT=\"$new\"/" /etc/default/grub
+      changes_made=true
+    fi
   fi
 
-  # Apply GRUB tweaks
-  sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=".*"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet nowatchdog acpi_backlight=native"/' /etc/default/grub
-  sudo sed -i 's/#GRUB_DISABLE_RECOVERY/GRUB_DISABLE_RECOVERY/' /etc/default/grub
-  sudo sed -i 's/#GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=menu/' /etc/default/grub
-  sudo sed -i 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=3/' /etc/default/grub
+  # GRUB_DISABLE_RECOVERY
+  if grep -q "^#GRUB_DISABLE_RECOVERY" /etc/default/grub 2>/dev/null; then
+    sudo sed -i 's/#GRUB_DISABLE_RECOVERY/GRUB_DISABLE_RECOVERY/' /etc/default/grub
+    changes_made=true
+  fi
 
-  ok "GRUB config updated (acpi_backlight=native, timeout=3)"
+  # GRUB_TIMEOUT_STYLE
+  if grep -q "^#GRUB_TIMEOUT_STYLE" /etc/default/grub 2>/dev/null; then
+    sudo sed -i 's/#GRUB_TIMEOUT_STYLE/GRUB_TIMEOUT_STYLE/' /etc/default/grub
+    changes_made=true
+  fi
+
+  # GRUB_TIMEOUT
+  if grep -q "^GRUB_TIMEOUT=" /etc/default/grub 2>/dev/null; then
+    sudo sed -i 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=3/' /etc/default/grub
+    changes_made=true
+  fi
+
+  # ── ACPI backlight=native (laptop only — ask first) ─────
+  if prompt_yes "Add acpi_backlight=native to kernel cmdline? (needed for laptops)" "n"; then
+    local cur_line
+    cur_line=$(grep "^GRUB_CMDLINE_LINUX_DEFAULT" /etc/default/grub | head -1)
+    if echo "$cur_line" | grep -q "acpi_backlight=native"; then
+      info "acpi_backlight=native already set"
+    else
+      local without_quote
+      without_quote=$(echo "$cur_line" | sed 's/GRUB_CMDLINE_LINUX_DEFAULT="//' | sed 's/"//')
+      sudo sed -i "s/GRUB_CMDLINE_LINUX_DEFAULT=\"$without_quote\"/GRUB_CMDLINE_LINUX_DEFAULT=\"$without_quote acpi_backlight=native\"/" /etc/default/grub
+      changes_made=true
+      ok "acpi_backlight=native added to GRUB_CMDLINE_LINUX_DEFAULT"
+    fi
+  else
+    info "Skipping acpi_backlight=native"
+  fi
+
+  if $changes_made; then
+    ok "GRUB config updated"
+  else
+    info "No GRUB config changes needed"
+  fi
 
   # Install GRUB theme (Nord)
   local theme_dst="/boot/grub/themes/nord"
@@ -288,13 +332,15 @@ THEME
     info "GRUB theme already installed"
   fi
 
-  # Regenerate GRUB config
-  info "Regenerating GRUB config..."
-  if command -v grub-mkconfig &>/dev/null; then
-    sudo grub-mkconfig -o /boot/grub/grub.cfg 2>&1 | tail -1
-    ok "GRUB config regenerated"
-  else
-    warn "grub-mkconfig not found — regenerate manually"
+  # Regenerate GRUB config (only if changes were made)
+  if $changes_made; then
+    info "Regenerating GRUB config..."
+    if command -v grub-mkconfig &>/dev/null; then
+      sudo grub-mkconfig -o /boot/grub/grub.cfg 2>&1 | tail -1
+      ok "GRUB config regenerated"
+    else
+      warn "grub-mkconfig not found — regenerate manually"
+    fi
   fi
 
   ok "GRUB setup complete"
