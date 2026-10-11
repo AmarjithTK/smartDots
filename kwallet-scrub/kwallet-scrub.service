@@ -1,0 +1,8 @@
+[Unit]
+Description=Scrub KDE KWallet packages/services if they reappear
+Documentation=file:///home/starwalker/.local/share/kwallet-scrub/kwallet-scrub.sh
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/kwallet-scrub
+Nice=10

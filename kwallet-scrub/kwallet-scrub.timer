@@ -1,0 +1,10 @@
+[Unit]
+Description=Periodic KWallet scrub (catches pacman -Syu reintroductions)
+
+[Timer]
+OnBootSec=3min
+OnUnitInactiveSec=6h
+Persistent=true
+
+[Install]
+WantedBy=timers.target
