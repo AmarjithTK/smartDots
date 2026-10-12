@@ -82,6 +82,7 @@ install_configs() {
   echo "  ┌─────────────────────────────────────────────────────────┐"
   echo "  │  .gitconfig        → Git user name/email + aliases        │"
   echo "  │  .gitignore_global → Global gitignore (Node/Python/...)  │"
+  echo "  │  chrome/chromium-flags.conf → --password-store=basic     │"
   echo "  └─────────────────────────────────────────────────────────┘"
 
   local script_dir
@@ -93,6 +94,19 @@ install_configs() {
         info "$f already exists in ~/ — not overwritten"
       else
         cp "$script_dir/$f" "$HOME/" && ok "Copied $f → ~/$f"
+      fi
+    fi
+  done
+
+  # Browsers: force --password-store=basic so Chrome/Chromium never touch
+  # KWallet/gnome-keyring (both scrubbed by kwallet-scrub).
+  mkdir -p "$HOME/.config"
+  for f in chrome-flags.conf chromium-flags.conf; do
+    if [ -f "$script_dir/$f" ]; then
+      if [ -f "$HOME/.config/$f" ]; then
+        info "$f already exists in ~/.config/ — not overwritten"
+      else
+        cp "$script_dir/$f" "$HOME/.config/$f" && ok "Copied $f → ~/.config/$f"
       fi
     fi
   done
