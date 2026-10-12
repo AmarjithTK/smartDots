@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# kwallet-scrub — remove KDE KWallet stack and keep it gone. Idempotent, runs as root.
+# kwallet-scrub — remove KDE KWallet + gnome-keyring stacks and keep them gone. Idempotent, runs as root.
 set -u
 
 PKGS=(
@@ -9,6 +9,7 @@ PKGS=(
   kwallet-pam
   ksshaskpass
   signon-kwallet-extension
+  gnome-keyring
 )
 
 present=()
@@ -24,8 +25,8 @@ else
   echo "kwallet-scrub: no kwallet packages present"
 fi
 
-# Kill any running wallet daemons
-for d in kwalletd6 kwalletd5 kwalletd; do
+# Kill any running wallet/keyring daemons
+for d in kwalletd6 kwalletd5 kwalletd gnome-keyring-daemon; do
   if pkill -x "$d" 2>/dev/null; then
     echo "kwallet-scrub: killed $d"
   fi
@@ -34,5 +35,10 @@ done
 # Strip autostart entries (system + every user) in case a package/hook recreated them
 rm -f /etc/xdg/autostart/*kwallet* 2>/dev/null
 rm -f /home/*/.config/autostart/*kwallet* 2>/dev/null
+rm -f /etc/xdg/autostart/*gnome-keyring* 2>/dev/null
+rm -f /home/*/.config/autostart/*gnome-keyring* 2>/dev/null
+# Drop any lingering user-unit enablement links (unit files leave with the package)
+rm -f /home/*/.config/systemd/user/*/gnome-keyring-daemon* 2>/dev/null
+rm -f /home/*/.config/systemd/user/*/gnome-keyring-* 2>/dev/null
 
 echo "kwallet-scrub: done at $(date -Is)"
